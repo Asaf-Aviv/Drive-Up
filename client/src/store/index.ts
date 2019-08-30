@@ -7,10 +7,12 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import notificationReducer from './notification/reducers';
+import notificationsReducer from './notifications/reducers';
+import moviesReducer from './movies/reducers';
 
 const rootReducer = combineReducers({
-  notifications: notificationReducer,
+  notifications: notificationsReducer,
+  movies: moviesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
