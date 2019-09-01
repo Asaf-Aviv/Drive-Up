@@ -6,6 +6,7 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import notificationsReducer from './notifications/reducers';
 import moviesReducer from './movies/reducers';
@@ -19,7 +20,10 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export default () => {
   const devMode = process.env.NODE_ENV !== 'production';
-  const middlewares: Middleware[] = [thunkMiddleware];
+
+  const sagaMiddleware = createSagaMiddleware();
+
+  const middlewares: Middleware[] = [sagaMiddleware, thunkMiddleware];
 
   if (devMode) {
     middlewares.push(logger);
@@ -33,6 +37,8 @@ export default () => {
       ? composeWithDevTools(middleWareEnhancer)
       : middleWareEnhancer,
   );
+
+  // sagaMiddleware.run()
 
   return store;
 };
