@@ -9,3 +9,5 @@ client/.env.production.local
 client/npm-debug.log*
 
 server/.env
+
+.vscode
