@@ -3,10 +3,11 @@ import { ThunkAction } from 'redux-thunk';
 
 /* eslint-disable no-multi-spaces */
 enum MoviesTypes {
-  ADD_MOVIES        = 'ADD_MOVIES',
-  SET_RESULTS_COUNT = 'SET_RESULTS_COUNT',
-  SET_LOADING       = 'SET_LOADING',
-  SET_PAGE          = 'SET_PAGE',
+  ADD_MOVIES         = 'ADD_MOVIES',
+  SET_RESULTS_COUNT  = 'SET_RESULTS_COUNT',
+  SET_LOADING        = 'SET_LOADING',
+  SET_PAGE           = 'SET_PAGE',
+  FETCH_MOVIES_ERROR = 'FETCH_MOVIES_ERROR',
 }
 /* eslint-enable no-multi-spaces */
 
@@ -44,6 +45,10 @@ interface SetLoadingAction {
   type: typeof MoviesTypes.SET_LOADING;
 }
 
+interface SetFetchErrorAction {
+  type: typeof MoviesTypes.FETCH_MOVIES_ERROR;
+}
+
 interface SetPage {
   type: typeof MoviesTypes.SET_PAGE;
   page: number;
@@ -54,10 +59,15 @@ type MoviesActionTypes = (
   | SetResultsCountAction
   | SetLoadingAction
   | SetPage
+  | SetFetchErrorAction
 )
 
-const setLoading = (): MoviesActionTypes => ({
+const setLoadingMovies = (): MoviesActionTypes => ({
   type: MoviesTypes.SET_LOADING,
+});
+
+const SetFetchError = (): MoviesActionTypes => ({
+  type: MoviesTypes.FETCH_MOVIES_ERROR,
 });
 
 const setPage = (page: number): MoviesActionTypes => ({
@@ -80,27 +90,38 @@ const setResultsCount = (pagesCount: number, moviesCount: number): MoviesActionT
 
 export const fetchInitialMovies = (): ThunkAction<Promise<void>, {}, {}, MoviesActionTypes> => async (dispatch) => {
   try {
-    dispatch(setLoading());
-    const { data } = await axios('https://api.themoviedb.org/3/discover/movie?page=1');
-    const { total_results: moviesCount, total_pages: pagesCount, results: movies, page } = data;
+    dispatch(setLoadingMovies());
+    const { data } = await axios('https://api.themoviedb.org/3/discover/movie', {
+      params: {
+        page: 1,
+      }
+    });
+    const { total_results: moviesCount, total_pages: pagesCount, results: movies } = data;
     console.log(data);
     dispatch(setResultsCount(pagesCount, moviesCount));
     dispatch(addMovies(movies));
   } catch (err) {
     console.log(err);
+    dispatch(SetFetchError());
   }
 }
 
 export const fetchNextPage = (page: number): ThunkAction<Promise<void>, {}, {}, MoviesActionTypes> => async (dispatch, getState) => {
   try {
     console.log(page)
-    dispatch(setLoading());
-    const { data: { results: movies } } = await axios(`https://api.themoviedb.org/3/discover/movie?page=${page}`);
+    dispatch(setLoadingMovies());
+    const { data: { results: movies } } = await axios('https://api.themoviedb.org/3/discover/movie', {
+      params: {
+        page,
+        sort_by: 'revenue.desc'
+      }
+    });
     console.log(movies);
     dispatch(setPage(page));
     dispatch(addMovies(movies));
   } catch (err) {
     console.log(err);
+    dispatch(SetFetchError());
   }
 }
 
@@ -131,6 +152,12 @@ export default (
       return {
         ...state,
         loading: true,
+      };
+    case MoviesTypes.FETCH_MOVIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
       };
     case MoviesTypes.SET_PAGE:
       return {
