@@ -35,6 +35,7 @@ export default (
       return {
         ...state,
         movies: state.movies.concat(action.movies),
+        page: action.page,
         loading: false,
         error: false,
       };
