@@ -26,11 +26,11 @@ describe('fetchMovies Saga', () => {
 
     expect(gen.next().value).toEqual(put(fetchMoviesStart()));
     expect(gen.next().value).toEqual(call(TMDB.fetchMovies, action.page));
-    expect(gen.next(res).value).toEqual(put(fetchMoviesSuccess(res.data.results)));
+    expect(gen.next(res).value).toEqual(put(fetchMoviesSuccess(res.data.results, res.data.page)));
     expect(gen.next().done).toBeTruthy();
   });
 
-  it('should dispatch a FETCH_MOVIES_ERROR action', () => {
+  it('should dispatch a FETCH_MOVIES_ERROR action when the saga throws', () => {
     const action = requestMovies(1) as RequestMoviesAction;
     const gen = fetchMoviesSaga(action);
 
