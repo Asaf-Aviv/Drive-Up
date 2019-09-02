@@ -10,11 +10,11 @@ import {
 
 export function* fetchMovies({ page }: RequestMoviesAction) {
   try {
-    console.log(page);
     yield put(fetchMoviesStart());
-    const res: FetchMoviesResponse = yield call(TMDB.fetchMovies, page);
-    console.log(res);
-    yield put(fetchMoviesSuccess(res.data.results));
+    const {
+      data: { results: movies, page: currentPage },
+    }: FetchMoviesResponse = yield call(TMDB.fetchMovies, page);
+    yield put(fetchMoviesSuccess(movies, currentPage));
   } catch (error) {
     yield put(fetchMoviesError());
   }
