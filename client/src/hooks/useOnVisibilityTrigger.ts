@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * fires the callback function when the ref element is almost in view
+ * a hook that fires the callback function when the ref element is almost in view
  * @param {...React.RefObject} ref React.ref object
  * @param {callback} callback a function to be executed
  */
@@ -25,6 +25,7 @@ export function useOnVisibilityTrigger(ref: React.RefObject<HTMLElement>, callba
       observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio > 0) {
+            console.log('triggering callback');
             callback();
           }
         });
