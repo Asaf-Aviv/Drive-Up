@@ -6,10 +6,11 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
-import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import notificationsReducer from './notifications/reducers';
 import moviesReducer from './movies/reducers';
+import rootSaga from './sagas/rootSaga';
 
 const rootReducer = combineReducers({
   notifications: notificationsReducer,
@@ -38,7 +39,7 @@ export default () => {
       : middleWareEnhancer,
   );
 
-  // sagaMiddleware.run()
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };
