@@ -13,6 +13,7 @@ interface FetchMoviesStartAction {
 interface FetchMoviesSuccessAction {
   type: typeof MoviesTypes.FETCH_MOVIES_SUCCESS;
   movies: MovieShowcase[];
+  page: number;
 }
 
 interface FetchMoviesErrorAction {
@@ -25,7 +26,7 @@ export type MoviesActionTypes =
   | FetchMoviesSuccessAction
   | FetchMoviesErrorAction
 
-export const requestMovies = (page: number): MoviesActionTypes => ({
+export const requestMovies = (page = 1): MoviesActionTypes => ({
   type: MoviesTypes.REQUEST_MOVIES,
   page,
 });
@@ -34,9 +35,10 @@ export const fetchMoviesStart = (): MoviesActionTypes => ({
   type: MoviesTypes.FETCH_MOVIES_START,
 });
 
-export const fetchMoviesSuccess = (movies: MovieShowcase[]): MoviesActionTypes => ({
+export const fetchMoviesSuccess = (movies: MovieShowcase[], page: number): MoviesActionTypes => ({
   type: MoviesTypes.FETCH_MOVIES_SUCCESS,
   movies,
+  page,
 });
 
 export const fetchMoviesError = (): MoviesActionTypes => ({
