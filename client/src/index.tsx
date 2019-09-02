@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import ReactGA from 'react-ga';
 import App from './App';
-import configureStore from './store';
+import store from './store';
 
 ReactGA.initialize('');
 
@@ -15,9 +15,6 @@ history.listen((location) => {
   ReactGA.set({ page: location.pathname });
   ReactGA.pageview(location.pathname);
 });
-
-// eslint-disable-next-line import/prefer-default-export
-export const store = configureStore();
 
 render(
   <Provider store={store}>
