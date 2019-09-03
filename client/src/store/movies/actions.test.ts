@@ -1,5 +1,4 @@
 import { MovieShowcase } from './interfaces';
-import { MoviesTypes } from './constants';
 import {
   requestMovies, fetchMoviesStart, fetchMoviesSuccess, fetchMoviesError,
 } from './actions';
@@ -7,7 +6,7 @@ import {
 describe('movies actions', () => {
   it('should create an action to request movies with default page of 1', () => {
     const expectedAction = {
-      type: MoviesTypes.REQUEST_MOVIES,
+      type: 'REQUEST_MOVIES',
       page: 1,
     };
 
@@ -16,7 +15,7 @@ describe('movies actions', () => {
 
   it('should create an action to request movies with page based of parameter', () => {
     const expectedAction = {
-      type: MoviesTypes.REQUEST_MOVIES,
+      type: 'REQUEST_MOVIES',
       page: 3,
     };
 
@@ -27,7 +26,7 @@ describe('movies actions', () => {
 
   it('should create an action to start fetching movies', () => {
     const expectedAction = {
-      type: MoviesTypes.FETCH_MOVIES_START,
+      type: 'FETCH_MOVIES_START',
     };
 
     expect(fetchMoviesStart()).toEqual(expectedAction);
@@ -38,7 +37,7 @@ describe('movies actions', () => {
     const page = 3;
 
     const expectedAction = {
-      type: MoviesTypes.FETCH_MOVIES_SUCCESS,
+      type: 'FETCH_MOVIES_SUCCESS',
       movies,
       page,
     };
@@ -48,7 +47,7 @@ describe('movies actions', () => {
 
   it('should create an action for error fetching movies', () => {
     const expectedAction = {
-      type: MoviesTypes.FETCH_MOVIES_ERROR,
+      type: 'FETCH_MOVIES_ERROR',
     };
 
     expect(fetchMoviesError()).toEqual(expectedAction);
