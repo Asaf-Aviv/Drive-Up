@@ -11,7 +11,7 @@ interface MoviesState {
   moviesCount: number;
 }
 
-const initialState: MoviesState = {
+export const initialState: MoviesState = {
   movies: [],
   loading: false,
   error: false,
@@ -20,10 +20,10 @@ const initialState: MoviesState = {
   moviesCount: 0,
 };
 
-export default (
+export function moviesReducer(
   state = initialState,
   action: MoviesActionTypes
-): MoviesState => {
+): MoviesState {
   switch (action.type) {
     case MoviesTypes.FETCH_MOVIES_START:
       return {
@@ -48,4 +48,4 @@ export default (
     default:
       return state;
   }
-};
+}
