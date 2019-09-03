@@ -5,7 +5,7 @@ import {
   fetchMoviesError,
   fetchMoviesSuccess,
 } from './actions';
-import { moviesReducer, initialState } from './reducers';
+import moviesReducer, { initialState } from './reducers';
 
 describe('movies reducer', () => {
   it('should return the initial state', () => {
@@ -76,6 +76,7 @@ describe('movies reducer', () => {
     const state = {
       ...initialState,
       loading: true,
+      error: false,
     };
 
     expect(
