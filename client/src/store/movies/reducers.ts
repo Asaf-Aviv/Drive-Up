@@ -20,7 +20,7 @@ export const initialState: MoviesState = {
   moviesCount: 0,
 };
 
-export function moviesReducer(
+export default function moviesReducer(
   state = initialState,
   action: MoviesActionTypes
 ): MoviesState {
