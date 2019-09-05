@@ -1,7 +1,15 @@
-import { addNotification, removeNotification, RemoveNotificationAction } from './../actions';
-import { addNotificationSaga, removeNotificationSaga } from './notificationsSaga';
-import { put, call } from 'redux-saga/effects';
-import { AddNotificationAction } from '../actions';
+import { put } from 'redux-saga/effects';
+import {
+  addNotification,
+  removeNotification,
+  RemoveNotificationAction,
+  AddNotificationAction,
+} from '../actions';
+import {
+  addNotificationSaga,
+  removeNotificationSaga,
+} from './notificationsSaga';
+
 import { Notification } from '../interfaces';
 
 describe('notification sagas', () => {
@@ -10,21 +18,21 @@ describe('notification sagas', () => {
       const notification: Notification = {
         id: '123',
         message: 'Hi',
-        'variant': 'success',
-      }
+        variant: 'success',
+      };
 
       const action = addNotification(notification) as AddNotificationAction;
 
       const gen = addNotificationSaga(action);
-      
+
       expect(gen.next().value).toEqual(put(addNotification(notification)));
       expect(gen.next().done).toBeTruthy();
     });
   });
-  
+
   describe('removeNotificationSaga', () => {
     it('should dispatch REMOVE_NOTIFICATION action', () => {
-      const id = '123'
+      const id = '123';
 
       const action = removeNotification(id) as RemoveNotificationAction;
 
