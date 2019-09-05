@@ -43,6 +43,7 @@ module.exports = {
       2,
     ],
     'no-console': 'off',
+    'implicit-arrow-linebreak': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/camelcase': 'off',
     'import/prefer-default-export': 'off',
