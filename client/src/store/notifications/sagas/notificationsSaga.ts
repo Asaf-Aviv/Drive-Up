@@ -10,15 +10,15 @@ import { NotificationsTypes } from '../constants';
 
 const put = <A extends NotificationActionTypes>(action: A): PutEffect<A> => untypedPut(action);
 
-function* addNotification({ notification }: AddNotificationAction) {
+export function* addNotificationSaga({ notification }: AddNotificationAction) {
   yield put(addNotificationAction(notification));
 }
 
-function* removeNotification({ id }: RemoveNotificationAction) {
+export function* removeNotificationSaga({ id }: RemoveNotificationAction) {
   yield put(removeNotificationAction(id));
 }
 
 export function* notificationsWatcher() {
-  yield takeEvery(NotificationsTypes.NEW_NOTIFICATION, addNotification);
-  yield takeEvery(NotificationsTypes.REMOVE_NOTIFICATION, removeNotification);
+  yield takeEvery(NotificationsTypes.ADD_NOTIFICATION, addNotificationSaga);
+  yield takeEvery(NotificationsTypes.REMOVE_NOTIFICATION, removeNotificationSaga);
 }

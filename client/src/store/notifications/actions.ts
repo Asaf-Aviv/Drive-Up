@@ -1,11 +1,6 @@
 import { Notification } from './interfaces';
 import { NotificationsTypes } from './constants';
 
-export interface NewNotificationAction {
-  type: typeof NotificationsTypes.NEW_NOTIFICATION;
-  notification: Notification;
-}
-
 export interface AddNotificationAction {
   type: typeof NotificationsTypes.ADD_NOTIFICATION;
   notification: Notification;
@@ -17,7 +12,6 @@ export interface RemoveNotificationAction {
 }
 
 export type NotificationActionTypes =
-  | NewNotificationAction
   | AddNotificationAction
   | RemoveNotificationAction;
 
