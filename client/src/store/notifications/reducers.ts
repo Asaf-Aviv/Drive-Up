@@ -2,7 +2,7 @@ import { NotificationActionTypes } from './actions';
 import { NotificationsTypes } from './constants';
 import { Notification } from './interfaces';
 
-const initialState: Notification[] = [];
+export const initialState: Notification[] = [];
 
 export default function notificationsReducer(
   state = initialState,
