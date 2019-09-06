@@ -26,7 +26,7 @@ export type MoviesActionTypes =
   | FetchMoviesSuccessAction
   | FetchMoviesErrorAction
 
-export const requestMovies = (page = 1): MoviesActionTypes => ({
+export const requestMovies = (page: number): MoviesActionTypes => ({
   type: MoviesTypes.REQUEST_MOVIES,
   page,
 });
