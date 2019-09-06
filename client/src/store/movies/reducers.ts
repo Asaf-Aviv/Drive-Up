@@ -15,7 +15,7 @@ export const initialState: MoviesState = {
   movies: [],
   loading: false,
   error: false,
-  page: 1,
+  page: 0,
   pagesCount: 0,
   moviesCount: 0,
 };
