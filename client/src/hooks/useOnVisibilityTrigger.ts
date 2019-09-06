@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
 /**
- * a hook that fires the callback function when the ref element is almost in view
+ * a hook that fires the callback function when the ref element is 500px
+ * below the current scroll position
  * @param {...React.RefObject} ref React.ref object
  * @param {callback} callback a function to be executed
  */
@@ -18,7 +19,7 @@ export function useOnVisibilityTrigger(ref: React.RefObject<HTMLElement>, callba
 
       const options = {
         root: null,
-        rootMargin: '0px',
+        rootMargin: '500px',
         threshold: 1.0,
       };
 
