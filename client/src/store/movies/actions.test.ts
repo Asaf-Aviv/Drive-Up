@@ -4,15 +4,6 @@ import {
 } from './actions';
 
 describe('movies actions', () => {
-  it('should create an action to request movies with default page of 1', () => {
-    const expectedAction = {
-      type: 'REQUEST_MOVIES',
-      page: 1,
-    };
-
-    expect(requestMovies()).toEqual(expectedAction);
-  });
-
   it('should create an action to request movies with page based of parameter', () => {
     const expectedAction = {
       type: 'REQUEST_MOVIES',
