@@ -1,3 +1,3 @@
-import MovieShowcaseList from './MovieShowcaseList';
+import MoviesShowcaseList from './MoviesShowcaseList';
 
-export default MovieShowcaseList;
+export default MoviesShowcaseList;
