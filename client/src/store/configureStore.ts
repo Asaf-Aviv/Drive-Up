@@ -1,5 +1,4 @@
 import {
-  combineReducers,
   createStore,
   applyMiddleware,
   Middleware,
@@ -11,7 +10,7 @@ import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from './sagas/rootSaga';
 
-export default (rootReducer: Reducer) => {
+export default function configureStore(rootReducer: Reducer, preloadedState = {}) {
   const devMode = process.env.NODE_ENV !== 'production';
 
   const sagaMiddleware = createSagaMiddleware();
@@ -26,6 +25,7 @@ export default (rootReducer: Reducer) => {
 
   const store = createStore(
     rootReducer,
+    preloadedState,
     devMode
       ? composeWithDevTools(middleWareEnhancer)
       : middleWareEnhancer,
@@ -34,4 +34,4 @@ export default (rootReducer: Reducer) => {
   sagaMiddleware.run(rootSaga);
 
   return store;
-};
+}
