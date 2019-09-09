@@ -4,7 +4,7 @@ import configureStore from './configureStore';
 import moviesReducer from './movies/reducers';
 import showsReducer from './shows/reducers';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   notifications: notificationsReducer,
   movies: moviesReducer,
   shows: showsReducer,
