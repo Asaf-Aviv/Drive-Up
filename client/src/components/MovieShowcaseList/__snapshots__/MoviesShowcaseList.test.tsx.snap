@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoviesShowcaseList component renders correctly 1`] = `
+"<Provider store={{...}}>
+  <MovieShowcaseList>
+    <main>
+      <WithStyles(ForwardRef(List))>
+        <ForwardRef(List) classes={{...}}>
+          <ul className=\\"MuiList-root MuiList-padding\\">
+            <span>
+              Loading...
+            </span>
+          </ul>
+        </ForwardRef(List)>
+      </WithStyles(ForwardRef(List))>
+    </main>
+  </MovieShowcaseList>
+</Provider>"
+`;
