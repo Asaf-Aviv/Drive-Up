@@ -1,13 +1,15 @@
 export interface ShowShowcase {
-  poster_path: string | null;
+  original_name: string;
+  genre_ids: number[];
+  name: string;
   popularity: number;
-  id: number;
+  origin_country: string[];
+  vote_count: number;
+  first_air_date: string;
   backdrop_path: string | null;
+  original_language: string;
+  id: number;
   vote_average: number;
   overview: string;
-  first_air_date: string;
-  original_language: string;
-  vote_count: number;
-  name: string;
-  original_name: string;
+  poster_path: string | null;
 }
