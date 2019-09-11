@@ -33,7 +33,8 @@ const ShowShowcaseList: React.FC = () => {
     <main>
       <List>
         {shows.map(renderShowsShowcase)}
-        {loading ? <span>Loading...</span> : <span ref={fetchNextPageTrigger} />}
+        {!error && !loading && <span ref={fetchNextPageTrigger} />}
+        {loading && <span>Loading...</span>}
         {error && <RetryButton onClick={fetchNextShowsPage} />}
       </List>
     </main>
