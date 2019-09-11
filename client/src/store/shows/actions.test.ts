@@ -7,13 +7,13 @@ import {
 } from './actions';
 
 describe('shows actions', () => {
-  it('should create an action to request shows with default page of 1', () => {
+  it('should create an action to request shows', () => {
     const expectedAction = {
       type: 'REQUEST_SHOWS',
       page: 1,
     };
 
-    expect(requestShows()).toEqual(expectedAction);
+    expect(requestShows(1)).toEqual(expectedAction);
   });
 
   it('should create an action to request shows with page based of parameter', () => {
