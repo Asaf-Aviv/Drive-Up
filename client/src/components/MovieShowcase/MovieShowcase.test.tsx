@@ -1,4 +1,5 @@
-import { mount } from 'enzyme';
+import React from 'react';
+import { mount, shallow } from 'enzyme';
 import MovieShowcase from './MovieShowcase';
 import { MovieShowcase as IMovieShowcase } from '../../store/movies/interfaces';
 import { renderWithProviders } from '../../test-utils';
@@ -22,7 +23,7 @@ const movie: IMovieShowcase = {
 
 describe('MovieShowcase component', () => {
   it('renders correctly', () => {
-    const wrapper = mount(renderWithProviders(MovieShowcase, movie));
+    const wrapper = shallow(<MovieShowcase {...movie} />);
     expect(wrapper.debug()).toMatchSnapshot();
   });
 
