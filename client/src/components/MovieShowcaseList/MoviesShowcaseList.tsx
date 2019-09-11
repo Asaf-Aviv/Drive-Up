@@ -6,7 +6,7 @@ import { requestMovies } from '../../store/movies/actions';
 import { useOnVisibilityTrigger } from '../../hooks/useOnVisibilityTrigger';
 import MovieShowcase from '../MovieShowcase/MovieShowcase';
 import { MovieShowcase as IMovieShowcase } from '../../store/movies/interfaces';
-import RetryButton from '../RetryButton/RetryButton';
+import RetryButton from '../RetryButton';
 
 const MovieShowcaseList: React.FC = () => {
   const {
@@ -33,7 +33,8 @@ const MovieShowcaseList: React.FC = () => {
     <main>
       <List>
         {movies.map(renderMovieShowcase)}
-        {loading ? <span>Loading...</span> : <span ref={fetchNextPageTrigger} />}
+        {!error && !loading && <span ref={fetchNextPageTrigger} />}
+        {loading && <span>Loading...</span>}
         {error && <RetryButton onClick={fetchNextMoviesPage} />}
       </List>
     </main>
