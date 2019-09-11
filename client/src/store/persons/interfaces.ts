@@ -14,3 +14,11 @@ export interface Person {
   imdb_id: string;
   homepage: string | null;
 }
+
+export interface PersonSummary {
+  profile_path: string;
+  adult: boolean;
+  id: number;
+  name: string;
+  popularity: number;
+}
