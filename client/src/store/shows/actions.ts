@@ -26,7 +26,7 @@ export type ShowsActionTypes =
   | FetchShowsSuccessAction
   | FetchShowsError
 
-export const requestShows = (page = 1): ShowsActionTypes => ({
+export const requestShows = (page: number): ShowsActionTypes => ({
   type: ShowsTypes.REQUEST_SHOWS,
   page,
 });

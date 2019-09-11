@@ -15,7 +15,7 @@ export const initialState: ShowsState = {
   shows: [],
   loading: false,
   error: false,
-  page: 1,
+  page: 0,
   pagesCount: 0,
   moviesCount: 0,
 };
