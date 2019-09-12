@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ShowShowcase } from '../store/shows/interfaces';
 import { MovieShowcase } from '../store/movies/interfaces';
-import { Person } from '../store/people/interfaces';
+import { Person, PersonSummary } from '../store/persons/interfaces';
 
 export interface BaseResponse<T> {
   data: {
@@ -34,8 +34,15 @@ class TheMovieDB {
       },
     });
 
+  fetchPersons = (page: number) =>
+    this.fetcher.get<BaseResponse<PersonSummary>>('/person/popular', {
+      params: {
+        page,
+      },
+    });
+
   fetchPerson = (personId: string) =>
-    this.fetcher.get<Person>(`/persons/${personId}`);
+    this.fetcher.get<Person>(`/person/${personId}`);
 }
 
 const TMDB = new TheMovieDB();
