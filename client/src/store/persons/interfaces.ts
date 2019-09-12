@@ -21,4 +21,6 @@ export interface PersonSummary {
   id: number;
   name: string;
   popularity: number;
+  known_for_department: string;
+  gender: 0 | 1 | 2;
 }
