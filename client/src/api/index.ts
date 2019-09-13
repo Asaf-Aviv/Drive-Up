@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { ShowShowcase } from '../store/shows/interfaces';
 import { MovieShowcase } from '../store/movies/interfaces';
-import { Person, PersonSummary } from '../store/persons/interfaces';
+import { PersonSummary } from '../store/persons/interfaces';
+import { Person } from '../store/personsByIds/interfaces';
 
 export interface BaseResponse<T> {
   data: {
@@ -21,11 +22,14 @@ class TheMovieDB {
   });
 
   fetchMovies = (page: number) =>
-    this.fetcher.get<BaseResponse<MovieShowcase>>('/discover/movie', {
+    this.fetcher.get<BaseResponse<MovieShowcase>>('/movie', {
       params: {
         page,
       },
     });
+
+  fetchMovieById = (movieId: number) =>
+    this.fetcher.get<BaseResponse<MovieShowcase>>(`/movie/${movieId}`);
 
   fetchShows = (page: number) =>
     this.fetcher.get<BaseResponse<ShowShowcase>>('/discover/tv', {
@@ -34,6 +38,9 @@ class TheMovieDB {
       },
     });
 
+  fetchShowById = (showId: number) =>
+    this.fetcher.get<BaseResponse<ShowShowcase>>(`/show/${showId}`);
+
   fetchPersons = (page: number) =>
     this.fetcher.get<BaseResponse<PersonSummary>>('/person/popular', {
       params: {
@@ -41,7 +48,7 @@ class TheMovieDB {
       },
     });
 
-  fetchPerson = (personId: string) =>
+  fetchPersonById = (personId: number) =>
     this.fetcher.get<Person>(`/person/${personId}`);
 }
 
