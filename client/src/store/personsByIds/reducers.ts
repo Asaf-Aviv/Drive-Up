@@ -16,7 +16,7 @@ export const initialState: PersonsByIdsState = {
   error: false,
 };
 
-export default function moviesByIdsReducer(
+export default function personsByIdsReducer(
   state = initialState,
   action: PersonsByIdActionTypes
 ): PersonsByIdsState {
