@@ -1,17 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Box,
-  Paper,
-  Theme,
-  Typography,
-} from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/styles';
+import { Box, Paper, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { MovieShowcase as IMovieShowcase } from '../../store/movies/interfaces';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
   paper: {
-    marginBottom: theme.spacing(3),
+    marginBottom: 24,
   },
   link: {
     textDecoration: 'none',
@@ -23,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     margin: '0 auto',
     fontSize: '0.9em',
   },
-}));
+});
 
 const MovieShowcase: React.FC<IMovieShowcase> = ({
   id,

@@ -16,6 +16,8 @@ const PersonsList: React.FC = () => {
   const fetchNextPageTrigger = useRef<HTMLElement>(null);
 
   const fetchNextPersonsPage = () => {
+    if (persons.length) return;
+
     dispatch(requestPersons(page + 1));
   };
 

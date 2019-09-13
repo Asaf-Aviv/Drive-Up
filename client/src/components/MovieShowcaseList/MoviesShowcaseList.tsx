@@ -16,6 +16,8 @@ const MovieShowcaseList: React.FC = () => {
   const fetchNextPageTrigger = useRef<HTMLElement>(null);
 
   const fetchNextMoviesPage = () => {
+    if (movies.length) return;
+
     dispatch(requestMovies(page + 1));
   };
 

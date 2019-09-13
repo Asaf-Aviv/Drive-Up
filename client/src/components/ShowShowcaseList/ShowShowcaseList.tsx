@@ -16,6 +16,8 @@ const ShowShowcaseList: React.FC = () => {
   const fetchNextPageTrigger = useRef<HTMLElement>(null);
 
   const fetchNextShowsPage = () => {
+    if (shows.length) return;
+
     dispatch(requestShows(page + 1));
   };
 
