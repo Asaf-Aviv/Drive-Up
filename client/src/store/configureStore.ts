@@ -4,7 +4,6 @@ import {
   Middleware,
   Reducer,
 } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -15,11 +14,11 @@ export default function configureStore(rootReducer: Reducer, preloadedState = {}
 
   const sagaMiddleware = createSagaMiddleware();
 
-  const middlewares: Middleware[] = [sagaMiddleware, thunkMiddleware];
+  const middlewares: Middleware[] = [sagaMiddleware];
 
-  if (devMode) {
-    middlewares.push(logger);
-  }
+  // if (devMode) {
+  //   middlewares.push(logger);
+  // }
 
   const middleWareEnhancer = applyMiddleware(...middlewares);
 
