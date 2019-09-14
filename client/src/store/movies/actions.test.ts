@@ -44,3 +44,5 @@ describe('movies actions', () => {
     expect(fetchMoviesError()).toEqual(expectedAction);
   });
 });
+
+export {};

@@ -11,7 +11,7 @@ import TMDB, { BaseResponse } from '../../../api';
 import { MovieShowcase } from '../interfaces';
 
 describe('fetchMovies Saga', () => {
-  it('should fetch movies', () => {
+  it('should fetch movies and dispatch FETCH_MOVIES_SUCCESS action', () => {
     const action = requestMovies(1) as RequestMoviesAction;
     const gen = fetchMovies(action);
 
