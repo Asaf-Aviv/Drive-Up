@@ -17,10 +17,10 @@ import { Movie } from '../interfaces';
 
 const put = <A extends MoviesByIdActionTypes>(action: A): PutEffect<A> => untypedPut(action);
 
-export function* fetchMovieById({ id }: RequestMovieByIdAction) {
+export function* fetchMovieById({ movieId }: RequestMovieByIdAction) {
   try {
     yield put(fetchMovieByIdStart());
-    const res = yield call(TMDB.fetchMovieById, id);
+    const res = yield call(TMDB.fetchMovieById, movieId);
     const movie = res.data as Movie;
     yield put(fetchMovieByIdSuccess(movie));
   } catch (error) {

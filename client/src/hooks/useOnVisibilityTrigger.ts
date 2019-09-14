@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 export function useOnVisibilityTrigger(ref: React.RefObject<HTMLElement>, callback: () => void) {
   useEffect(() => {
     let observer: IntersectionObserver;
-    // capture ref.current because rec.current might
+    // capture ref.current because ref.current might
     // change before the cleanup function runs
     let currentRef: HTMLElement | null = null;
 

@@ -3,7 +3,7 @@ import { Movie } from './interfaces';
 
 export interface RequestMovieByIdAction {
   type: typeof MoviesByIdsTypes.REQUEST_MOVIE_BY_ID;
-  id: number;
+  movieId: number;
 }
 
 interface FetchMovieByIdStartAction {
@@ -25,9 +25,9 @@ export type MoviesByIdActionTypes =
   | FetchMovieByIdSuccessAction
   | FetchMovieByIdErrorAction
 
-export const requestMovieById = (id: number): MoviesByIdActionTypes => ({
+export const requestMovieById = (movieId: number): MoviesByIdActionTypes => ({
   type: MoviesByIdsTypes.REQUEST_MOVIE_BY_ID,
-  id,
+  movieId,
 });
 
 export const fetchMovieByIdStart = (): MoviesByIdActionTypes => ({

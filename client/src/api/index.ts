@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { Show } from '../store/showsByIds/interfaces';
+import { Movie } from '../store/moviesByIds/interfaces';
 import { ShowShowcase } from '../store/shows/interfaces';
 import { MovieShowcase } from '../store/movies/interfaces';
 import { PersonSummary } from '../store/persons/interfaces';
@@ -29,7 +31,7 @@ class TheMovieDB {
     });
 
   fetchMovieById = (movieId: number) =>
-    this.fetcher.get<BaseResponse<MovieShowcase>>(`/movie/${movieId}`);
+    this.fetcher.get<Movie>(`/movie/${movieId}`);
 
   fetchShows = (page: number) =>
     this.fetcher.get<BaseResponse<ShowShowcase>>('/discover/tv', {
@@ -39,7 +41,7 @@ class TheMovieDB {
     });
 
   fetchShowById = (showId: number) =>
-    this.fetcher.get<BaseResponse<ShowShowcase>>(`/show/${showId}`);
+    this.fetcher.get<Show>(`/show/${showId}`);
 
   fetchPersons = (page: number) =>
     this.fetcher.get<BaseResponse<PersonSummary>>('/person/popular', {
