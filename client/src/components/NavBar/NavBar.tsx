@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
+import Container from '../Container';
 
 interface LinkProps {
   to: string;
@@ -12,19 +13,32 @@ interface LinkProps {
 }
 
 const links: LinkProps[] = [
+  { to: '/', text: 'Home' },
   { to: '/movies', text: 'Movies' },
   { to: '/shows', text: 'Shows' },
   { to: '/persons', text: 'Persons' },
-  { to: '/Companies', text: 'Companies' },
+  { to: '/companies', text: 'Companies' },
 ];
 
 const useStyles = makeStyles({
   link: {
     color: 'inherit',
-    marginRight: '1em',
+    marginRight: 24,
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none',
+    },
+    '& .MuiTypography-h6': {
+      fontSize: 16,
+    },
+  },
+  linkMenu: {
+    '& .MuiList-root': {
+      padding: 0,
+      top: 65,
+    },
+    '& .MuiPaper-root': {
+      overflow: 'hidden',
     },
   },
 });
@@ -42,9 +56,11 @@ const NavBar = () => {
 
   return (
     <AppBar position="fixed" color="default">
-      <Toolbar>
-        {links.map(renderLinks)}
-      </Toolbar>
+      <Container>
+        <Toolbar>
+          {links.map(renderLinks)}
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
