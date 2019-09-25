@@ -3,8 +3,8 @@ import { MoviesTypes } from './constants';
 
 export type RelatedFields = 'similar' | 'recommendations';
 
-export interface GeneralResult {
-  results: MovieShowcase[];
+export interface GeneralResult<T> {
+  results: T;
   page: number;
   total_results: number;
   total_pages: number;
@@ -22,7 +22,7 @@ interface FetchMoviesByQueryStartAction {
 
 interface FetchMoviesByQuerySuccessAction {
   type: typeof MoviesTypes.FETCH_MOVIES_BY_QUERY_SUCCESS;
-  payload: GeneralResult;
+  payload: GeneralResult<MovieShowcase[]>;
 }
 
 interface FetchMoviesByQueryErrorAction {
@@ -68,7 +68,7 @@ interface FetchRelatedMoviesSuccessAction {
   type: typeof MoviesTypes.FETCH_RELATED_MOVIES_SUCCESS;
   movieId: number;
   relatedField: RelatedFields;
-  payload: GeneralResult;
+  payload: GeneralResult<MovieShowcase[]>;
 }
 
 interface FetchRelatedMoviesErrorAction {
@@ -91,7 +91,7 @@ interface FetchMoviesByCategoryStartAction {
 interface FetchMoviesByCategorySuccessAction {
   type: typeof MoviesTypes.FETCH_MOVIES_BY_CATEGORY_SUCCESS;
   category: string;
-  payload: GeneralResult;
+  payload: GeneralResult<MovieShowcase[]>;
 }
 
 interface FetchMoviesByCategoryErrorAction {
@@ -129,7 +129,7 @@ export const fetchMoviesByQueryStart = (): MoviesActionTypes => ({
 });
 
 export const fetchMoviesByQueryByIdSuccess = (
-  payload: GeneralResult
+  payload: GeneralResult<MovieShowcase[]>
 ): MoviesActionTypes => ({
   type: MoviesTypes.FETCH_MOVIES_BY_QUERY_SUCCESS,
   payload,
@@ -184,7 +184,7 @@ export const fetchRelatedMoviesStart = (
 export const fetchRelatedMoviesSuccess = (
   movieId: number,
   relatedField: RelatedFields,
-  payload: GeneralResult,
+  payload: GeneralResult<MovieShowcase[]>,
 ): MoviesActionTypes => ({
   type: MoviesTypes.FETCH_RELATED_MOVIES_SUCCESS,
   movieId,
@@ -217,7 +217,7 @@ export const fetchMoviesByCategoryStart = (category: string): MoviesActionTypes 
 
 export const fetchMoviesByCategorySuccess = (
   category: string,
-  payload: GeneralResult,
+  payload: GeneralResult<MovieShowcase[]>,
 ): MoviesActionTypes => ({
   type: MoviesTypes.FETCH_MOVIES_BY_CATEGORY_SUCCESS,
   category,

@@ -2,7 +2,7 @@ import { MoviesTypes } from './constants';
 import { MoviesActionTypes } from './actions';
 import { Movie, Results, MovieShowcase } from './interfaces';
 
-interface LoadingStates {
+export interface LoadingStates {
   loading: boolean;
   error: boolean;
 }
@@ -19,7 +19,7 @@ interface MoviesByIdsState {
     loading: boolean;
     error: boolean;
   };
-  category: {
+  byCategory: {
     [key: string]: Results<MovieShowcase[]> & LoadingStates;
     popular: Results<MovieShowcase[]> & LoadingStates;
     topRated: Results<MovieShowcase[]> & LoadingStates;
@@ -34,7 +34,7 @@ const loadingAndError = {
   error: false,
 };
 
-const searchState = {
+export const searchState = {
   results: [],
   page: 0,
   total_pages: 0,
@@ -45,7 +45,7 @@ const searchState = {
 export const initialState: MoviesByIdsState = {
   byQuery: searchState,
   byId: loadingAndError,
-  category: {
+  byCategory: {
     popular: searchState,
     topRated: searchState,
     latest: searchState,
@@ -195,10 +195,10 @@ export default function moviesByIdsReducer(
     case MoviesTypes.FETCH_MOVIES_BY_CATEGORY_START:
       return {
         ...state,
-        category: {
-          ...state.category,
+        byCategory: {
+          ...state.byCategory,
           [action.category]: {
-            ...state.category[action.category],
+            ...state.byCategory[action.category],
             loading: true,
             error: false,
           },
@@ -213,12 +213,12 @@ export default function moviesByIdsReducer(
 
       return {
         ...state,
-        category: {
-          ...state.category,
+        byCategory: {
+          ...state.byCategory,
           [category]: {
-            ...state.category[category],
+            ...state.byCategory[category],
             results: [
-              ...state.category[category].results,
+              ...state.byCategory[category].results,
               ...results,
             ],
             page,
@@ -233,10 +233,10 @@ export default function moviesByIdsReducer(
     case MoviesTypes.FETCH_MOVIES_BY_CATEGORY_ERROR:
       return {
         ...state,
-        category: {
-          ...state.category,
+        byCategory: {
+          ...state.byCategory,
           [action.category]: {
-            ...state.category[action.category],
+            ...state.byCategory[action.category],
             loading: false,
             error: true,
           },
