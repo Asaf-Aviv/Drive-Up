@@ -1,4 +1,10 @@
-import { Company, Genre } from '../movies/interfaces';
+import {
+  Company,
+  Genre,
+  Image,
+  Video,
+  Results,
+} from '../movies/interfaces';
 
 export interface ShowShowcase {
   original_name: string;
@@ -36,6 +42,15 @@ export interface Show {
   networks: Company[];
   number_of_episodes: number;
   number_of_seasons: number;
+  images: {
+    posters: Image[];
+    backdrops: Image[];
+  };
+  similar: Results<ShowShowcase[]>;
+  recommendations: Results<ShowShowcase[]>;
+  videos: {
+    results: Video[];
+  };
   overview: string;
   popularity: number;
   poster_path: string;

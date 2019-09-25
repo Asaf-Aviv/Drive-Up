@@ -3,6 +3,7 @@ import {
   takeLatest,
   call,
   PutEffect,
+  takeEvery,
 } from 'redux-saga/effects';
 import {
   fetchShowByIdStart,
@@ -18,6 +19,10 @@ import {
   fetchShowsByQueryStart,
   fetchShowsByQueryError,
   fetchShowsByQueryByIdSuccess,
+  RequestRelatedShowsAction,
+  fetchRelatedShowsStart,
+  fetchRelatedShowsSuccess,
+  fetchRelatedShowsError,
 } from './actions';
 import { ShowsTypes } from './constants';
 import TMDB from '../../api';
@@ -61,8 +66,22 @@ export function* fetchShowById({ showId }: RequestShowByIdAction) {
   }
 }
 
+export function* fetchRelatedShows(action: RequestRelatedShowsAction) {
+  const { showId, relatedField, page } = action;
+
+  yield put(fetchRelatedShowsStart(showId, relatedField));
+
+  try {
+    const res = yield call(TMDB.fetchRelatedShows, showId, relatedField, page);
+    yield put(fetchRelatedShowsSuccess(showId, relatedField, res.data));
+  } catch (err) {
+    yield put(fetchRelatedShowsError(showId, relatedField));
+  }
+}
+
 export function* requestShowsWatcher() {
   yield takeLatest(ShowsTypes.REQUEST_SHOWS_BY_QUERY, fetchShowsByQuery);
-  yield takeLatest(ShowsTypes.REQUEST_SHOWS_BY_CATEGORY, fetchShowsByCategory);
+  yield takeEvery(ShowsTypes.REQUEST_SHOWS_BY_CATEGORY, fetchShowsByCategory);
   yield takeLatest(ShowsTypes.REQUEST_SHOW_BY_ID, fetchShowById);
+  yield takeEvery(ShowsTypes.REQUEST_RELATED_SHOWS, fetchRelatedShows);
 }

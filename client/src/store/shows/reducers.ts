@@ -2,12 +2,12 @@ import { ShowsTypes } from './constants';
 import { ShowsActionTypes } from './actions';
 import { ShowShowcase, Show } from './interfaces';
 import { Results } from '../movies/interfaces';
-import { LoadingStates, searchState } from '../movies/reducers';
+import { LoadingStates, searchState, RelatedFieldsLoadingStates } from '../movies/reducers';
 
 interface ShowsState {
   byQuery: Results<ShowShowcase[]> & LoadingStates;
   byId: {
-    [showId: number]: Show;
+    [showId: number]: Show & RelatedFieldsLoadingStates;
     loading: boolean;
     error: boolean;
   };
@@ -19,6 +19,11 @@ interface ShowsState {
     airing_today: Results<ShowShowcase[]> & LoadingStates;
   };
 }
+
+const loadingAndError = {
+  loading: false,
+  error: false,
+};
 
 export const initialState: ShowsState = {
   byQuery: searchState,
@@ -96,9 +101,12 @@ export default function showsReducer(
         ...state,
         byId: {
           ...state.byId,
-          [action.show.id]: action.show,
-          loading: false,
-          error: false,
+          ...loadingAndError,
+          [action.show.id]: {
+            ...action.show,
+            similar: Object.assign(action.show.similar, loadingAndError),
+            recommendations: Object.assign(action.show.recommendations, loadingAndError),
+          },
         },
       };
     case ShowsTypes.FETCH_SHOW_BY_ID_ERROR:
@@ -108,6 +116,66 @@ export default function showsReducer(
           ...state.byId,
           loading: false,
           error: true,
+        },
+      };
+    case ShowsTypes.FETCH_RELATED_SHOWS_START: {
+      const field = action.relatedField;
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.showId]: {
+            ...state.byId[action.showId],
+            [field]: {
+              ...state.byId[action.showId][field],
+              loading: true,
+              error: false,
+            },
+          },
+        },
+      };
+    }
+    case ShowsTypes.FETCH_RELATED_SHOWS_SUCCESS: {
+      const {
+        page, results, total_pages, total_results,
+      } = action.payload;
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.showId]: {
+            ...state.byId[action.showId],
+            [action.relatedField as 'similar']: {
+              ...state.byId[action.showId][action.relatedField],
+              results: [
+                ...state.byId[action.showId][action.relatedField].results,
+                ...results,
+              ],
+              loading: false,
+              error: false,
+              page,
+              total_results,
+              total_pages,
+            },
+          },
+        },
+      };
+    }
+    case ShowsTypes.FETCH_RELATED_SHOWS_ERROR:
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.showId]: {
+            ...state.byId[action.showId],
+            [action.relatedField as 'similar']: {
+              ...state.byId[action.showId][action.relatedField],
+              loading: false,
+              error: true,
+            },
+          },
         },
       };
     case ShowsTypes.FETCH_SHOWS_BY_CATEGORY_START:
