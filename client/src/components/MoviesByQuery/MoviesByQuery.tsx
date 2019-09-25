@@ -26,7 +26,7 @@ const MoviesByQuery: React.FC<RouteComponentProps> = ({
   useEffect(() => {
     dispatch(clearMoviesByQuery());
     dispatch(requestMoviesByQuery(getParams(), 1));
-  }, [dispatch, getParams, search]);
+  }, [dispatch, getParams]);
 
   const fetchNextMoviesPage = () => {
     dispatch(requestMoviesByQuery(getParams(), page + 1));

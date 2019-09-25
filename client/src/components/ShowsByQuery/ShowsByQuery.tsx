@@ -26,7 +26,7 @@ const ShowsByQuery: React.FC<RouteComponentProps> = ({
   useEffect(() => {
     dispatch(clearShowsByQuery());
     dispatch(requestShowsByQuery(getParams(), 1));
-  }, [dispatch, getParams, search]);
+  }, [dispatch, getParams]);
 
   const fetchNextMoviesPage = () => {
     dispatch(requestShowsByQuery(getParams(), page + 1));
