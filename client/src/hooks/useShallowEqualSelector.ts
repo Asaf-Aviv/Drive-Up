@@ -1,4 +1,7 @@
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { RootState } from '../store/index';
 
-export default <TR>(selector: (state: RootState) => TR) => useSelector(selector, shallowEqual);
+const useShallowEqualSelector: TypedUseSelectorHook<RootState> = selector =>
+  useSelector(selector, shallowEqual);
+
+export default useShallowEqualSelector;
