@@ -5,48 +5,46 @@ import {
   Typography,
   Box,
   Link,
-  Tabs,
-  Tab,
-  List,
-  ListItem,
+  Container,
 } from '@material-ui/core';
 import Gallery from 'react-photo-gallery';
-import { requestMovieById } from '../../store/moviesByIds/actions';
+import { requestMovieById, requestRelatedMovies } from '../../store/movies/actions';
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector';
 import { minutesConverter } from '../../utils';
-import Container from '../Container';
-import MovieOverview from '../MovieOverview';
-import MovieShowcase from '../MovieShowcase';
 import useStyles from './styles';
 import TMDB from '../../api';
+import TabsPanel from '../TabsPanel';
+import Videos from '../Videos/Videos';
+import Overview from '../Overview';
+import Companies from '../Companies';
+import MoviesList from '../MoviesList';
 
 interface Params {
   movieId: string;
 }
 
 const Movie: React.FC<RouteComponentProps<Params>> = ({
-  match: {
-    params: { movieId },
-  },
+  match: { params: { movieId } },
 }) => {
-  const { movies, loading, error } = useShallowEqualSelector(
-    state => state.moviesByIds
+  const { byId: movies, byId: { loading, error } } = useShallowEqualSelector(
+    state => state.movies
   );
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
 
-  const movie = movies[movieId];
+  const movie = movies[+movieId];
 
   useEffect(() => {
     setTabIndex(0);
   }, [movieId]);
 
   useEffect(() => {
-    if (!movie && !loading && !error) {
-      dispatch(requestMovieById(movieId));
+    if (!movie) {
+      dispatch(requestMovieById(+movieId));
     }
-  }, [dispatch, error, loading, movie, movieId]);
+  }, [dispatch, movie, movieId]);
 
   if (loading) return <span>Loading</span>;
 
@@ -74,7 +72,7 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
 
   return (
     <main>
-      <Container paddingTop>
+      <Container>
         <Typography className={classes.title} variant="h3" component="h1">
           {title}
         </Typography>
@@ -100,65 +98,69 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
             <Box component="span">{`Revenue: $${revenue.toLocaleString()}`}</Box>
           )}
         </Box>
-        <Tabs
-          className={classes.tabsContainer}
-          value={tabIndex}
-          onChange={(e, newTabIndex) => setTabIndex(newTabIndex)}
-          textColor="secondary"
-          centered
-        >
-          <Tab label="Overview" />
-          <Tab label="Similar" />
-          <Tab label="Recommended" />
-          <Tab label="Images" />
-          <Tab label="Videos" />
-        </Tabs>
+        <TabsPanel
+          tabs={['Overview', 'Similar', 'Recommended', 'Images', 'Videos']}
+          activeTabIndex={tabIndex}
+          setNextTab={setTabIndex}
+        />
       </Container>
       <Typography component="div" hidden={tabIndex !== 0}>
-        <MovieOverview
+        <Overview
           backdrop_path={backdrop_path}
           title={title}
           genres={genres}
           overview={overview}
-          series={series}
-          companies={companies}
         />
+        {series && (
+          <Container>
+            <Box marginBottom={6}>
+              <Typography variant="h4">{series.name}</Typography>
+              <Box flex={1} borderRadius={6} overflow="hidden" boxShadow={10}>
+                <img
+                  className={classes.movieImage}
+                  src={`https://image.tmdb.org/t/p/original/${series.backdrop_path}`}
+                  alt={series.name}
+                  title={series.name}
+                />
+              </Box>
+            </Box>
+          </Container>
+        )}
+        <Companies companies={companies} />
       </Typography>
       <Typography component="div" hidden={tabIndex !== 1}>
         <Container>
-          <Typography
-            align="right"
-            color="textSecondary"
-          >
+          <Typography align="right" color="textSecondary">
             <em>{`Showing ${similar.results.length} of ${similar.total_results} Results`}</em>
           </Typography>
-          <List className={classes.movieList}>
-            {similar.results.map(similarMovie => (
-              <ListItem key={similarMovie.id} disableGutters>
-                <MovieShowcase {...similarMovie} />
-              </ListItem>
-            ))}
-          </List>
+          <MoviesList
+            movies={similar.results}
+            fetchNextPage={() => dispatch(
+              requestRelatedMovies(movie.id, 'similar', similar.page + 1)
+            )}
+            loading={similar.loading}
+            error={similar.error}
+            isLastPage={similar.page === similar.total_pages}
+          />
         </Container>
       </Typography>
       <Typography component="div" hidden={tabIndex !== 2}>
         <Container>
-          <Typography
-            align="right"
-            color="textSecondary"
-          >
+          <Typography align="right" color="textSecondary">
             <em>
               {`Showing ${recommendations.results.length} 
               of ${recommendations.total_results} Results`}
             </em>
           </Typography>
-          <List className={classes.movieList}>
-            {recommendations.results.map(recommended => (
-              <ListItem key={recommended.id} disableGutters>
-                <MovieShowcase {...recommended} />
-              </ListItem>
-            ))}
-          </List>
+          <MoviesList
+            movies={recommendations.results}
+            fetchNextPage={() => dispatch(
+              requestRelatedMovies(movie.id, 'recommendations', recommendations.page + 1)
+            )}
+            loading={recommendations.loading}
+            error={recommendations.error}
+            isLastPage={recommendations.page === recommendations.total_pages}
+          />
         </Container>
       </Typography>
       <Typography component="div" hidden={tabIndex !== 3}>
@@ -176,19 +178,7 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
         />
       </Typography>
       <Typography component="div" hidden={tabIndex !== 4}>
-        <Container>
-          <Box className={classes.videosContainer}>
-            {videos.results.map(video => (
-              <Box boxShadow={10} key={video.id}>
-                <iframe
-                  title={video.name}
-                  allowFullScreen
-                  src={`https://www.youtube.com/embed/${video.key}`}
-                />
-              </Box>
-            ))}
-          </Box>
-        </Container>
+        <Videos videos={videos.results} />
       </Typography>
     </main>
   );
