@@ -41,10 +41,10 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
   }, [movieId]);
 
   useEffect(() => {
-    if (!movie) {
-      dispatch(requestMovieById(+movieId));
+    if (!movie && !loading && !error) {
+      dispatch(requestMovieById(movieId));
     }
-  }, [dispatch, movie, movieId]);
+  }, [dispatch, error, loading, movie, movieId]);
 
   if (loading) return <span>Loading</span>;
 
@@ -104,84 +104,91 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
           setNextTab={setTabIndex}
         />
       </Container>
-      <Typography component="div" hidden={tabIndex !== 0}>
-        <Overview
-          backdrop_path={backdrop_path}
-          title={title}
-          genres={genres}
-          overview={overview}
-        />
-        {series && (
-          <Container>
-            <Box marginBottom={6}>
-              <Typography variant="h4">{series.name}</Typography>
-              <Box flex={1} borderRadius={6} overflow="hidden" boxShadow={10}>
-                <img
-                  className={classes.movieImage}
-                  src={`https://image.tmdb.org/t/p/original/${series.backdrop_path}`}
-                  alt={series.name}
-                  title={series.name}
-                />
+      {tabIndex === 0 && (
+        <>
+          <Overview
+            backdrop_path={backdrop_path}
+            title={title}
+            genres={genres}
+            overview={overview}
+          />
+          {series && (
+            <Container>
+              <Box marginBottom={6}>
+                <Typography variant="h4">{series.name}</Typography>
+                <Box flex={1} borderRadius={6} overflow="hidden" boxShadow={10}>
+                  <img
+                    className={classes.movieImage}
+                    src={`https://image.tmdb.org/t/p/original/${series.backdrop_path}`}
+                    alt={series.name}
+                    title={series.name}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </Container>
+          )}
+          <Companies companies={companies} />
+        </>
+      )}
+      {tabIndex === 1 && (
+        <>
+          <Container>
+            <Typography align="right" color="textSecondary">
+              <em>{`Showing ${similar.results.length} of ${similar.total_results} Results`}</em>
+            </Typography>
+            <MoviesList
+              movies={similar.results}
+              fetchNextPage={() => dispatch(
+                requestRelatedMovies(movie.id, 'similar', similar.page + 1)
+              )}
+              loading={similar.loading}
+              error={similar.error}
+              isLastPage={similar.page === similar.total_pages}
+            />
           </Container>
-        )}
-        <Companies companies={companies} />
-      </Typography>
-      <Typography component="div" hidden={tabIndex !== 1}>
-        <Container>
-          <Typography align="right" color="textSecondary">
-            <em>{`Showing ${similar.results.length} of ${similar.total_results} Results`}</em>
-          </Typography>
-          <MoviesList
-            movies={similar.results}
-            fetchNextPage={() => dispatch(
-              requestRelatedMovies(movie.id, 'similar', similar.page + 1)
-            )}
-            loading={similar.loading}
-            error={similar.error}
-            isLastPage={similar.page === similar.total_pages}
+        </>
+      )}
+      {tabIndex === 2 && (
+        <>
+          <Container>
+            <Typography align="right" color="textSecondary">
+              <em>
+                {`Showing ${recommendations.results.length} 
+                of ${recommendations.total_results} Results`}
+              </em>
+            </Typography>
+            <MoviesList
+              movies={recommendations.results}
+              fetchNextPage={() => dispatch(
+                requestRelatedMovies(movie.id, 'recommendations', recommendations.page + 1)
+              )}
+              loading={recommendations.loading}
+              error={recommendations.error}
+              isLastPage={recommendations.page === recommendations.total_pages}
+            />
+          </Container>
+        </>
+      )}
+      {tabIndex === 3 && (
+        <>
+          <Gallery
+            photos={images.backdrops.map(i => ({
+              ...i,
+              src: `${TMDB.imgURL}/original/${i.file_path}`,
+            }))}
           />
-        </Container>
-      </Typography>
-      <Typography component="div" hidden={tabIndex !== 2}>
-        <Container>
-          <Typography align="right" color="textSecondary">
-            <em>
-              {`Showing ${recommendations.results.length} 
-              of ${recommendations.total_results} Results`}
-            </em>
-          </Typography>
-          <MoviesList
-            movies={recommendations.results}
-            fetchNextPage={() => dispatch(
-              requestRelatedMovies(movie.id, 'recommendations', recommendations.page + 1)
-            )}
-            loading={recommendations.loading}
-            error={recommendations.error}
-            isLastPage={recommendations.page === recommendations.total_pages}
+          <Gallery
+            photos={images.posters.map(i => ({
+              ...i,
+              src: `${TMDB.imgURL}/original/${i.file_path}`,
+            }))}
           />
-        </Container>
-      </Typography>
-      <Typography component="div" hidden={tabIndex !== 3}>
-        <Gallery
-          photos={images.backdrops.map(i => ({
-            ...i,
-            src: `${TMDB.imgURL}/original/${i.file_path}`,
-          }))}
-        />
-        <Gallery
-          photos={images.posters.map(i => ({
-            ...i,
-            src: `${TMDB.imgURL}/original/${i.file_path}`,
-          }))}
-        />
-      </Typography>
-      <Typography component="div" hidden={tabIndex !== 4}>
-        <Videos videos={videos.results} />
-      </Typography>
+        </>
+      )}
+      {tabIndex === 4 && <Videos videos={videos.results} />}
     </main>
   );
 };
+
 
 export default Movie;

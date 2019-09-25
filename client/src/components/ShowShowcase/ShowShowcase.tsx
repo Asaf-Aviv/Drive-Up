@@ -33,10 +33,10 @@ const ShowShowcase: React.FC<IShowShowcase> = ({
   return (
     <Paper className={classes.paper} elevation={5}>
       <Box display="flex">
-        <Box display="inline-flex" flexBasis={154}>
+        <Box display="inline-flex" flexBasis={185}>
           <img
             style={{ alignSelf: 'flex-start' }}
-            src={`http://image.tmdb.org/t/p/w154/${poster_path}`}
+            src={`http://image.tmdb.org/t/p/w185/${poster_path}`}
             alt={name}
           />
         </Box>

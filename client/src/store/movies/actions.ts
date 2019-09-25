@@ -35,7 +35,7 @@ interface ClearMoviesByQueryErrorAction {
 
 export interface RequestMovieByIdAction {
   type: typeof MoviesTypes.REQUEST_MOVIE_BY_ID;
-  movieId: number;
+  movieId: string;
 }
 
 interface FetchMovieByIdStartAction {
@@ -143,7 +143,7 @@ export const clearMoviesByQuery = (): MoviesActionTypes => ({
   type: MoviesTypes.CLEAR_MOVIES_BY_QUERY,
 });
 
-export const requestMovieById = (movieId: number): MoviesActionTypes => ({
+export const requestMovieById = (movieId: string): MoviesActionTypes => ({
   type: MoviesTypes.REQUEST_MOVIE_BY_ID,
   movieId,
 });

@@ -42,6 +42,7 @@ module.exports = {
       'error', 
       2,
     ],
+    'react/jsx-props-no-spreading': 'off',
     'no-console': 'off',
     'implicit-arrow-linebreak': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -49,6 +50,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/jsx-filename-extension': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'jsx-a11y/mouse-events-have-key-events': 'off',
     'comma-dangle': [
       'error', 
       'always-multiline',
@@ -80,6 +82,7 @@ module.exports = {
     'space-in-parens': 'error',
     'arrow-body-style': 'error',
     'space-infix-ops': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-wrap-multilines': [
       'error',
       {

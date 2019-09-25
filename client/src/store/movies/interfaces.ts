@@ -1,5 +1,3 @@
-import { MovieShowcase } from '../movies/interfaces';
-
 export interface Results<T> {
   results: T;
   page: number;

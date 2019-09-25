@@ -30,7 +30,7 @@ const Overview: React.FC<Overview> = ({
           <Box flex={1} borderRadius={6} overflow="hidden" boxShadow={10}>
             <img
               className={classes.movieImage}
-              src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/w780/${backdrop_path}`}
               alt={title}
               title={title}
             />
@@ -38,9 +38,6 @@ const Overview: React.FC<Overview> = ({
           <Box className={classes.overviewContainer}>
             <Typography color="textSecondary" className={classes.overview}>{overview}</Typography>
             <Box>
-              <Box component="span" fontSize={16} display="block">
-                Genres:
-              </Box>
               <Box className={classes.genreGroup} marginTop={1}>
                 {genres.map(({ name }) => (
                   <Button color="secondary" variant="outlined" size="small" key={name}>

@@ -7,7 +7,7 @@ export interface LoadingStates {
   error: boolean;
 }
 
-interface RelatedFieldsLoadingStates {
+export interface RelatedFieldsLoadingStates {
   similar: LoadingStates;
   recommendations: LoadingStates;
 }
@@ -161,7 +161,7 @@ export default function moviesByIdsReducer(
           ...state.byId,
           [action.movieId]: {
             ...state.byId[action.movieId],
-            [action.relatedField]: {
+            [action.relatedField as 'similar']: {
               ...state.byId[action.movieId][action.relatedField],
               results: [
                 ...state.byId[action.movieId][action.relatedField].results,
@@ -184,7 +184,7 @@ export default function moviesByIdsReducer(
           ...state.byId,
           [action.movieId]: {
             ...state.byId[action.movieId],
-            [action.relatedField]: {
+            [action.relatedField as 'similar']: {
               ...state.byId[action.movieId][action.relatedField],
               loading: false,
               error: true,
