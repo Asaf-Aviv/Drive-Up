@@ -3,7 +3,7 @@ import rootSaga from './rootSaga';
 import { requestMoviesWatcher } from '../movies/sagas/fetchMovies';
 import { requestShowsWatcher } from '../shows/sagas/fetchShows';
 import { notificationsWatcher } from '../notifications/sagas/notificationsSaga';
-import { requestPersonsWatcher } from '../persons/sagas/fetchPersons';
+import { requestPersonsWatcher } from '../persons/sagas';
 import { requestMovieByIdWatcher } from '../moviesByIds/sagas/fetchMovieById';
 import { requestShowByIdWatcher } from '../showsByIds/sagas/fetchShowById';
 import { requestPersonByIdWatcher } from '../personsByIds/sagas/fetchPersonById';

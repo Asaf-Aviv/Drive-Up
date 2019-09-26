@@ -8,7 +8,7 @@ interface Params {
 
 interface WithRedirect extends RouteComponentProps<Params> {
   redirectURL: string;
-  reduxSelector: (arg: string) => any;
+  reduxSelector: (category: string) => any;
 }
 
 /**
@@ -17,13 +17,14 @@ interface WithRedirect extends RouteComponentProps<Params> {
  * can only be used to check [type].byCategory[category] exist in Redux
  */
 
-const withRedirect = (redirectURL: string, reduxSelector: (arg: string) => any) => (
+const withRedirect = (redirectURL: string, reduxSelector: (category: string) => any) => (
   WrappedComponent: React.ComponentType<any>
 ) => {
-  const WithRedirect: React.FC<WithRedirect> = ({ match: { params: { category } }, ...rest }) => {
-    console.log(rest);
-    const isValid = useShallowEqualSelector(reduxSelector(category));
-    return isValid ? <WrappedComponent category={category} /> : <Redirect to={redirectURL} />;
+  const WithRedirect: React.FC<WithRedirect> = ({ match: { params: { category } } }) => {
+    const hasCategoryInStore = useShallowEqualSelector(reduxSelector(category));
+    return hasCategoryInStore
+      ? <WrappedComponent category={category} />
+      : <Redirect to={redirectURL} />;
   };
 
   return WithRedirect;
