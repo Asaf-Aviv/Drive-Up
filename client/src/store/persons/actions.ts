@@ -1,49 +1,87 @@
 import { PersonsTypes } from './constants';
-import { PersonSummary } from './interfaces';
+import { PersonSummary, Person } from './interfaces';
+import { GeneralResult } from '../movies/actions';
 
-export interface RequestPersonsAction {
-  type: typeof PersonsTypes.REQUEST_PERSONS;
+export interface RequestPopularPersonsAction {
+  type: typeof PersonsTypes.REQUEST_POPULAR_PERSONS;
   page: number;
 }
 
-interface FetchPersonsStartAction {
-  type: typeof PersonsTypes.FETCH_PERSONS_START;
+interface FetchPopularPersonsStartAction {
+  type: typeof PersonsTypes.FETCH_POPULAR_PERSONS_START;
 }
 
-interface FetchPersonsSuccessAction {
-  type: typeof PersonsTypes.FETCH_PERSONS_SUCCESS;
-  persons: PersonSummary[];
-  page: number;
+interface FetchPopularPersonsSuccessAction {
+  type: typeof PersonsTypes.FETCH_POPULAR_PERSONS_SUCCESS;
+  payload: GeneralResult<PersonSummary[]>;
 }
 
-interface FetchPersonsErrorAction {
-  type: typeof PersonsTypes.FETCH_PERSONS_ERROR;
+interface FetchPopularPersonsErrorAction {
+  type: typeof PersonsTypes.FETCH_POPULAR_PERSONS_ERROR;
+}
+
+export interface RequestPersonByIdAction {
+  type: typeof PersonsTypes.REQUEST_PERSON_BY_ID;
+  personId: number;
+}
+
+interface FetchPersonByIdStartAction {
+  type: typeof PersonsTypes.FETCH_PERSON_BY_ID_START;
+}
+
+interface FetchPersonByIdSuccessAction {
+  type: typeof PersonsTypes.FETCH_PERSON_BY_ID_SUCCESS;
+  person: Person;
+}
+
+interface FetchPersonByIdErrorAction {
+  type: typeof PersonsTypes.FETCH_PERSON_BY_ID_ERROR;
 }
 
 export type PersonsActionTypes =
-  | RequestPersonsAction
-  | FetchPersonsStartAction
-  | FetchPersonsSuccessAction
-  | FetchPersonsErrorAction;
+  | RequestPopularPersonsAction
+  | FetchPopularPersonsStartAction
+  | FetchPopularPersonsSuccessAction
+  | FetchPopularPersonsErrorAction
+  | RequestPersonByIdAction
+  | FetchPersonByIdStartAction
+  | FetchPersonByIdSuccessAction
+  | FetchPersonByIdErrorAction;
 
-export const requestPersons = (page: number): PersonsActionTypes => ({
-  type: PersonsTypes.REQUEST_PERSONS,
+export const requestPopularPersons = (page: number): PersonsActionTypes => ({
+  type: PersonsTypes.REQUEST_POPULAR_PERSONS,
   page,
 });
 
-export const fetchPersonsStart = (): PersonsActionTypes => ({
-  type: PersonsTypes.FETCH_PERSONS_START,
+export const fetchPopularPersonsStart = (): PersonsActionTypes => ({
+  type: PersonsTypes.FETCH_POPULAR_PERSONS_START,
 });
 
-export const fetchPersonsSuccess = (
-  persons: PersonSummary[],
-  page: number
+export const fetchPopularPersonsSuccess = (
+  payload: GeneralResult<PersonSummary[]>
 ): PersonsActionTypes => ({
-  type: PersonsTypes.FETCH_PERSONS_SUCCESS,
-  persons,
-  page,
+  type: PersonsTypes.FETCH_POPULAR_PERSONS_SUCCESS,
+  payload,
 });
 
-export const fetchPersonsError = (): PersonsActionTypes => ({
-  type: PersonsTypes.FETCH_PERSONS_ERROR,
+export const fetchPopularPersonsError = (): PersonsActionTypes => ({
+  type: PersonsTypes.FETCH_POPULAR_PERSONS_ERROR,
+});
+
+export const requestPersonById = (personId: number): PersonsActionTypes => ({
+  type: PersonsTypes.REQUEST_PERSON_BY_ID,
+  personId,
+});
+
+export const fetchPersonByIdStart = (): PersonsActionTypes => ({
+  type: PersonsTypes.FETCH_PERSON_BY_ID_START,
+});
+
+export const fetchPersonByIdSuccess = (person: Person): PersonsActionTypes => ({
+  type: PersonsTypes.FETCH_PERSON_BY_ID_SUCCESS,
+  person,
+});
+
+export const fetchPersonByIdError = (): PersonsActionTypes => ({
+  type: PersonsTypes.FETCH_PERSON_BY_ID_ERROR,
 });
