@@ -1,24 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Link as RouterLink } from 'react-router-dom';
+import {
+  Box,
+  Paper,
+  Typography,
+  Link,
+} from '@material-ui/core';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { MovieShowcase as IMovieShowcase } from '../../store/movies/interfaces';
-
-const useStyles = makeStyles({
-  paper: {
-    marginBottom: 24,
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-  overview: {
-    maxWidth: 650,
-    textAlign: 'center',
-    margin: '0 auto',
-    fontSize: '0.9em',
-  },
-});
+import useStyles from './styles';
+import Genres from '../Genres';
 
 const MovieShowcase: React.FC<IMovieShowcase> = ({
   id,
@@ -27,6 +18,7 @@ const MovieShowcase: React.FC<IMovieShowcase> = ({
   overview,
   poster_path,
   release_date,
+  genre_ids,
 }) => {
   const classes = useStyles();
 
@@ -40,35 +32,40 @@ const MovieShowcase: React.FC<IMovieShowcase> = ({
             alt={title}
           />
         </Box>
-        <Box padding={3} width="100%">
-          <Box display="flex" alignItems="center">
-            <Box flex={1} component="span" paddingRight={3} fontWeight={600}>
+        <Box display="flex" flexDirection="column" padding={2} width="100%">
+          <RouterLink className={classes.link} to={`/movie/${id}`}>
+            <Typography
+              variant="h5"
+              component="h2"
+              align="center"
+              color="secondary"
+            >
+              {title}
+            </Typography>
+          </RouterLink>
+          <Genres mediaType="movies" genres={genre_ids} />
+          <Typography className={classes.overview} variant="subtitle1">{overview}</Typography>
+          <Box display="flex" alignItems="center" fontWeight="bold">
+            <Box component="span" mr={2}>
               {`Release Date: ${new Date(release_date).toLocaleDateString()}`}
             </Box>
-            <Link className={classes.link} to={`/movie/${id}`}>
-              <Typography
-                variant="h5"
-                component="h2"
-                align="center"
-                gutterBottom
-              >
-                {title}
-              </Typography>
-            </Link>
-            <Box
-              flex={1}
-              textAlign="right"
-              component="span"
-            >
-              {`Language ${original_language.toUpperCase()}`}
+            <Box component="span" mr={2}>
+              {`Language: ${original_language.toUpperCase()}`}
             </Box>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Typography className={classes.overview} variant="subtitle1">{overview}</Typography>
+            <Link
+              color="secondary"
+              component={RouterLink}
+              className={classes.footerLink}
+              to={`/movie/${id}`}
+            >
+              <Box display="flex" alignItems="center" ml="auto">
+                <Typography>Read More</Typography>
+                <ArrowRightAltIcon />
+              </Box>
+            </Link>
           </Box>
         </Box>
       </Box>
-
     </Paper>
   );
 };

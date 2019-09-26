@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { ShowShowcase as IShowShowcase } from '../../store/shows/interfaces';
+import Genres from '../Genres';
 
 const useStyles = makeStyles({
   paper: {
@@ -27,6 +28,7 @@ const ShowShowcase: React.FC<IShowShowcase> = ({
   overview,
   poster_path,
   first_air_date,
+  genre_ids,
 }) => {
   const classes = useStyles();
 
@@ -63,6 +65,7 @@ const ShowShowcase: React.FC<IShowShowcase> = ({
               {`Language ${original_language.toUpperCase()}`}
             </Box>
           </Box>
+          <Genres mediaType="shows" genres={genre_ids} />
           <Box display="flex" alignItems="center">
             <Typography className={classes.overview} variant="subtitle1">{overview}</Typography>
           </Box>

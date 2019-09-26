@@ -15,5 +15,4 @@ export const minutesConverter = (minutes: number) => {
   return `${hoursPhrase} and ${mins > 1 ? `${mins} minutes` : '1 minute'}`;
 };
 
-export const genreIdToString = (genreIds: number[]) =>
-  genreIds.map(id => genres[id]);
+export const genreIdToString = (genreId: number) => genres[genreId];

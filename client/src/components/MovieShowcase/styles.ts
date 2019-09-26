@@ -4,14 +4,11 @@ const useStyles = makeStyles({
   paper: {
     marginBottom: 24,
     width: '100%',
+    overflow: 'hidden',
   },
   link: {
     textDecoration: 'none',
     color: 'inherit',
-  },
-  buttonLink: {
-    textDecoration: 'none',
-    marginRight: 16,
   },
   footerLink: {
     display: 'inline-block',

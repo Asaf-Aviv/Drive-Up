@@ -7,12 +7,14 @@ import {
 } from '@material-ui/core';
 import { Genre } from '../../store/movies/interfaces';
 import useStyles from './styles';
+import Genres from '../Genres';
 
 interface Overview {
   backdrop_path: string | null;
   title: string;
   overview: string;
   genres: Genre[];
+  mediaType: 'movies' | 'shows';
 }
 
 const Overview: React.FC<Overview> = ({
@@ -20,6 +22,7 @@ const Overview: React.FC<Overview> = ({
   backdrop_path,
   overview,
   genres,
+  mediaType,
 }) => {
   const classes = useStyles();
 
@@ -37,15 +40,7 @@ const Overview: React.FC<Overview> = ({
           </Box>
           <Box className={classes.overviewContainer}>
             <Typography color="textSecondary" className={classes.overview}>{overview}</Typography>
-            <Box>
-              <Box className={classes.genreGroup} marginTop={1}>
-                {genres.map(({ name }) => (
-                  <Button color="secondary" variant="outlined" size="small" key={name}>
-                    {name}
-                  </Button>
-                ))}
-              </Box>
-            </Box>
+            <Genres mediaType={mediaType} genres={genres.map(({ id }) => id)} />
           </Box>
         </Box>
         <Box />

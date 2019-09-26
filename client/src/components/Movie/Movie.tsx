@@ -111,6 +111,7 @@ const Movie: React.FC<RouteComponentProps<Params>> = ({
             title={title}
             genres={genres}
             overview={overview}
+            mediaType="movies"
           />
           {series && (
             <Container>
