@@ -22,7 +22,7 @@ interface FetchPopularPersonsErrorAction {
 
 export interface RequestPersonByIdAction {
   type: typeof PersonsTypes.REQUEST_PERSON_BY_ID;
-  personId: number;
+  personId: string;
 }
 
 interface FetchPersonByIdStartAction {
@@ -68,7 +68,7 @@ export const fetchPopularPersonsError = (): PersonsActionTypes => ({
   type: PersonsTypes.FETCH_POPULAR_PERSONS_ERROR,
 });
 
-export const requestPersonById = (personId: number): PersonsActionTypes => ({
+export const requestPersonById = (personId: string): PersonsActionTypes => ({
   type: PersonsTypes.REQUEST_PERSON_BY_ID,
   personId,
 });

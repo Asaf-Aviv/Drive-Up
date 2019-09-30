@@ -1,3 +1,6 @@
+import { Image, MovieShowcase } from '../movies/interfaces';
+import { ShowShowcase } from '../shows/interfaces';
+
 export interface PersonSummary {
   profile_path: string;
   adult: boolean;
@@ -23,4 +26,13 @@ export interface Person {
   adult: boolean;
   imdb_id: string;
   homepage: string | null;
+  images: {
+    profiles: Image[];
+  };
+  movie_credits: {
+    cast: MovieShowcase[];
+  };
+  tv_credits: {
+    cast: ShowShowcase[];
+  };
 }
