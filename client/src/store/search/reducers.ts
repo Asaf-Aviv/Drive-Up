@@ -1,15 +1,35 @@
 import { SearchTypes } from './constants';
+import { SearchActionTypes } from './actions';
+import { ShowShowcase } from '../shows/interfaces';
+import { PersonSummary } from '../persons/interfaces';
+import { MovieShowcase } from '../movies/interfaces';
 
-const initialState = {
-  results: [],
-  page: 1,
+interface SearchState {
+  movies: MovieShowcase[];
+  shows: ShowShowcase[];
+  persons: PersonSummary[];
+  page: number;
+  total_pages: number;
+  total_results: number;
+  loading: boolean;
+  error: boolean;
+}
+
+const initialState: SearchState = {
+  movies: [],
+  shows: [],
+  persons: [],
+  page: 0,
   total_pages: 0,
   total_results: 0,
   loading: false,
   error: false,
 };
 
-const searchReducer = (state = initialState, action: any) => {
+const searchReducer = (
+  state = initialState,
+  action: SearchActionTypes
+): SearchState => {
   switch (action.type) {
     case SearchTypes.FETCH_SEARCH_RESULTS_START:
       return {
@@ -19,12 +39,19 @@ const searchReducer = (state = initialState, action: any) => {
       };
     case SearchTypes.FETCH_SEARCH_RESULTS_SUCCESS: {
       const {
-        page, results, total_pages, total_results,
+        page,
+        movies,
+        shows,
+        persons,
+        total_pages,
+        total_results,
       } = action.payload;
 
       return {
         ...state,
-        results: [...state.results, ...results],
+        movies: [...state.movies, ...movies],
+        shows: [...state.shows, ...shows],
+        persons: [...state.persons, ...persons],
         page,
         total_pages,
         total_results,
@@ -38,6 +65,8 @@ const searchReducer = (state = initialState, action: any) => {
         loading: false,
         error: true,
       };
+    case SearchTypes.INIT_SEARCH_STATE:
+      return initialState;
     default:
       return state;
   }
