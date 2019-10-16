@@ -12,7 +12,7 @@ interface WithRedirect extends RouteComponentProps<Params> {
 }
 
 /**
- * takes a redirectURL and a selector to search if a gategory exists in Redux store
+ * takes a redirectURL and a selector to search if a category exists in Redux store
  * otherwise redirects to @redirectURL
  * can only be used to check [type].byCategory[category] exist in Redux
  */
