@@ -22,10 +22,10 @@ interface MoviesByIdsState {
   byCategory: {
     [key: string]: Results<MovieShowcase[]> & LoadingStates;
     popular: Results<MovieShowcase[]> & LoadingStates;
-    topRated: Results<MovieShowcase[]> & LoadingStates;
+    top_rated: Results<MovieShowcase[]> & LoadingStates;
     latest: Results<MovieShowcase[]> & LoadingStates;
     upcoming: Results<MovieShowcase[]> & LoadingStates;
-    inTheathers: Results<MovieShowcase[]> & LoadingStates;
+    now_playing: Results<MovieShowcase[]> & LoadingStates;
   };
 }
 
@@ -47,10 +47,10 @@ export const initialState: MoviesByIdsState = {
   byId: loadingAndError,
   byCategory: {
     popular: searchState,
-    topRated: searchState,
+    top_rated: searchState,
     latest: searchState,
     upcoming: searchState,
-    inTheathers: searchState,
+    now_playing: searchState,
   },
 };
 
@@ -152,19 +152,26 @@ export default function moviesByIdsReducer(
     }
     case MoviesTypes.FETCH_RELATED_MOVIES_SUCCESS: {
       const {
-        page, results, total_pages, total_results,
-      } = action.payload;
+        movieId,
+        relatedField,
+        payload: {
+          page,
+          results,
+          total_pages,
+          total_results,
+        },
+      } = action;
 
       return {
         ...state,
         byId: {
           ...state.byId,
-          [action.movieId]: {
-            ...state.byId[action.movieId],
-            [action.relatedField as 'similar']: {
-              ...state.byId[action.movieId][action.relatedField],
+          [movieId]: {
+            ...state.byId[movieId],
+            [relatedField as 'similar']: {
+              ...state.byId[movieId][relatedField],
               results: [
-                ...state.byId[action.movieId][action.relatedField].results,
+                ...state.byId[movieId][relatedField].results,
                 ...results,
               ],
               loading: false,
