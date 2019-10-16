@@ -3,7 +3,6 @@ import {
   call,
   PutEffect,
   takeLatest,
-  delay,
 } from 'redux-saga/effects';
 import {
   RequestSearchResultsAction,
@@ -26,8 +25,6 @@ export function* fetchSearchResults({
   params,
 }: RequestSearchResultsAction) {
   if (page === 1) {
-    // debounce only on a new query filters
-    yield delay(500);
     yield put(initSearchState());
   }
 
