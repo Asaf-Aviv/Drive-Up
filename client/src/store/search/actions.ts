@@ -3,7 +3,7 @@ import { MovieShowcase } from '../movies/interfaces';
 import { ShowShowcase } from '../shows/interfaces';
 import { PersonSummary } from '../persons/interfaces';
 
-type Category = 'multi' | 'movie' | 'tv' | 'person';
+export type Category = 'multi' | 'movie' | 'tv' | 'person';
 
 export interface RequestSearchResultsAction {
   type: typeof SearchTypes.REQUEST_SEARCH_RESULTS;
