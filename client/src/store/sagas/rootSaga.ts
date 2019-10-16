@@ -4,10 +4,12 @@ import { requestShowsWatcher } from '../shows/sagas';
 import { notificationsWatcher } from '../notifications/sagas';
 import { requestPersonsWatcher } from '../persons/sagas';
 import { requestSearchResultsWatcher } from '../search/sagas';
+import { requestSeasonsWatcher } from '../seasons/sagas';
 
 export default function* rootSaga() {
   yield fork(requestMoviesWatcher);
   yield fork(requestShowsWatcher);
+  yield fork(requestSeasonsWatcher);
   yield fork(requestPersonsWatcher);
   yield fork(requestSearchResultsWatcher);
   yield fork(notificationsWatcher);
