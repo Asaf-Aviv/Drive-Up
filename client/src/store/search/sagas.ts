@@ -19,14 +19,28 @@ import { SearchResults } from './interfaces';
 const put = <A extends SearchActionTypes>(action: A): PutEffect<A> =>
   untypedPut(action);
 
-export function* fetchSearchResults({
-  category,
-  page,
-  params,
-}: RequestSearchResultsAction) {
+export function* fetchSearchResults(action: RequestSearchResultsAction) {
+  const { category, page, params } = action;
+
   if (page === 1) {
     yield put(initSearchState());
   }
+
+  yield put(fetchSearchResultsStart());
+
+  let data;
+
+  try {
+    const res = yield call(TMDB.search, category, params, page);
+    data = res.data;
+  } catch (err) {
+    yield put(fetchSearchResultsError());
+    return;
+  }
+
+  const { results, ...metaData } = data;
+
+  const payload = Object.assign(metaData, { movies: [], shows: [], persons: [] });
 
   const mapper = {
     movie: 'movies',
@@ -34,23 +48,14 @@ export function* fetchSearchResults({
     person: 'persons',
   };
 
-  try {
-    yield put(fetchSearchResultsStart());
-    const { data: { results, ...metaData } } = yield call(TMDB.search, category, params, page);
+  category === 'multi'
+    // multi search can return an array of mixed results(movies/shows/persons)
+    ? results.forEach(({ media_type, ...item }: SearchResults) => {
+      payload[mapper[media_type]].push(item);
+    })
+    : payload[mapper[category]] = results;
 
-    const payload = Object.assign(metaData, { movies: [], shows: [], persons: [] });
-
-    category === 'multi'
-      // multi search can return an array of mixed movies/shows/persons
-      ? results.forEach(({ media_type, ...item }: SearchResults) => {
-        payload[mapper[media_type]].push(item);
-      })
-      : payload[mapper[category]] = results;
-
-    yield put(fetchSearchResultsSuccess(payload));
-  } catch (error) {
-    yield put(fetchSearchResultsError());
-  }
+  yield put(fetchSearchResultsSuccess(payload));
 }
 
 export function* requestSearchResultsWatcher() {

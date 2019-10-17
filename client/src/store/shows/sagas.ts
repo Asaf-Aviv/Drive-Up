@@ -34,12 +34,17 @@ export function* fetchShowsByQuery(action: RequestShowsByQueryAction) {
 
   yield put(fetchShowsByQueryStart());
 
+  let shows;
+
   try {
-    const res = yield call(TMDB.fetchShowsByQuery, params, page);
-    yield put(fetchShowsByQueryByIdSuccess(res.data));
+    const { data } = yield call(TMDB.fetchShowsByQuery, params, page);
+    shows = data;
   } catch (err) {
     yield put(fetchShowsByQueryError());
+    return;
   }
+
+  yield put(fetchShowsByQueryByIdSuccess(shows));
 }
 
 function* fetchShowsByCategory(action: RequestShowsByCategoryAction) {
@@ -47,23 +52,33 @@ function* fetchShowsByCategory(action: RequestShowsByCategoryAction) {
 
   yield put(fetchShowsByCategoryStart(category));
 
+  let shows;
+
   try {
-    const res = yield call(TMDB.fetchShowsByCategory, category, page);
-    yield put(fetchShowsByCategorySuccess(category, res.data));
+    const { data } = yield call(TMDB.fetchShowsByCategory, category, page);
+    shows = data;
   } catch (err) {
     yield put(fetchShowsByCategoryError(category));
+    return;
   }
+
+  yield put(fetchShowsByCategorySuccess(category, shows));
 }
 
 export function* fetchShowById({ showId }: RequestShowByIdAction) {
-  console.log('running');
+  yield put(fetchShowByIdStart());
+
+  let show;
+
   try {
-    yield put(fetchShowByIdStart());
-    const res = yield call(TMDB.fetchShowById, showId);
-    yield put(fetchShowByIdSuccess(res.data));
-  } catch (error) {
+    const { data } = yield call(TMDB.fetchShowById, showId);
+    show = data;
+  } catch (err) {
     yield put(fetchShowByIdError());
+    return;
   }
+
+  yield put(fetchShowByIdSuccess(show));
 }
 
 export function* fetchRelatedShows(action: RequestRelatedShowsAction) {
@@ -71,17 +86,22 @@ export function* fetchRelatedShows(action: RequestRelatedShowsAction) {
 
   yield put(fetchRelatedShowsStart(showId, relatedField));
 
+  let shows;
+
   try {
-    const res = yield call(TMDB.fetchRelatedShows, showId, relatedField, page);
-    yield put(fetchRelatedShowsSuccess(showId, relatedField, res.data));
+    const { data } = yield call(TMDB.fetchRelatedShows, showId, relatedField, page);
+    shows = data;
   } catch (err) {
     yield put(fetchRelatedShowsError(showId, relatedField));
+    return;
   }
+
+  yield put(fetchRelatedShowsSuccess(showId, relatedField, shows));
 }
 
 export function* requestShowsWatcher() {
   yield takeLatest(ShowsTypes.REQUEST_SHOWS_BY_QUERY, fetchShowsByQuery);
   yield takeEvery(ShowsTypes.REQUEST_SHOWS_BY_CATEGORY, fetchShowsByCategory);
   yield takeLatest(ShowsTypes.REQUEST_SHOW_BY_ID, fetchShowById);
-  yield takeEvery(ShowsTypes.REQUEST_RELATED_SHOWS, fetchRelatedShows);
+  yield takeLatest(ShowsTypes.REQUEST_RELATED_SHOWS, fetchRelatedShows);
 }
