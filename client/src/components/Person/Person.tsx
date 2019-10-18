@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 import {
   Container, Typography, Box, Link,
 } from '@material-ui/core';
@@ -18,9 +18,8 @@ interface Params {
   personId: string;
 }
 
-const Person: React.FC<RouteComponentProps<Params>> = ({
-  match: { params: { personId } },
-}) => {
+const Person: React.FC = () => {
+  const { personId } = useParams<Params>();
   const dispatch = useDispatch();
   const classes = useStyles();
   const { byId: persons, byId: { loading, error } } = useShallowEqualSelector(
@@ -43,8 +42,6 @@ const Person: React.FC<RouteComponentProps<Params>> = ({
   if (loading) return <span>Loading</span>;
 
   if (!person) return <span>Movie Not Found</span>;
-
-  console.log(person);
 
   const {
     name,

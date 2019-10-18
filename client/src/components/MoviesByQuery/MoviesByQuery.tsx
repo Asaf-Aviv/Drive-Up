@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import qs from 'qs';
 import { useDispatch } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useLocation } from 'react-router';
 import { Container } from '@material-ui/core';
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector';
 import { clearMoviesByQuery, requestMoviesByQuery } from '../../store/movies/actions';
@@ -9,13 +9,12 @@ import { useOnVisibilityTrigger } from '../../hooks/useOnVisibilityTrigger';
 import SearchBar from '../SearchBar';
 import MoviesList from '../MoviesList';
 
-const MoviesByQuery: React.FC<RouteComponentProps> = ({
-  location: { search },
-}) => {
+const MoviesByQuery: React.FC = () => {
   const {
     page, loading, results, error, total_pages,
   } = useShallowEqualSelector(state => state.movies.byQuery);
   const dispatch = useDispatch();
+  const { search } = useLocation();
   const fetchNextPageTrigger = useRef<HTMLElement>(null);
 
   const getParams = useCallback(

@@ -9,22 +9,42 @@ import MoviesByQuery from '../MoviesByQuery';
 import ShowsByCategory from '../ShowsByCategory';
 import ShowsByQuery from '../ShowsByQuery';
 import Home from '../Home';
-import ShowSeason from '../../ShowSeason';
+import ShowSeason from '../ShowSeason';
+import MovieCollection from '../MovieCollection';
 
-const Routes: React.FC = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/movies" component={MoviesByQuery} />
-    <Route path="/movies/:category" component={MoviesByCategory} />
-    <Route path="/movie/:movieId" component={Movie} />
-    <Route exact path="/shows" component={ShowsByQuery} />
-    <Route path="/shows/:category" component={ShowsByCategory} />
-    <Route exact path="/show/:showId" component={Show} />
-    <Route path="/show/:showId/season/:seasonNumber" component={ShowSeason} />
-    <Route path="/persons" component={PersonsList} />
-    <Route path="/person/:personId" component={Person} />
-    <Route render={() => <Redirect to="/" />} />
-  </Switch>
-);
+interface RouteProps {
+  path: string;
+  component: React.ComponentType;
+  exact: boolean;
+}
+
+const routes: RouteProps[] = [
+  { path: '/', component: Home, exact: true },
+  { path: '/movies', component: MoviesByQuery, exact: true },
+  { path: '/movies/:category', component: MoviesByCategory, exact: true },
+  { path: '/movies/collection/:collectionId', component: MovieCollection, exact: false },
+  { path: '/movie/:movieId', component: Movie, exact: false },
+  { path: '/shows', component: ShowsByQuery, exact: true },
+  { path: '/shows/:category', component: ShowsByCategory, exact: false },
+  { path: '/show/:showId', component: Show, exact: true },
+  { path: '/show/:showId/season/:seasonNumber', component: ShowSeason, exact: false },
+  { path: '/persons', component: PersonsList, exact: false },
+  { path: '/person/:personId', component: Person, exact: false },
+];
+
+const Routes: React.FC = () => {
+  const renderRoute = ({ path, component: Component, exact }: RouteProps) => (
+    <Route path={path} exact={exact}>
+      <Component />
+    </Route>
+  );
+
+  return (
+    <Switch>
+      {routes.map(renderRoute)}
+      <Route render={() => <Redirect to="/" />} />
+    </Switch>
+  );
+};
 
 export default Routes;

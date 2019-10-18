@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import qs from 'qs';
 import { useDispatch } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useLocation } from 'react-router';
 import { Container } from '@material-ui/core';
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector';
 import { useOnVisibilityTrigger } from '../../hooks/useOnVisibilityTrigger';
@@ -9,14 +9,13 @@ import SearchBar from '../SearchBar';
 import ShowsList from '../ShowsList';
 import { clearShowsByQuery, requestShowsByQuery } from '../../store/shows/actions';
 
-const ShowsByQuery: React.FC<RouteComponentProps> = ({
-  location: { search },
-}) => {
+const ShowsByQuery: React.FC = () => {
   const {
     page, loading, results, error, total_pages,
   } = useShallowEqualSelector(state => state.shows.byQuery);
   const dispatch = useDispatch();
   const fetchNextPageTrigger = useRef<HTMLElement>(null);
+  const { search } = useLocation();
 
   const getParams = useCallback(
     () => qs.parse(search, { ignoreQueryPrefix: true }),
