@@ -18,28 +18,38 @@ import {
 import { PersonsTypes } from './constants';
 import TMDB from '../../api';
 
-
 const put = <A extends PersonsActionTypes>(action: A): PutEffect<A> => untypedPut(action);
 
 export function* fetchPopularPersons({ page }: RequestPopularPersonsAction) {
+  yield put(fetchPopularPersonsStart());
+
+  let persons;
+
   try {
-    yield put(fetchPopularPersonsStart());
-    const res = yield call(TMDB.fetchPopularPersons, page);
-    yield put(fetchPopularPersonsSuccess(res.data));
-  } catch (error) {
+    const { data } = yield call(TMDB.fetchPopularPersons, page);
+    persons = data;
+  } catch (err) {
     yield put(fetchPopularPersonsError());
+    return;
   }
+
+  yield put(fetchPopularPersonsSuccess(persons));
 }
 
 export function* fetchPersonById({ personId }: RequestPersonByIdAction) {
+  yield put(fetchPersonByIdStart());
+
+  let person;
+
   try {
-    yield put(fetchPersonByIdStart());
-    const res = yield call(TMDB.fetchPersonById, personId);
-    const person = res.data;
-    yield put(fetchPersonByIdSuccess(person));
-  } catch (error) {
+    const { data } = yield call(TMDB.fetchPersonById, personId);
+    person = data;
+  } catch (err) {
     yield put(fetchPersonByIdError());
+    return;
   }
+
+  yield put(fetchPersonByIdSuccess(person));
 }
 
 export function* requestPersonsWatcher() {

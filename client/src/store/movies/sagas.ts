@@ -19,7 +19,7 @@ import {
   RequestMoviesByQueryAction,
   fetchMoviesByQueryStart,
   fetchMoviesByQueryError,
-  fetchMoviesByQueryByIdSuccess,
+  fetchMoviesByQuerySuccess,
   fetchMovieByIdStart,
   fetchMovieByIdError,
   fetchMovieByIdSuccess,
@@ -34,12 +34,17 @@ export function* fetchdMoviesByQuery(action: RequestMoviesByQueryAction) {
 
   yield put(fetchMoviesByQueryStart());
 
+  let movies;
+
   try {
-    const res = yield call(TMDB.fetchMoviesByQuery, params, page);
-    yield put(fetchMoviesByQueryByIdSuccess(res.data));
+    const { data } = yield call(TMDB.fetchMoviesByQuery, params, page);
+    movies = data;
   } catch (err) {
     yield put(fetchMoviesByQueryError());
+    return;
   }
+
+  yield put(fetchMoviesByQuerySuccess(movies));
 }
 
 export function* fetchRelatedMovies(action: RequestRelatedMoviesAction) {
@@ -47,12 +52,17 @@ export function* fetchRelatedMovies(action: RequestRelatedMoviesAction) {
 
   yield put(fetchRelatedMoviesStart(movieId, relatedField));
 
+  let movies;
+
   try {
-    const res = yield call(TMDB.fetchRelatedMovies, movieId, relatedField, page);
-    yield put(fetchRelatedMoviesSuccess(movieId, relatedField, res.data));
+    const { data } = yield call(TMDB.fetchRelatedMovies, movieId, relatedField, page);
+    movies = data;
   } catch (err) {
     yield put(fetchRelatedMoviesError(movieId, relatedField));
+    return;
   }
+
+  yield put(fetchRelatedMoviesSuccess(movieId, relatedField, movies));
 }
 
 function* fetchMoviesByCategory(action: RequestMoviesByCategoryAction) {
@@ -60,22 +70,33 @@ function* fetchMoviesByCategory(action: RequestMoviesByCategoryAction) {
 
   yield put(fetchMoviesByCategoryStart(category));
 
+  let movies;
+
   try {
-    const res = yield call(TMDB.fetchMoviesByCategory, category, page);
-    yield put(fetchMoviesByCategorySuccess(category, res.data));
+    const { data } = yield call(TMDB.fetchMoviesByCategory, category, page);
+    movies = data;
   } catch (err) {
     yield put(fetchMoviesByCategoryError(category));
+    return;
   }
+
+  yield put(fetchMoviesByCategorySuccess(category, movies));
 }
 
 export function* fetchMovieById({ movieId }: RequestMovieByIdAction) {
+  yield put(fetchMovieByIdStart());
+
+  let movie;
+
   try {
-    yield put(fetchMovieByIdStart());
-    const res = yield call(TMDB.fetchMovieById, movieId);
-    yield put(fetchMovieByIdSuccess(res.data));
-  } catch (error) {
+    const { data } = yield call(TMDB.fetchMovieById, movieId);
+    movie = data;
+  } catch (err) {
     yield put(fetchMovieByIdError());
+    return;
   }
+
+  yield put(fetchMovieByIdSuccess(movie));
 }
 
 export function* requestMoviesWatcher() {
