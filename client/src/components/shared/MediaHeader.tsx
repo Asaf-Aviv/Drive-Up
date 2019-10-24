@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import TMDB from '../../api';
 import Typography from './Typography';
-import { Video as IVideo, Certification } from '../../store/movies/interfaces';
+import { Video as IVideo, PG as IPG } from '../../store/movies/interfaces';
 import { formatDate, minutesConverter } from '../../utils';
-import Modal from '../Modal';
+import Modal from './Modal';
 import { ReactComponent as PlayIcon } from '../../assets/icons/play.svg';
 import { ReactComponent as PopcornIcon } from '../../assets/icons/popcorn.svg';
 import PG from './PG';
@@ -19,7 +19,7 @@ interface MediaHeader {
   tagline?: string | null;
   trailer?: IVideo;
   runtime?: number | null;
-  pg?: Certification | undefined;
+  pg?: IPG;
 }
 
 const MediaHeader: React.FC<MediaHeader> = ({
@@ -66,7 +66,7 @@ const MediaHeader: React.FC<MediaHeader> = ({
                   {minutesConverter(runtime)}
                 </Runtime>
               )}
-              <PG pg={pg} />
+              {pg && <PG pg={pg} />}
               {trailer && (
                 <>
                   <Button onClick={() => setShowTrailer(true)}>
