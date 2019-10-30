@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Paper = styled.div`
   background-color: #1f1f1f;
