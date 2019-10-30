@@ -1,4 +1,4 @@
-import { Image, MovieShowcase } from '../movies/interfaces';
+import { Image, MovieShowcase, Video } from '../movies/interfaces';
 import { ShowShowcase } from '../shows/interfaces';
 
 export interface PersonSummary {
@@ -35,4 +35,5 @@ export interface Person {
   tv_credits: {
     cast: ShowShowcase[];
   };
+  videos: Video[];
 }

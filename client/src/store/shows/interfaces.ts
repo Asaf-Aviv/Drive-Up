@@ -1,4 +1,6 @@
+import { SeasonSummary } from '../seasons/interfaces';
 import {
+  Credits,
   Company,
   Genre,
   Image,
@@ -38,7 +40,9 @@ export interface Show {
   id: number;
   last_air_date: string;
   name: string;
-  next_episode_to_air: unknown;
+  next_episode_to_air: {
+    air_date: string;
+  };
   networks: Company[];
   number_of_episodes: number;
   number_of_seasons: number;
@@ -55,17 +59,12 @@ export interface Show {
   popularity: number;
   poster_path: string;
   production_companies: Company[];
-  seasons: {
-    air_date: string;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string;
-    season_number: number;
-  }[];
+  seasons: SeasonSummary[];
+  origin_country: string[];
   status: string;
   type: string;
   vote_average: number;
   vote_count: number;
+  languages: string[];
+  credits: Credits;
 }

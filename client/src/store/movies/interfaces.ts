@@ -38,6 +38,16 @@ export interface Video {
   type: string;
 }
 
+export interface Crew {
+  credit_id: string;
+  department: string;
+  gender: 0 | 1 | 2;
+  id: number;
+  job: string;
+  name: string;
+  profile_path: string;
+}
+
 export interface MovieShowcase {
   poster_path: string | null;
   adult: boolean;
@@ -53,6 +63,36 @@ export interface MovieShowcase {
   vote_count: number;
   video: boolean;
   vote_average: number;
+}
+
+export interface Credits {
+  crew: Crew[];
+  cast: {
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    gender: 0 | 1 | 2;
+    id: number;
+    job: string;
+    name: string;
+    order: number;
+    profile_path: string;
+  }[];
+}
+
+export interface PG {
+  results: {
+    iso_3166_1: string;
+    release_dates: Certification[];
+  }[];
+}
+
+export interface Certification {
+  certification: string;
+  iso_639_1: string;
+  note: string;
+  release_date: string;
+  type: number;
 }
 
 export interface Movie {
@@ -78,6 +118,15 @@ export interface Movie {
   popularity: number;
   poster_path: string | null;
   production_companies: Company[];
+  production_countries: {
+    iso_3166_1: string;
+    name: string;
+  }[];
+  spoken_languages: {
+    name: string;
+    iso_639_1: string;
+  }[];
+  credits: Credits;
   release_date: string;
   revenue: number;
   runtime: number | null;
@@ -86,4 +135,5 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  release_dates: PG;
 }

@@ -27,7 +27,6 @@ interface Episode {
 }
 
 export interface Season {
-  _id: string;
   id: string;
   air_date: string;
   name: string;
@@ -35,4 +34,14 @@ export interface Season {
   poster_path: string | null;
   season_number: number;
   episodes: Episode[];
+}
+
+export interface SeasonSummary {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  season_number: number;
 }
