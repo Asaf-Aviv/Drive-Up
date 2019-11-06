@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const TabsPanel: React.FC = ({ children }) => (
-  <TabsPanelContainer>
+interface TabsPanel {
+  className?: string;
+}
+
+const TabsPanel: React.FC<TabsPanel> = ({ children, className }) => (
+  <TabsPanelContainer className={className}>
     <TabsWrapper>
       <TabContainer>
         {children}
