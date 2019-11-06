@@ -52,7 +52,6 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     'import/prefer-default-export': 'off',
     'react/jsx-filename-extension': 'off',
-    'consistent-return': 0,
     'import/no-extraneous-dependencies': 'off',
     'jsx-a11y/mouse-events-have-key-events': 'off',
     'comma-dangle': [
