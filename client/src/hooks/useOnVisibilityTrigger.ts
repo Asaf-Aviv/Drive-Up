@@ -24,7 +24,6 @@ export function useOnVisibilityTrigger(ref: React.RefObject<HTMLElement>, callba
       observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio > 0) {
-            console.log('triggering callback');
             callback();
           }
         });
