@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`RetryButton component renders correctly 1`] = `
-"<WithStyles(ForwardRef(Button)) onClick={[Function: mockConstructor]}>
-  Retry
-</WithStyles(ForwardRef(Button))>"
-`;
