@@ -50,6 +50,7 @@ module.exports = {
       },
     ],
     'import/prefer-default-export': 'off',
+    'import/no-cycle': 'off', // errors on cyclic typescript types imports
     'implicit-arrow-linebreak': 'off',
     'consistent-return': 'off',
     'react/jsx-filename-extension': 'off',
