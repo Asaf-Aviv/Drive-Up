@@ -4,120 +4,79 @@ module.exports = {
     es6: true,
     jest: true
   },
-  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks'
-  ],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
-      }
-    },
-  },
-  'overrides': [
-    {
-      'files': ['**/*.tsx'],
-      'rules': {
-        'react/prop-types': 'off'
-      }
-    }
-  ],
-  rules: {
-    'indent': 'off',
-    '@typescript-eslint/indent': [
-      'error', 
-      2,
-    ],
-    '@typescript-eslint/no-var-requires': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'no-console': 'off',
-    'no-unused-expressions': 'off',
-    'no-nested-ternary': 'off',
-    'implicit-arrow-linebreak': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/camelcase': 'off',
-    'import/prefer-default-export': 'off',
-    'react/jsx-filename-extension': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    'jsx-a11y/mouse-events-have-key-events': 'off',
-    'comma-dangle': [
-      'error', 
-      'always-multiline',
-    ],
-    'lines-between-class-members': 'off',
-    'object-curly-spacing': ['error', 'always'],
-    'max-len': ['error', 100],
-    'semi': ['error', 'always'],
-    'no-trailing-spaces': 'error',
-    'import/order': 'error',
-    'react/button-has-type': 'error',
-    'react/jsx-closing-bracket-location': 'error',
-    'function-paren-newline': [
-      'error',
-      'consistent'
-    ],
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    'key-spacing': ['error', {
-      beforeColon: false
-    }],
-    'react/jsx-tag-spacing': 'error',
-    'no-multi-spaces': 'error',
-    'react/jsx-one-expression-per-line': ['off', { allow: 'single-child'}],
-    'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'multiline'}],
-    'arrow-spacing': 'error',
-    'comma-spacing': 'error',
-    'keyword-spacing': 'error',
-    'space-in-parens': 'error',
-    'arrow-body-style': 'error',
-    'space-infix-ops': 'error',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'react/jsx-wrap-multilines': [
-      'error',
-      {
-        declaration: 'parens-new-line'
-      }
-    ],
-    'semi-style': 'error',
-    'quotes': ['error', 'single'],
-    'import/no-useless-path-segments': 'error',
-    'arrow-parens': ['error', 'as-needed', { 'requireForBlockBody': true }],
-    'import/newline-after-import': 'error',
-    '@typescript-eslint/type-annotation-spacing': ['error', {
-      before: false,
-      after: true,
-      overrides: {
-        colon: {
-          before: false,
-          after: true
-        },
-        arrow: {
-          before: true,
-          after: true,
-        }
-      }
-    }]
-  },
   extends: [
     'airbnb',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly'
+  },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off'
+      }
+    }
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module'
+  },
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
+  rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/semi': ['error', 'never'],
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
+      {
+        multiline: {
+          delimiter: 'none',
+          requireLast: false
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false
+        }
+      }
+    ],
+    'import/prefer-default-export': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'consistent-return': 'off',
+    'react/jsx-filename-extension': 'off',
+    'import/no-cycle': 'off', // research if create-react-app supports circular dependencies
+    'import/extensions': 'off', // research if create-react-app supports circular dependencies
+    'react/jsx-props-no-spreading': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'import/no-extraneous-dependencies': 'off',
+    'no-unused-expressions': 'off',
+    'default-case': 'off',
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['draft'] }],
+    'import/no-unresolved': 'off',
+    'arrow-parens': [2, "as-needed", { "requireForBlockBody": true }],
+    "object-curly-newline": ["error", {
+      "ImportDeclaration": { "multiline": true, "minProperties": 6 }
+    }],
+    'semi': 'off',
+    "@typescript-eslint/no-unused-vars": 0, //fix later,
+    "@typescript-eslint/camelcase": 'off' //fix later,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
+  }
 };
