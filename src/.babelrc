@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    ["babel-plugin-styled-components", {
+        "srr": false,
+        "displayName": true,
+        "fileName": true,
+        "transpileTemplateLiterals": false,
+        "pure": true
+      }
+    ],
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-nullish-coalescing-operator"
+  ]
+}
