@@ -18,13 +18,6 @@ import {
 } from './reducers'
 import TMDB from '../../api'
 
-
-const mapper = {
-  movie: 'movies',
-  tv: 'shows',
-  person: 'persons',
-}
-
 export function* fetchSearchResults(action: RequestSearchResultsAction) {
   const { category, page, params } = action
 
