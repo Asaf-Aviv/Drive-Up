@@ -3,7 +3,6 @@ import {
   call,
   takeLatest,
 } from 'redux-saga/effects'
-import { formatSeason } from '../helpers/index'
 import {
   REQUEST_SEASON,
   RequestShowSeasonAction,

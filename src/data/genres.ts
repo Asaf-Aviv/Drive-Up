@@ -1,8 +1,4 @@
-interface Genres {
-  [genreId: number]: string
-}
-
-const genres: Genres = {
+const genres: Record<number, string> = {
   12: 'Adventure',
   14: 'Fantasy',
   16: 'Animation',

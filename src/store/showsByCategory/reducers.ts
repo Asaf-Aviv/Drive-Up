@@ -20,24 +20,24 @@ type ClearShowsByQuery = {
   type: typeof CLEAR_SHOWS_BY_CATEGORY
 }
 
-export interface RequestShowsByCategoryAction {
+export type RequestShowsByCategoryAction = {
   type: typeof REQUEST_SHOWS_BY_CATEGORY
   category: string
   page: number
 }
 
-interface FetchShowsByCategoryStartAction {
+type FetchShowsByCategoryStartAction = {
   type: typeof FETCH_SHOWS_BY_CATEGORY_START
   category: string
 }
 
-interface FetchShowsByCategorySuccessAction {
+type FetchShowsByCategorySuccessAction = {
   type: typeof FETCH_SHOWS_BY_CATEGORY_SUCCESS
   category: string
   payload: Payload
 }
 
-interface FetchShowsByCategoryErrorAction {
+type FetchShowsByCategoryErrorAction = {
   type: typeof FETCH_SHOWS_BY_CATEGORY_ERROR
   category: string
 }

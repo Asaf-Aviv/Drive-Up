@@ -20,24 +20,24 @@ type ClearMoviesByQuery = {
   type: typeof CLEAR_MOVIES_BY_CATEGORY
 }
 
-export interface RequestMoviesByCategoryAction {
+export type RequestMoviesByCategoryAction = {
   type: typeof REQUEST_MOVIES_BY_CATEGORY
   category: string
   page: number
 }
 
-interface FetchMoviesByCategoryStartAction {
+type FetchMoviesByCategoryStartAction = {
   type: typeof FETCH_MOVIES_BY_CATEGORY_START
   category: string
 }
 
-interface FetchMoviesByCategorySuccessAction {
+type FetchMoviesByCategorySuccessAction = {
   type: typeof FETCH_MOVIES_BY_CATEGORY_SUCCESS
   category: string
   payload: Payload
 }
 
-interface FetchMoviesByCategoryErrorAction {
+type FetchMoviesByCategoryErrorAction = {
   type: typeof FETCH_MOVIES_BY_CATEGORY_ERROR
   category: string
 }
