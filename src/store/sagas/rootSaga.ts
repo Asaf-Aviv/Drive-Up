@@ -1,4 +1,5 @@
 import { fork } from 'redux-saga/effects'
+import { requestCollectionWatcher } from '../collections/sagas'
 import { requestSearchResultsWatcher } from '../search/sagas'
 import { requestTrendingsWatcher } from '../trending/sagas'
 import { requestMoviesByQueryWatcher } from '../moviesByQuery/sagas'
@@ -23,4 +24,5 @@ export default function* rootSaga() {
   yield fork(requestShowWatcher)
   yield fork(requestPersonWatcher)
   yield fork(requestShowSeasonWatcher)
+  yield fork(requestCollectionWatcher)
 }

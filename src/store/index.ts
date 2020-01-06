@@ -15,12 +15,13 @@ import movieReducer from './movie/reducers'
 import showReducer from './show/reducers'
 import personsReducer from './person/reducers'
 import showSeasonsReducer from './showSeasons/reducers'
+import collectionsReducer from './collections/reducers'
 
 export const rootReducer = combineReducers({
   movie: movieReducer,
   show: showReducer,
   persons: personsReducer,
-  // collections: collectionsReducer,
+  collections: collectionsReducer,
   showSeasons: showSeasonsReducer,
   search: searchReducer,
   showsByCategory: showsByCategoryReducer,

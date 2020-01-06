@@ -12,11 +12,13 @@ export type CollectionSummary = {
   backdrop: string | null
 }
 
-export type Collection = {
+export type Collection<T = ShortMedia> = {
   overview: string
-  poster_path: string | null
-  parts: ShortMedia[]
+  poster: string | null
+  parts: T[]
 } & CollectionSummary
+
+export type CollectionInStore = Collection<string>
 
 export type ResultsPayload<T = string> = {
   results: T[]
