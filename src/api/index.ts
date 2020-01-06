@@ -5,6 +5,7 @@ import {
   formatFullMedia,
   formatSeason,
   formatCollection,
+  formatPersonSummary,
 } from './formatters'
 
 const formatPageInfo = res => ({
@@ -21,7 +22,7 @@ const formatResponse = res => ({
 
 const formatPersonResponse = res => ({
   ...formatPageInfo(res),
-  isLastPage: res.page === res.total_pages,
+  results: res.results.map(formatPersonSummary),
 })
 
 const formatPersonInfo = person => ({
@@ -71,7 +72,7 @@ class TheMovieDB {
 
   fetchTrendings = (mediaType: 'movie' | 'tv', timeWindow: 'week' | 'day') =>
     this.fetcher(`/trending/${mediaType}/${timeWindow}`)
-      .then(res => (res ? formatShortMedia(res.results) : null))
+      .then(res => (res ? res.results.map(formatShortMedia) : null))
 
   search = (category: string, params: any, page: number) =>
     this.fetcher(`/search/${category}`, {

@@ -49,7 +49,7 @@ const formatCrew = person => ({
   },
 })
 
-export const formatPersomSummary = ({
+export const formatPersonSummary = ({
   id,
   name,
   profile_path,
