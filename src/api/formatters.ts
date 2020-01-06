@@ -1,4 +1,4 @@
-import { ShortMedia } from 'store/types'
+import { ShortMedia, Collection } from 'store/types'
 
 const siteVideoUrls = {
   YouTube: (videoId: string) => `https://www.youtube.com/embed/${videoId}`,
@@ -79,6 +79,15 @@ export const formatShortMedia = (media): ShortMedia => ({
   overview: media.overview,
   voteAverage: media.vote_average,
   date: formatDate(media.release_date || media.first_air_date),
+})
+
+export const formatCollection = (collection): Collection => ({
+  id: collection.id,
+  name: collection.name,
+  poster: collection.poster_path,
+  backdrop: collection.backdrop_path,
+  overview: collection.overview,
+  parts: collection.parts.map(formatShortMedia),
 })
 
 const formatRelatedMedia = media => ({

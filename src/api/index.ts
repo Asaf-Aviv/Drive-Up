@@ -4,6 +4,7 @@ import {
   formatShortMedia,
   formatFullMedia,
   formatSeason,
+  formatCollection,
 } from './formatters'
 
 const formatPageInfo = res => ({
@@ -148,8 +149,9 @@ class TheMovieDB {
       },
     }).then(res => (res ? formatPerson(res) : res))
 
-  fetchMovieCollection = (collectionId: number | string) =>
+  fetchMovieCollection = (collectionId: string) =>
     this.fetcher(`/collection/${collectionId}`)
+      .then(res => res ? formatCollection(res) : null)
 }
 
 const TMDB = new TheMovieDB()
