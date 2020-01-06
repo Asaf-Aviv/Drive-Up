@@ -2,7 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'airbnb',
@@ -10,27 +10,27 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
   ],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   overrides: [
     {
       files: ['**/*.tsx'],
       rules: {
-        'react/prop-types': 'off'
-      }
-    }
+        'react/prop-types': 'off',
+      },
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
@@ -41,42 +41,47 @@ module.exports = {
       {
         multiline: {
           delimiter: 'none',
-          requireLast: false
+          requireLast: false,
         },
         singleline: {
           delimiter: 'semi',
-          requireLast: false
-        }
-      }
+          requireLast: false,
+        },
+      },
     ],
     'import/prefer-default-export': 'off',
     'implicit-arrow-linebreak': 'off',
     'consistent-return': 'off',
     'react/jsx-filename-extension': 'off',
-    'import/no-cycle': 'off', // research if create-react-app supports circular dependencies
-    'import/extensions': 'off', // research if create-react-app supports circular dependencies
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'no-confusing-arrow': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'import/no-extraneous-dependencies': 'off',
     'no-unused-expressions': 'off',
     'default-case': 'off',
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['draft'] }],
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['draft'] },
+    ],
     'import/no-unresolved': 'off',
-    'arrow-parens': [2, "as-needed", { "requireForBlockBody": true }],
-    "object-curly-newline": ["error", {
-      "ImportDeclaration": { "multiline": true, "minProperties": 6 }
-    }],
-    'semi': 'off',
-    "@typescript-eslint/no-unused-vars": 0, //fix later,
-    "@typescript-eslint/camelcase": 'off' //fix later,
+    'arrow-parens': [2, 'as-needed', { requireForBlockBody: true }],
+    'object-curly-newline': [
+      'error',
+      {
+        ImportDeclaration: { multiline: true, minProperties: 6 },
+      },
+    ],
+    semi: 'off',
+    '@typescript-eslint/no-unused-vars': 0, //fix later,
+    '@typescript-eslint/camelcase': 'off', //fix later,
   },
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
-      }
-    }
-  }
-};
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+}
