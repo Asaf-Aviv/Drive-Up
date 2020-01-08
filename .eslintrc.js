@@ -75,8 +75,8 @@ module.exports = {
       },
     ],
     semi: 'off',
-    '@typescript-eslint/no-unused-vars': 0, //fix later,
-    '@typescript-eslint/camelcase': 'off', //fix later,
+    '@typescript-eslint/no-unused-vars': 0,
+    '@typescript-eslint/camelcase': 'off',
   },
   settings: {
     'import/resolver': {

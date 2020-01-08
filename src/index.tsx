@@ -1,23 +1,10 @@
 import 'intersection-observer'
 import 'typeface-montserrat'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import 'simplebar/dist/simplebar.min.css'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router } from 'react-router-dom'
-import ReactGA from 'react-ga'
-import { createBrowserHistory } from 'history'
-import App from 'components/App'
-import store from 'store'
+import { App } from 'components'
 
-export const history = createBrowserHistory()
-
-ReactGA.initialize('')
-
-render(
-  <Provider store={store}>
-    <Router history={history}>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById('root'),
-)
+render(<App />, document.getElementById('root'))
