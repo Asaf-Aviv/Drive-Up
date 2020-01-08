@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs')
 
-const makeBarrels = (
+const makeBarrel = (
   directoryPath,
   barrelsFilePath,
   fromFilePath,
@@ -25,6 +25,6 @@ const makeBarrels = (
   fs.appendFileSync(barrelsFilePath, barrelFileContent)
 }
 
-makeBarrels('./src/components', './src/components/index.tsx', '.', false)
-makeBarrels('./src/components/global', './src/components/index.tsx', './global', true, false)
-makeBarrels('./src/hooks', './src/hooks/index.ts', '.', true)
+makeBarrel('./src/components/global', './src/components/index.tsx', './global', true)
+makeBarrel('./src/components', './src/components/index.tsx', '.', false, false)
+makeBarrel('./src/hooks', './src/hooks/index.ts', '.', true)

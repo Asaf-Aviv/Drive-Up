@@ -113,7 +113,7 @@ const StyledTitle = styled(Title)`
   text-align: left;
 `
 
-const StyledModalChildrenContainer = styled(ModalChildrenContainer)`
+const StyledModalChildrenContainer = styled((props: any) => <ModalChildrenContainer {...props} />)`
   max-height: 80vh;
   padding: 0 2rem;
   @media (min-width: 600px) {
@@ -204,7 +204,7 @@ export const ImageHeader = styled.header<{ bgImg: string }>`
   }};
 `
 
-const StyledPoster = styled(Poster)`
+const StyledPoster = styled((props: any) => <Poster {...props} />)`
   margin-right: 1rem;
   align-self: flex-start;
   @media (max-width: 599px) {

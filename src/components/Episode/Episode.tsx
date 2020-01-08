@@ -149,7 +149,7 @@ const StyledBackDrop = styled(BackDrop)<{ centered: boolean }>`
   }
 `
 
-const StyledOverview = styled(Overview)`
+const StyledOverview = styled((props: any) => <Overview {...props} />)`
   @media (max-width: 599px) {
     max-width: 500px;
     text-align: center;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { hot } from 'react-hot-loader/root'
-import { useLocation, BrowserRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
 import Routes from 'components/Routes'
 import NavBar from 'components/NavBar'
@@ -23,18 +23,16 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <WindowWidthProvider>
-            <NavBar />
-            <Wrapper>
-              <Routes />
-            </Wrapper>
-            <Footer />
-          </WindowWidthProvider>
-        </ThemeProvider>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <WindowWidthProvider>
+          <NavBar />
+          <Wrapper>
+            <Routes />
+          </Wrapper>
+          <Footer />
+        </WindowWidthProvider>
+      </ThemeProvider>
     </Provider>
   )
 }

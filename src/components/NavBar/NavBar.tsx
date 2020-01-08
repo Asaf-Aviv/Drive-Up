@@ -17,7 +17,7 @@ const NavBar = () => {
   )
 }
 
-const StyledContainer = styled(Container)`
+const StyledContainer = styled((props: any) => <Container {...props} />)`
   height: 100%;
   display: flex;
   align-items: center;

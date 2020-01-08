@@ -217,7 +217,7 @@ const StyledGenres = styled(Genres)`
   margin-bottom: 2rem;
 `
 
-const StyledOverview = styled(Overview)`
+const StyledOverview = styled((props: any) => <Overview {...props} />)`
   margin-bottom: 4rem;
 `
 
