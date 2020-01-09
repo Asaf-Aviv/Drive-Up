@@ -15,7 +15,7 @@ import {
 } from './reducers'
 
 export function* fetchdMoviesByQuery(action: RequestMoviesByQueryAction) {
-  const { params, page } = action
+  const { params, page } = action.meta
 
   yield put(fetchMoviesByQueryStart())
 

@@ -1,4 +1,5 @@
 import { PersonByQuery } from 'store/types'
+import { Action } from 'store/helpers'
 import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '..'
@@ -17,28 +18,22 @@ type Payload = {
   isLastPage: boolean
 }
 
-type ClearPersonsByQueryAction = {
-  type: typeof CLEAR_PERSONS_BY_QUERY
-}
+type ClearPersonsByQueryAction = Action<typeof CLEAR_PERSONS_BY_QUERY>
 
-export type RequestPersonsByQueryAction = {
-  type: typeof REQUEST_PERSONS_BY_QUERY
-  params: any
-  page: number
-}
+export type RequestPersonsByQueryAction = Action<
+  typeof REQUEST_PERSONS_BY_QUERY,
+  undefined,
+  { params: any; page: number }
+>
 
-type FetchPersonsByQueryStartAction = {
-  type: typeof FETCH_PERSONS_BY_QUERY_START
-}
+type FetchPersonsByQueryStartAction = Action<typeof FETCH_PERSONS_BY_QUERY_START>
 
-type FetchPersonsByQuerySuccessAction = {
-  type: typeof FETCH_PERSONS_BY_QUERY_SUCCESS
-  payload: Payload
-}
+type FetchPersonsByQuerySuccessAction = Action<
+  typeof FETCH_PERSONS_BY_QUERY_SUCCESS,
+  Payload
+>
 
-type FetchPersonsByQueryErrorAction = {
-  type: typeof FETCH_PERSONS_BY_QUERY_ERROR
-}
+type FetchPersonsByQueryErrorAction = Action<typeof FETCH_PERSONS_BY_QUERY_ERROR>
 
 type PersonsByQueryActionTypes =
   | ClearPersonsByQueryAction
@@ -57,8 +52,10 @@ export const requestPersonsByQuery = (
   page: number,
 ): PersonsByQueryActionTypes => ({
   type: REQUEST_PERSONS_BY_QUERY,
-  params,
-  page,
+  meta: {
+    params,
+    page,
+  },
 })
 
 export const fetchPersonsByQueryStart = (): PersonsByQueryActionTypes => ({
@@ -99,17 +96,18 @@ export const initialState: PersonsByQueryState = {
 const personsByQueryReducer = (
   state = initialState,
   action: PersonsByQueryActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case CLEAR_PERSONS_BY_QUERY:
-      return initialState
-    case FETCH_PERSONS_BY_QUERY_SUCCESS: {
-      const { results, ...payload } = action.payload
-      Object.assign(draft, payload)
-      draft.results.push(...results)
+) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case CLEAR_PERSONS_BY_QUERY:
+        return initialState
+      case FETCH_PERSONS_BY_QUERY_SUCCESS: {
+        const { results, ...payload } = action.payload
+        Object.assign(draft, payload)
+        draft.results.push(...results)
+      }
     }
-  }
-})
+  })
 
 export const selectPersonsByQuery = (state: RootState): PersonByQuery[] =>
   state.personsByQuery.results

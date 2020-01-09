@@ -1,3 +1,4 @@
+import { Action } from '../helpers'
 import withLoadingStates from '../helpers/withLoadingStates'
 import { LoadingStates } from '../types'
 
@@ -6,27 +7,21 @@ const FETCH_MOVIE_BY_ID_START = 'FETCH_MOVIE_BY_ID_START'
 const FETCH_MOVIE_BY_ID_SUCCESS = 'FETCH_MOVIE_BY_ID_SUCCESS'
 const FETCH_MOVIE_BY_ID_ERROR = 'FETCH_MOVIE_BY_ID_ERROR'
 
-export type RequestMovieByIdAction = {
-  type: typeof REQUEST_MOVIE_BY_ID
-  meta: {
-    movieId: string
-  }
-}
+export type RequestMovieByIdAction = Action<
+  typeof REQUEST_MOVIE_BY_ID,
+  undefined,
+  { movieId: string }
+>
 
-type FetchMovieByIdStartAction = {
-  type: typeof FETCH_MOVIE_BY_ID_START
-}
+type FetchMovieByIdStartAction = Action<typeof FETCH_MOVIE_BY_ID_START>
 
-type FetchMovieByIdSuccessAction = {
-  type: typeof FETCH_MOVIE_BY_ID_SUCCESS
-}
+type FetchMovieByIdSuccessAction = Action<typeof FETCH_MOVIE_BY_ID_SUCCESS>
 
-type FetchMovieByIdErrorAction = {
-  type: typeof FETCH_MOVIE_BY_ID_ERROR
-  meta: {
-    movieId: string
-  }
-}
+type FetchMovieByIdErrorAction = Action<
+  typeof FETCH_MOVIE_BY_ID_ERROR,
+  undefined,
+  { movieId: string }
+>
 
 type MovieByIdActionTypes =
   | RequestMovieByIdAction

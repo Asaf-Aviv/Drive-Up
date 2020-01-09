@@ -1,14 +1,15 @@
 import produce from 'immer'
 import addByIdReducer from 'store/helpers/addByIdReducer'
 import { RootState } from 'store'
+import { Action } from 'store/helpers'
 import { ShortMedia } from 'store/types'
 
 const ADD_SHORT_MOVIES = 'ADD_SHORT_MOVIES'
 
-type AddMoviesAction = {
-  type: typeof ADD_SHORT_MOVIES
-  payload: ShortMedia[]
-}
+type AddMoviesAction = Action<
+  typeof ADD_SHORT_MOVIES,
+  ShortMedia[]
+>
 
 type ShortMoviesState = Record<string, ShortMedia>
 

@@ -15,7 +15,7 @@ import {
 import TMDB from '../../api'
 
 export function* fetchdShowsByQuery(action: RequestShowsByQueryAction) {
-  const { params, page } = action
+  const { params, page } = action.meta
 
   yield put(fetchShowsByQueryStart())
 

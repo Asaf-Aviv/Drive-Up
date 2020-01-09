@@ -15,7 +15,7 @@ import {
 } from './reducers'
 
 export function* fetchdShowsByCategory(action: RequestShowsByCategoryAction) {
-  const { category, page } = action
+  const { category, page } = action.meta
 
   yield put(fetchShowsByCategoryStart(category))
 

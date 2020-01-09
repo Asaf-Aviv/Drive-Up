@@ -15,7 +15,7 @@ import {
 import TMDB from '../../api'
 
 export function* fetchdMoviesByCategory(action: RequestMoviesByCategoryAction) {
-  const { category, page } = action
+  const { category, page } = action.meta
 
   yield put(fetchMoviesByCategoryStart(category))
 

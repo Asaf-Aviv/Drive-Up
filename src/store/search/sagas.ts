@@ -19,7 +19,7 @@ import {
 import TMDB from '../../api'
 
 export function* fetchSearchResults(action: RequestSearchResultsAction) {
-  const { category, page, params } = action
+  const { category, page, params } = action.meta
 
   yield delay(200)
 

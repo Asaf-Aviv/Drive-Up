@@ -1,4 +1,5 @@
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from 'store/helpers'
 import { ShortMedia } from 'store/types'
 import produce from 'immer'
 import { RootState } from '..'
@@ -17,31 +18,31 @@ type Payload = {
   isLastPage: boolean
 }
 
-type ClearMoviesByQuery = {
-  type: typeof CLEAR_MOVIES_BY_CATEGORY
-}
+export type RequestMoviesByCategoryAction = Action<
+  typeof REQUEST_MOVIES_BY_CATEGORY,
+  undefined,
+  { category: string; page: number }
+>
 
-export type RequestMoviesByCategoryAction = {
-  type: typeof REQUEST_MOVIES_BY_CATEGORY
-  category: string
-  page: number
-}
+type ClearMoviesByQuery = Action<typeof CLEAR_MOVIES_BY_CATEGORY>
 
-type FetchMoviesByCategoryStartAction = {
-  type: typeof FETCH_MOVIES_BY_CATEGORY_START
-  category: string
-}
+type FetchMoviesByCategoryStartAction = Action<
+  typeof FETCH_MOVIES_BY_CATEGORY_START,
+  undefined,
+  { category: string }
+>
 
-type FetchMoviesByCategorySuccessAction = {
-  type: typeof FETCH_MOVIES_BY_CATEGORY_SUCCESS
-  category: string
-  payload: Payload
-}
+type FetchMoviesByCategorySuccessAction = Action<
+  typeof FETCH_MOVIES_BY_CATEGORY_SUCCESS,
+  Payload,
+  { category: string }
+>
 
-type FetchMoviesByCategoryErrorAction = {
-  type: typeof FETCH_MOVIES_BY_CATEGORY_ERROR
-  category: string
-}
+type FetchMoviesByCategoryErrorAction = Action<
+  typeof FETCH_MOVIES_BY_CATEGORY_ERROR,
+  undefined,
+  { category: string }
+>
 
 type MoviesByCategoryActionTypes =
   | ClearMoviesByQuery
@@ -59,15 +60,19 @@ export const requestMoviesByCategory = (
   page: number,
 ): MoviesByCategoryActionTypes => ({
   type: REQUEST_MOVIES_BY_CATEGORY,
-  category,
-  page,
+  meta: {
+    category,
+    page,
+  },
 })
 
 export const fetchMoviesByCategoryStart = (
   category: string,
 ): MoviesByCategoryActionTypes => ({
   type: FETCH_MOVIES_BY_CATEGORY_START,
-  category,
+  meta: {
+    category,
+  },
 })
 
 export const fetchMoviesByCategorySuccess = (
@@ -75,15 +80,19 @@ export const fetchMoviesByCategorySuccess = (
   payload: Payload,
 ): MoviesByCategoryActionTypes => ({
   type: FETCH_MOVIES_BY_CATEGORY_SUCCESS,
-  category,
   payload,
+  meta: {
+    category,
+  },
 })
 
 export const fetchMoviesByCategoryError = (
   category: string,
 ): MoviesByCategoryActionTypes => ({
   type: FETCH_MOVIES_BY_CATEGORY_ERROR,
-  category,
+  meta: {
+    category,
+  },
 })
 
 type MoviesByCategoryState = {
@@ -118,7 +127,6 @@ const moviesByCategoryReducer = (
         const { results, ...payload } = action.payload
         Object.assign(draft, payload)
         draft.results.push(...results)
-        break
       }
     }
   })

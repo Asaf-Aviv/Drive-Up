@@ -1,6 +1,7 @@
 import { RootState } from 'store'
 import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from 'store/helpers'
 import { SeasonWithEpisodes } from '../types'
 
 export const REQUEST_SEASON = 'REQUEST_SEASON'
@@ -8,30 +9,21 @@ const FETCH_SEASON_START = 'FETCH_SEASON_START'
 const FETCH_SEASON_SUCCESS = 'FETCH_SEASON_SUCCESS'
 const FETCH_SEASON_ERROR = 'FETCH_SEASON_ERROR'
 
-export type RequestShowSeasonAction = {
-  type: typeof REQUEST_SEASON
-  meta: {
-    showId: string
-    seasonNumber: string
-  }
-}
+export type RequestShowSeasonAction = Action<
+  typeof REQUEST_SEASON,
+  undefined,
+  { seasonNumber: string; showId: string }
+>
 
-type FetchShowSeasonStartAction = {
-  type: typeof FETCH_SEASON_START
-}
+type FetchShowSeasonStartAction = Action<typeof FETCH_SEASON_START>
 
-type FetchShowSeasonSuccessAction = {
-  type: typeof FETCH_SEASON_SUCCESS
-  payload: SeasonWithEpisodes | null
-  meta: {
-    showId: string
-    seasonNumber: string
-  }
-}
+type FetchShowSeasonSuccessAction = Action<
+  typeof FETCH_SEASON_SUCCESS,
+  SeasonWithEpisodes | null,
+  { seasonNumber: string; showId: string }
+>
 
-type FetchShowSeasonErrorAction = {
-  type: typeof FETCH_SEASON_ERROR
-}
+type FetchShowSeasonErrorAction = Action<typeof FETCH_SEASON_ERROR>
 
 export type ShowSeasonsActionTypes =
   | RequestShowSeasonAction
@@ -117,10 +109,8 @@ export const selectShowSeasonEpisode = ({
 }: SelectSeasonEpisode) => ({ showSeasons }: RootState) => {
   const season = showSeasons.byShowId[showId]?.[seasonNumber]
   if (season === undefined) return
-  return (
-    season.episodes.find(episode => episode.episodeNumber === +episodeNumber)
-    ?? null
-  )
+  return season.episodes
+    .find(episode => episode.episodeNumber === +episodeNumber) ?? null
 }
 
 export default withLoadingStates({

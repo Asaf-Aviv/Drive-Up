@@ -1,5 +1,6 @@
 import produce from 'immer'
 import { RootState } from 'store'
+import { Action } from 'store/helpers'
 import { LoadingStates } from '../types'
 
 export type TredingFields =
@@ -15,26 +16,31 @@ const FETCH_TRENDINGS_ERROR = 'FETCH_TRENDINGS_ERROR'
 type TrendingsActionTypeCreator<T, P = never> = {
   type: T
   payload?: P
-  meta: {
-    fieldName: TredingFields
-  }
+  meta: { fieldName: TredingFields }
 }
 
-export type RequestTrendingsAction = TrendingsActionTypeCreator<
-  typeof REQUEST_TRENDINGS
+export type RequestTrendingsAction = Action<
+  typeof REQUEST_TRENDINGS,
+  undefined,
+  { fieldName: TredingFields }
 >
 
-type FetchTrendingsStartAction = TrendingsActionTypeCreator<
-  typeof FETCH_TRENDINGS_START
+type FetchTrendingsStartAction = Action<
+  typeof FETCH_TRENDINGS_START,
+  undefined,
+  { fieldName: TredingFields }
 >
 
-type FetchTrendingsSuccessAction = TrendingsActionTypeCreator<
+type FetchTrendingsSuccessAction = Action<
   typeof FETCH_TRENDINGS_SUCCESS,
-  string[]
+  string[],
+  { fieldName: TredingFields }
 >
 
-type FetchTrendingsErrorAction = TrendingsActionTypeCreator<
-  typeof FETCH_TRENDINGS_ERROR
+type FetchTrendingsErrorAction = Action<
+  typeof FETCH_TRENDINGS_ERROR,
+  undefined,
+  { fieldName: TredingFields }
 >
 
 type TrendingActionTypes =

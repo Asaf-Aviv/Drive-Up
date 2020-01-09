@@ -1,6 +1,7 @@
 import produce from 'immer'
 import { Collection, CollectionInStore } from 'store/types'
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from '../helpers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { RootState } from '..'
 
@@ -9,26 +10,21 @@ const FETCH_COLLECTION_START = 'FETCH_COLLECTION_START'
 const FETCH_COLLECTION_SUCCESS = 'FETCH_COLLECTION_SUCCESS'
 const FETCH_COLLECTION_ERROR = 'FETCH_COLLECTION_ERROR'
 
-export type RequestCollectionAction = {
-  type: typeof REQUEST_COLLECTION
-  collectionId: string
-}
+export type RequestCollectionAction = Action<
+  typeof REQUEST_COLLECTION,
+  undefined,
+  { collectionId: string }
+>
 
-type FetchCollectionStartAction = {
-  type: typeof FETCH_COLLECTION_START
-}
+type FetchCollectionStartAction = Action<typeof FETCH_COLLECTION_START>
 
-type FetchCollectionSuccessAction = {
-  type: typeof FETCH_COLLECTION_SUCCESS
-  collection: CollectionInStore | null
-  meta: {
-    collectionId: string
-  }
-}
+type FetchCollectionSuccessAction = Action<
+  typeof FETCH_COLLECTION_SUCCESS,
+  CollectionInStore | null,
+  { collectionId: string }
+>
 
-type FetchCollectionErrorAction = {
-  type: typeof FETCH_COLLECTION_ERROR
-}
+type FetchCollectionErrorAction = Action<typeof FETCH_COLLECTION_ERROR>
 
 export type CollectionActionTypes =
   | RequestCollectionAction
@@ -40,7 +36,7 @@ export const requestCollection = (
   collectionId: string,
 ): CollectionActionTypes => ({
   type: REQUEST_COLLECTION,
-  collectionId,
+  meta: { collectionId },
 })
 
 export const fetchCollectionStart = (): CollectionActionTypes => ({
@@ -48,11 +44,11 @@ export const fetchCollectionStart = (): CollectionActionTypes => ({
 })
 
 export const fetchCollectionSuccess = (
-  collection: CollectionInStore | null,
+  payload: CollectionInStore | null,
   collectionId: string,
 ): CollectionActionTypes => ({
   type: FETCH_COLLECTION_SUCCESS,
-  collection,
+  payload,
   meta: {
     collectionId,
   },
@@ -77,14 +73,16 @@ export const initialState: CollectionsState = {
 const collectionsReducer = (
   state = initialState,
   action: CollectionActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case FETCH_COLLECTION_SUCCESS: {
-      const { collection, meta: { collectionId } } = action
-      draft.byIds[collectionId] = collection
+) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case FETCH_COLLECTION_SUCCESS: {
+        const { payload, meta } = action
+        const { collectionId } = meta
+        draft.byIds[collectionId] = payload
+      }
     }
-  }
-})
+  })
 
 export const selectCollection = (collectionId: string) => (
   state: RootState,

@@ -1,6 +1,7 @@
 import withLoadingStates from 'store/helpers/withLoadingStates'
 import addByIdReducer from 'store/helpers/addByIdReducer'
 import produce from 'immer'
+import { Action } from '../helpers'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { RootState } from '..'
@@ -11,31 +12,25 @@ const FETCH_PERSON_BY_ID_START = 'FETCH_PERSON_BY_ID_START'
 const FETCH_PERSON_BY_ID_SUCCESS = 'FETCH_PERSON_BY_ID_SUCCESS'
 const FETCH_PERSON_BY_ID_ERROR = 'FETCH_PERSON_BY_ID_ERROR'
 
-export type RequestPersonByIdAction = {
-  type: typeof REQUEST_PERSON_BY_ID
-  meta: {
-    personId: string
-  }
-}
+export type RequestPersonByIdAction = Action<
+  typeof REQUEST_PERSON_BY_ID,
+  undefined,
+  { personId: string }
+>
 
-type FetchPersonByIdStartAction = {
-  type: typeof FETCH_PERSON_BY_ID_START
-}
+type FetchPersonByIdStartAction = Action<typeof FETCH_PERSON_BY_ID_START>
 
-type FetchPersonByIdSuccessAction = {
-  type: typeof FETCH_PERSON_BY_ID_SUCCESS
-  payload: PersonInStore | null
-  meta: {
-    personId: string
-  }
-}
+type FetchPersonByIdSuccessAction = Action<
+  typeof FETCH_PERSON_BY_ID_SUCCESS,
+  PersonInStore | null,
+  { personId: string }
+>
 
-type FetchPersonByIdErrorAction = {
-  type: typeof FETCH_PERSON_BY_ID_ERROR
-  meta: {
-    personId: string
-  }
-}
+type FetchPersonByIdErrorAction = Action<
+  typeof FETCH_PERSON_BY_ID_ERROR,
+  undefined,
+  { personId: string }
+>
 
 type PersonByIdActionTypes =
   | RequestPersonByIdAction
@@ -65,7 +60,9 @@ export const fetchPersonByIdSuccess = (
   },
 })
 
-export const fetchPersonByIdError = (personId: string): PersonByIdActionTypes => ({
+export const fetchPersonByIdError = (
+  personId: string,
+): PersonByIdActionTypes => ({
   type: FETCH_PERSON_BY_ID_ERROR,
   meta: {
     personId,
@@ -84,15 +81,13 @@ const initialState: PersonState = {
   error: false,
 }
 
-const PersonReducer = (
-  state = initialState,
-  action: PersonByIdActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case FETCH_PERSON_BY_ID_SUCCESS:
-      addByIdReducer(draft.byId, action.payload, action.meta.personId)
-  }
-})
+const PersonReducer = (state = initialState, action: PersonByIdActionTypes) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case FETCH_PERSON_BY_ID_SUCCESS:
+        addByIdReducer(draft.byId, action.payload, action.meta.personId)
+    }
+  })
 
 export const selectPersonById = (id: string) => (
   state: RootState,

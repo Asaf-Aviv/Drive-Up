@@ -1,5 +1,5 @@
-import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from 'store/helpers'
 import { LoadingStates } from '../types'
 
 export const REQUEST_SHOW_BY_ID = 'REQUEST_SHOW_BY_ID'
@@ -7,27 +7,21 @@ const FETCH_SHOW_BY_ID_START = 'FETCH_SHOW_BY_ID_START'
 const FETCH_SHOW_BY_ID_SUCCESS = 'FETCH_SHOW_BY_ID_SUCCESS'
 const FETCH_SHOW_BY_ID_ERROR = 'FETCH_SHOW_BY_ID_ERROR'
 
-export type RequestShowByIdAction = {
-  type: typeof REQUEST_SHOW_BY_ID
-  meta: {
-    showId: string
-  }
-}
+export type RequestShowByIdAction = Action<
+  typeof REQUEST_SHOW_BY_ID,
+  undefined,
+  { showId: string }
+>
 
-type FetchShowByIdStartAction = {
-  type: typeof FETCH_SHOW_BY_ID_START
-}
+type FetchShowByIdStartAction = Action<typeof FETCH_SHOW_BY_ID_START>
 
-type FetchShowByIdSuccessAction = {
-  type: typeof FETCH_SHOW_BY_ID_SUCCESS
-}
+type FetchShowByIdSuccessAction = Action<typeof FETCH_SHOW_BY_ID_SUCCESS>
 
-type FetchShowByIdErrorAction = {
-  type: typeof FETCH_SHOW_BY_ID_ERROR
-  meta: {
-    showId: string
-  }
-}
+type FetchShowByIdErrorAction = Action<
+  typeof FETCH_SHOW_BY_ID_ERROR,
+  undefined,
+  { showId: string }
+>
 
 type ShowByIdActionTypes =
   | RequestShowByIdAction

@@ -2,18 +2,17 @@ import produce from 'immer'
 import { RootState } from 'store'
 import addByIdReducer from 'store/helpers/addByIdReducer'
 import { FullShowInStore } from 'store/types'
+import { Action } from '../helpers'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 import { SelectedFullShow } from '../types'
 
 const ADD_FULL_SHOW = 'ADD_FULL_SHOW'
 
-type AddShowAction = {
-  type: typeof ADD_FULL_SHOW
-  payload: FullShowInStore | null
-  meta: {
-    showId: string
-  }
-}
+type AddShowAction = Action<
+  typeof ADD_FULL_SHOW,
+  FullShowInStore | null,
+  { showId: string }
+>
 
 export const addFullShow = (
   payload: FullShowInStore | null,
@@ -28,15 +27,13 @@ export const addFullShow = (
 
 type ShowsState = Record<string, FullShowInStore | null>
 
-const fullShowsReducer = (
-  state: ShowsState = {},
-  action: AddShowAction,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case ADD_FULL_SHOW:
-      addByIdReducer(draft, action.payload, action.meta.showId)
-  }
-})
+const fullShowsReducer = (state: ShowsState = {}, action: AddShowAction) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case ADD_FULL_SHOW:
+        addByIdReducer(draft, action.payload, action.meta.showId)
+    }
+  })
 
 export const selectShowById = (id: string) => (
   state: RootState,

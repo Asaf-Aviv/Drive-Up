@@ -10,7 +10,7 @@ import {
 } from './reducers'
 import TMDB from '../../api'
 
-export function* fetchCollection({ collectionId }: RequestCollectionAction) {
+export function* fetchCollection({ meta: { collectionId } }: RequestCollectionAction) {
   yield put(fetchCollectionStart())
 
   let collection

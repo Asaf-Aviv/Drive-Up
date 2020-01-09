@@ -1,6 +1,7 @@
 import { PersonByQuery, ShortMedia, Category } from 'store/types'
 import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from '../helpers'
 import { RootState } from '../index'
 
 export const REQUEST_SEARCH_RESULTS = 'REQUEST_SEARCH_RESULTS'
@@ -19,27 +20,26 @@ type SearchResultsPayload = {
   isLastPage: boolean
 }
 
-export type RequestSearchResultsAction = {
-  type: typeof REQUEST_SEARCH_RESULTS
-  category: Category
-  params: {
-    query: string
+export type RequestSearchResultsAction = Action<
+  typeof REQUEST_SEARCH_RESULTS,
+  undefined,
+  {
+    category: Category
+    params: {
+      query: string
+    }
+    page: number
   }
-  page: number
-}
+>
 
-type FetchSearchResultstartAction = {
-  type: typeof FETCH_SEARCH_RESULTS_START
-}
+type FetchSearchResultstartAction = Action<typeof FETCH_SEARCH_RESULTS_START>
 
 type FetchSearchResultsSuccessAction = {
   type: typeof FETCH_SEARCH_RESULTS_SUCCESS
   payload: SearchResultsPayload
 }
 
-type FetchSearchResultsErrorAction = {
-  type: typeof FETCH_SEARCH_RESULTS_ERROR
-}
+type FetchSearchResultsErrorAction = Action<typeof FETCH_SEARCH_RESULTS_ERROR>
 
 type ClearSearchStateAction = {
   type: typeof CLEAR_SEARCH_RESULTS
@@ -58,9 +58,11 @@ export const requestSearchResults = (
   page: number,
 ): SearchActionTypes => ({
   type: REQUEST_SEARCH_RESULTS,
-  category,
-  params,
-  page,
+  meta: {
+    category,
+    params,
+    page,
+  },
 })
 
 export const fetchSearchResultsStart = (): SearchActionTypes => ({

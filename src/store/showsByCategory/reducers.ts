@@ -1,6 +1,7 @@
 import { ShortMedia } from 'store/types'
 import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
+import { Action } from 'store/helpers'
 import { RootState } from '..'
 
 export const REQUEST_SHOWS_BY_CATEGORY = 'REQUEST_SHOWS_BY_CATEGORY'
@@ -17,31 +18,31 @@ type Payload = {
   isLastPage: boolean
 }
 
-type ClearShowsByQuery = {
-  type: typeof CLEAR_SHOWS_BY_CATEGORY
-}
+type ClearShowsByQuery = Action<typeof CLEAR_SHOWS_BY_CATEGORY>
 
-export type RequestShowsByCategoryAction = {
-  type: typeof REQUEST_SHOWS_BY_CATEGORY
-  category: string
-  page: number
-}
+export type RequestShowsByCategoryAction = Action<
+  typeof REQUEST_SHOWS_BY_CATEGORY,
+  undefined,
+  { category: string; page: number }
+>
 
-type FetchShowsByCategoryStartAction = {
-  type: typeof FETCH_SHOWS_BY_CATEGORY_START
-  category: string
-}
+type FetchShowsByCategoryStartAction = Action<
+  typeof FETCH_SHOWS_BY_CATEGORY_START,
+  undefined,
+  { category: string }
+>
 
-type FetchShowsByCategorySuccessAction = {
-  type: typeof FETCH_SHOWS_BY_CATEGORY_SUCCESS
-  category: string
-  payload: Payload
-}
+type FetchShowsByCategorySuccessAction = Action<
+  typeof FETCH_SHOWS_BY_CATEGORY_SUCCESS,
+  Payload,
+  { category: string }
+>
 
-type FetchShowsByCategoryErrorAction = {
-  type: typeof FETCH_SHOWS_BY_CATEGORY_ERROR
-  category: string
-}
+type FetchShowsByCategoryErrorAction = Action<
+  typeof FETCH_SHOWS_BY_CATEGORY_ERROR,
+  undefined,
+  { category: string }
+>
 
 type ShowsByCategoryActionTypes =
   | ClearShowsByQuery
@@ -59,15 +60,19 @@ export const requestShowsByCategory = (
   page: number,
 ): ShowsByCategoryActionTypes => ({
   type: REQUEST_SHOWS_BY_CATEGORY,
-  category,
-  page,
+  meta: {
+    category,
+    page,
+  },
 })
 
 export const fetchShowsByCategoryStart = (
   category: string,
 ): ShowsByCategoryActionTypes => ({
   type: FETCH_SHOWS_BY_CATEGORY_START,
-  category,
+  meta: {
+    category,
+  },
 })
 
 export const fetchShowsByCategorySuccess = (
@@ -75,15 +80,19 @@ export const fetchShowsByCategorySuccess = (
   payload: Payload,
 ): ShowsByCategoryActionTypes => ({
   type: FETCH_SHOWS_BY_CATEGORY_SUCCESS,
-  category,
   payload,
+  meta: {
+    category,
+  },
 })
 
 export const fetchShowsByCategoryError = (
   category: string,
 ): ShowsByCategoryActionTypes => ({
   type: FETCH_SHOWS_BY_CATEGORY_ERROR,
-  category,
+  meta: {
+    category,
+  },
 })
 
 type ShowsByCategoryState = {

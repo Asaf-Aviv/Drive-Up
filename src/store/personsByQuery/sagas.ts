@@ -9,7 +9,7 @@ import {
 import TMDB from '../../api'
 
 export function* fetchPersonsByQuery(action: RequestPersonsByQueryAction) {
-  const { page } = action
+  const { page } = action.meta
 
   yield put(fetchPersonsByQueryStart())
 

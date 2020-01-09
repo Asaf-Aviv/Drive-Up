@@ -1,18 +1,17 @@
 import produce from 'immer'
 import { RootState } from 'store'
+import { Action } from '../helpers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { SelectedFullMovie, FullMovieInStore } from '../types'
 import addByIdReducer from '../helpers/addByIdReducer'
 
 const ADD_FULL_MOVIE = 'ADD_FULL_MOVIE'
 
-type AddMovieAction = {
-  type: typeof ADD_FULL_MOVIE
-  payload: FullMovieInStore | null
-  meta: {
-    movieId: string
-  }
-}
+type AddMovieAction = Action<
+  typeof ADD_FULL_MOVIE,
+  FullMovieInStore | null,
+  { movieId: string }
+>
 
 export const addFullMovie = (
   payload: FullMovieInStore | null,
