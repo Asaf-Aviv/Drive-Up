@@ -1,5 +1,6 @@
 import { ShortMedia } from 'store/types'
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '..'
 
 export const REQUEST_SHOWS_BY_QUERY = 'REQUEST_SHOWS_BY_QUERY'
@@ -101,24 +102,19 @@ const showsByQueryReducer = (
   switch (action.type) {
     case CLEAR_SHOWS_BY_QUERY:
       return initialState
-    case FETCH_SHOWS_BY_QUERY_START:
-      draft.loading = true
-      draft.error = false
-      break
     case FETCH_SHOWS_BY_QUERY_SUCCESS: {
       const { results, ...payload } = action.payload
       Object.assign(draft, payload)
-      draft.loading = false
       draft.results.push(...results)
-      break
     }
-    case FETCH_SHOWS_BY_QUERY_ERROR:
-      draft.error = true
-      draft.loading = false
   }
 })
 
 export const selectShowsByQuery = (state: RootState): ShortMedia[] =>
   state.showsByQuery.results.map(id => state.shortShows[id])
 
-export default showsByQueryReducer
+export default withLoadingStates({
+  start: FETCH_SHOWS_BY_QUERY_START,
+  success: FETCH_SHOWS_BY_QUERY_SUCCESS,
+  error: FETCH_SHOWS_BY_QUERY_ERROR,
+})(showsByQueryReducer)

@@ -2,7 +2,7 @@ import produce from 'immer'
 import { RootState } from 'store'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { SelectedFullMovie, FullMovieInStore } from '../types'
-import { addByIdReducer } from '../helpers'
+import addByIdReducer from '../helpers/addByIdReducer'
 
 const ADD_FULL_MOVIE = 'ADD_FULL_MOVIE'
 

@@ -1,4 +1,5 @@
-import { addByIdReducer } from 'store/helpers'
+import withLoadingStates from 'store/helpers/withLoadingStates'
+import addByIdReducer from 'store/helpers/addByIdReducer'
 import produce from 'immer'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
@@ -88,17 +89,8 @@ const PersonReducer = (
   action: PersonByIdActionTypes,
 ) => produce(state, (draft) => {
   switch (action.type) {
-    case FETCH_PERSON_BY_ID_START:
-      draft.loading = true
-      draft.error = false
-      break
     case FETCH_PERSON_BY_ID_SUCCESS:
       addByIdReducer(draft.byId, action.payload, action.meta.personId)
-      draft.loading = false
-      break
-    case FETCH_PERSON_BY_ID_ERROR:
-      draft.error = true
-      draft.loading = false
   }
 })
 
@@ -116,4 +108,8 @@ export const selectPersonById = (id: string) => (
   }
 }
 
-export default PersonReducer
+export default withLoadingStates({
+  start: FETCH_PERSON_BY_ID_START,
+  success: FETCH_PERSON_BY_ID_SUCCESS,
+  error: FETCH_PERSON_BY_ID_ERROR,
+})(PersonReducer)

@@ -1,6 +1,6 @@
 import produce from 'immer'
 import { RootState } from 'store'
-import { addByIdReducer } from 'store/helpers'
+import addByIdReducer from 'store/helpers/addByIdReducer'
 import { FullShowInStore } from 'store/types'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 import { SelectedFullShow } from '../types'

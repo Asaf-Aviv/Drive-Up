@@ -1,5 +1,6 @@
 import { PersonByQuery, ShortMedia, Category } from 'store/types'
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '../index'
 
 export const REQUEST_SEARCH_RESULTS = 'REQUEST_SEARCH_RESULTS'
@@ -108,25 +109,15 @@ const initialState: SearchState = {
 const searchReducer = (state = initialState, action: SearchActionTypes) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case FETCH_SEARCH_RESULTS_START:
-        draft.loading = true
-        draft.error = false
-        break
+      case CLEAR_SEARCH_RESULTS:
+        return initialState
       case FETCH_SEARCH_RESULTS_SUCCESS: {
         const { movies, shows, persons, ...payload } = action.payload
         Object.assign(draft, payload)
         draft.movies.push(...movies)
         draft.shows.push(...shows)
         draft.persons.push(...persons)
-        draft.loading = false
-        break
       }
-      case FETCH_SEARCH_RESULTS_ERROR:
-        draft.loading = false
-        draft.error = true
-        break
-      case CLEAR_SEARCH_RESULTS:
-        return initialState
     }
   })
 
@@ -138,4 +129,8 @@ export const selectSearchResults = (
   search.persons,
 ]
 
-export default searchReducer
+export default withLoadingStates({
+  start: FETCH_SEARCH_RESULTS_START,
+  success: FETCH_SEARCH_RESULTS_SUCCESS,
+  error: FETCH_SEARCH_RESULTS_ERROR,
+})(searchReducer)

@@ -1,3 +1,4 @@
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { ShortMedia } from 'store/types'
 import produce from 'immer'
 import { RootState } from '..'
@@ -101,24 +102,19 @@ const moviesByQueryReducer = (
   switch (action.type) {
     case CLEAR_MOVIES_BY_QUERY:
       return initialState
-    case FETCH_MOVIES_BY_QUERY_START:
-      draft.loading = true
-      draft.error = false
-      break
     case FETCH_MOVIES_BY_QUERY_SUCCESS: {
       const { results, ...payload } = action.payload
       Object.assign(draft, payload)
-      draft.loading = false
       draft.results.push(...results)
-      break
     }
-    case FETCH_MOVIES_BY_QUERY_ERROR:
-      draft.error = true
-      draft.loading = false
   }
 })
 
 export const selectMoviesByQuery = (state: RootState): ShortMedia[] =>
   state.moviesByQuery.results.map(id => state.shortMovies[id])
 
-export default moviesByQueryReducer
+export default withLoadingStates({
+  start: FETCH_MOVIES_BY_QUERY_START,
+  success: FETCH_MOVIES_BY_QUERY_SUCCESS,
+  error: FETCH_MOVIES_BY_QUERY_ERROR,
+})(moviesByQueryReducer)

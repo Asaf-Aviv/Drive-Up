@@ -1,5 +1,6 @@
 import { RootState } from 'store'
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { SeasonWithEpisodes } from '../types'
 
 export const REQUEST_SEASON = 'REQUEST_SEASON'
@@ -91,20 +92,11 @@ const showSeasonsReducer = (
 ) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case FETCH_SEASON_START:
-        draft.loading = true
-        draft.error = false
-        break
       case FETCH_SEASON_SUCCESS: {
         const { showId, seasonNumber } = action.meta
-        draft.loading = false
         draft.byShowId[showId] = draft.byShowId[showId] || {}
         draft.byShowId[showId][seasonNumber] = action.payload
-        break
       }
-      case FETCH_SEASON_ERROR:
-        draft.error = true
-        draft.loading = false
     }
   })
 
@@ -125,7 +117,14 @@ export const selectShowSeasonEpisode = ({
 }: SelectSeasonEpisode) => ({ showSeasons }: RootState) => {
   const season = showSeasons.byShowId[showId]?.[seasonNumber]
   if (season === undefined) return
-  return season.episodes.find(episode => episode.episodeNumber === +episodeNumber) ?? null
+  return (
+    season.episodes.find(episode => episode.episodeNumber === +episodeNumber)
+    ?? null
+  )
 }
 
-export default showSeasonsReducer
+export default withLoadingStates({
+  start: FETCH_SEASON_START,
+  success: FETCH_SEASON_SUCCESS,
+  error: FETCH_SEASON_ERROR,
+})(showSeasonsReducer)

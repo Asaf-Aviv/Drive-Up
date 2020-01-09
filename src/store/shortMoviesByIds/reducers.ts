@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { addByIdReducer } from 'store/helpers'
+import addByIdReducer from 'store/helpers/addByIdReducer'
 import { RootState } from 'store'
 import { ShortMedia } from 'store/types'
 

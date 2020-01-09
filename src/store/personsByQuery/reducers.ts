@@ -1,5 +1,6 @@
-import { PersonByQuery, ResultsPayload } from 'store/types'
+import { PersonByQuery } from 'store/types'
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '..'
 
 export const REQUEST_PERSONS_BY_QUERY = 'REQUEST_PERSONS_BY_QUERY'
@@ -102,24 +103,19 @@ const personsByQueryReducer = (
   switch (action.type) {
     case CLEAR_PERSONS_BY_QUERY:
       return initialState
-    case FETCH_PERSONS_BY_QUERY_START:
-      draft.loading = true
-      draft.error = false
-      break
     case FETCH_PERSONS_BY_QUERY_SUCCESS: {
       const { results, ...payload } = action.payload
       Object.assign(draft, payload)
-      draft.loading = false
       draft.results.push(...results)
-      break
     }
-    case FETCH_PERSONS_BY_QUERY_ERROR:
-      draft.error = true
-      draft.loading = false
   }
 })
 
 export const selectPersonsByQuery = (state: RootState): PersonByQuery[] =>
   state.personsByQuery.results
 
-export default personsByQueryReducer
+export default withLoadingStates({
+  start: FETCH_PERSONS_BY_QUERY_START,
+  success: FETCH_PERSONS_BY_QUERY_SUCCESS,
+  error: FETCH_PERSONS_BY_QUERY_ERROR,
+})(personsByQueryReducer)

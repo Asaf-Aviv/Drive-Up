@@ -1,5 +1,6 @@
 import { ShortMedia } from 'store/types'
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '..'
 
 export const REQUEST_SHOWS_BY_CATEGORY = 'REQUEST_SHOWS_BY_CATEGORY'
@@ -113,24 +114,19 @@ const showsByCategoryReducer = (
     switch (action.type) {
       case CLEAR_SHOWS_BY_CATEGORY:
         return initialState
-      case FETCH_SHOWS_BY_CATEGORY_START:
-        draft.loading = true
-        draft.error = false
-        break
       case FETCH_SHOWS_BY_CATEGORY_SUCCESS: {
         const { results, ...payload } = action.payload
         Object.assign(draft, payload)
-        draft.loading = false
         draft.results.push(...results)
-        break
       }
-      case FETCH_SHOWS_BY_CATEGORY_ERROR:
-        draft.error = true
-        draft.loading = false
     }
   })
 
 export const selectShowsByCategory = (state: RootState): ShortMedia[] =>
   state.showsByCategory.results.map(id => state.shortShows[id])
 
-export default showsByCategoryReducer
+export default withLoadingStates({
+  start: FETCH_SHOWS_BY_CATEGORY_START,
+  success: FETCH_SHOWS_BY_CATEGORY_SUCCESS,
+  error: FETCH_SHOWS_BY_CATEGORY_ERROR,
+})(showsByCategoryReducer)

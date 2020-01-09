@@ -1,4 +1,5 @@
 import produce from 'immer'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { LoadingStates } from '../types'
 
 export const REQUEST_SHOW_BY_ID = 'REQUEST_SHOW_BY_ID'
@@ -64,19 +65,10 @@ const initialState: LoadingStates = {
 const showReducer = (
   state = initialState,
   action: ShowByIdActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case FETCH_SHOW_BY_ID_START:
-      draft.loading = true
-      draft.error = false
-      break
-    case FETCH_SHOW_BY_ID_SUCCESS:
-      draft.loading = false
-      break
-    case FETCH_SHOW_BY_ID_ERROR:
-      draft.error = true
-      draft.loading = false
-  }
-})
+) => state
 
-export default showReducer
+export default withLoadingStates({
+  start: FETCH_SHOW_BY_ID_START,
+  success: FETCH_SHOW_BY_ID_SUCCESS,
+  error: FETCH_SHOW_BY_ID_ERROR,
+})(showReducer)

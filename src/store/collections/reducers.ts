@@ -1,5 +1,6 @@
 import produce from 'immer'
 import { Collection, CollectionInStore } from 'store/types'
+import withLoadingStates from 'store/helpers/withLoadingStates'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { RootState } from '..'
 
@@ -78,20 +79,10 @@ const collectionsReducer = (
   action: CollectionActionTypes,
 ) => produce(state, (draft) => {
   switch (action.type) {
-    case FETCH_COLLECTION_START:
-      draft.loading = true
-      draft.error = false
-      break
     case FETCH_COLLECTION_SUCCESS: {
       const { collection, meta: { collectionId } } = action
-
       draft.byIds[collectionId] = collection
-      draft.loading = false
-      break
     }
-    case FETCH_COLLECTION_ERROR:
-      draft.loading = false
-      draft.error = true
   }
 })
 
@@ -108,4 +99,8 @@ export const selectCollection = (collectionId: string) => (
   }
 }
 
-export default collectionsReducer
+export default withLoadingStates({
+  start: FETCH_COLLECTION_START,
+  success: FETCH_COLLECTION_SUCCESS,
+  error: FETCH_COLLECTION_ERROR,
+})(collectionsReducer)

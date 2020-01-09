@@ -1,4 +1,4 @@
-import produce from 'immer'
+import withLoadingStates from '../helpers/withLoadingStates'
 import { LoadingStates } from '../types'
 
 export const REQUEST_MOVIE_BY_ID = 'REQUEST_MOVIE_BY_ID'
@@ -64,19 +64,10 @@ const initialState = {
 const movieReducer = (
   state: LoadingStates = initialState,
   action: MovieByIdActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case FETCH_MOVIE_BY_ID_START:
-      draft.loading = true
-      draft.error = false
-      break
-    case FETCH_MOVIE_BY_ID_SUCCESS:
-      draft.loading = false
-      break
-    case FETCH_MOVIE_BY_ID_ERROR:
-      draft.error = true
-      draft.loading = false
-  }
-})
+) => state
 
-export default movieReducer
+export default withLoadingStates({
+  start: FETCH_MOVIE_BY_ID_START,
+  success: FETCH_MOVIE_BY_ID_SUCCESS,
+  error: FETCH_MOVIE_BY_ID_ERROR,
+})(movieReducer)
