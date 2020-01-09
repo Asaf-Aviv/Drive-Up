@@ -1,4 +1,4 @@
-import { filterExistingMedia } from 'store/helpers'
+import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { addShortShows } from '../shortShowsByIds/reducers'
 import { addFullShow } from '../fullShowsByIds/reducers'

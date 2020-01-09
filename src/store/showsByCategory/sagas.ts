@@ -5,7 +5,7 @@ import {
 } from 'redux-saga/effects'
 import TMDB from 'api'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
-import { filterExistingMedia } from '../helpers'
+import filterExistingMedia from '../helpers/filterExistingMedia'
 import {
   REQUEST_SHOWS_BY_CATEGORY,
   RequestShowsByCategoryAction,

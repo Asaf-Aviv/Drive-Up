@@ -59,6 +59,7 @@ module.exports = {
     'no-confusing-arrow': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'react/state-in-constructor': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-unused-expressions': 'off',
     'default-case': 'off',

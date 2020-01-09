@@ -4,7 +4,7 @@ import {
   call,
 } from 'redux-saga/effects'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
-import { filterExistingMedia } from 'store/helpers'
+import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { getMediaType, getTimePeriod, getFilterField } from './utils'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {

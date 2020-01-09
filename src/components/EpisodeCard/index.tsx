@@ -1,3 +1,1 @@
-import EpisodeCard from './EpisodeCard'
-
-export default EpisodeCard
+export { default } from './EpisodeCard'

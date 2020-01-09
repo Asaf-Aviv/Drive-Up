@@ -6,7 +6,7 @@ import {
   delay,
 } from 'redux-saga/effects'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
-import { filterExistingMedia } from '../helpers'
+import filterExistingMedia from '../helpers/filterExistingMedia'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
   REQUEST_SEARCH_RESULTS,

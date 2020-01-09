@@ -4,7 +4,7 @@ import {
   call,
 } from 'redux-saga/effects'
 import TMDB from 'api'
-import { filterExistingMedia } from '../helpers'
+import filterExistingMedia from '../helpers/filterExistingMedia'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
   REQUEST_MOVIES_BY_QUERY,

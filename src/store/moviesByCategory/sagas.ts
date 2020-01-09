@@ -3,7 +3,7 @@ import {
   takeLatest,
   call,
 } from 'redux-saga/effects'
-import { filterExistingMedia } from '../helpers'
+import filterExistingMedia from '../helpers/filterExistingMedia'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
   REQUEST_MOVIES_BY_CATEGORY,
