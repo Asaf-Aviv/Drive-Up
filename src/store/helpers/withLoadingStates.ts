@@ -1,4 +1,4 @@
-import { Action as ReduxAction } from 'redux'
+import { Action } from 'redux'
 
 const startReducer = <S>(state: S): S => ({
   ...state,
@@ -19,21 +19,17 @@ const errorReducer = <S>(state: S): S => ({
 
 type LoadingActionTypes = Record<'start' | 'success' | 'error', string>
 
-const withLoadingStates = ({
-  start,
-  success,
-  error,
-}: LoadingActionTypes) => {
+const withLoadingStates = ({ start, success, error }: LoadingActionTypes) => {
   const actionReducerMapper = {
     [start]: startReducer,
     [success]: successReducer,
     [error]: errorReducer,
   }
 
-  return <S, A extends ReduxAction>(baseReducer: (state: S, action: A) => S) => (
-    state: S,
+  return <S, A extends Action>(baseReducer: (state: S | undefined, action: A) => S) => (
+    state: S | undefined,
     action: A,
-  ) => {
+  ): S => {
     const nextState = actionReducerMapper[action.type]?.(state) ?? state
     return baseReducer(nextState, action)
   }
