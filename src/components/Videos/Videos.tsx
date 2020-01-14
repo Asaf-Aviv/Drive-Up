@@ -1,49 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 import LazyLoad from 'react-lazyload'
-import { Video } from 'store/types'
-import { SectionTitle } from 'components'
+import { Video as IVideo } from 'store/types'
+import { SectionTitle, Video } from 'components'
 
 type Props = {
-  videos: Video[]
+  videos: IVideo[]
 }
 
-const Videos = ({ videos }: Props) => (
-  <LazyLoad offset={400} once>
-    <SectionTitle>
-      Videos
-    </SectionTitle>
-    <VideosGrid>
-      {videos.map(({ name, src }) => (
-        <Li key={src}>
-          <Iframe
-            title={name}
-            allowFullScreen
-            src={src}
-          />
-        </Li>
-      ))}
-    </VideosGrid>
-  </LazyLoad>
-)
+const Videos = ({ videos }: Props) => {
+  if (!videos[0]) return null
 
-const Li = styled.li`
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-top: 56.25% // 9 / 16 * 100%;
-`
-
-const Iframe = styled.iframe`
-  box-shadow: 0 2px 10px black;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-`
+  return (
+    <LazyLoad offset={400} once>
+      <SectionTitle>
+        Videos
+      </SectionTitle>
+      <VideosGrid>
+        {videos.map(video => (
+          <li key={video.src}>
+            <Video {...video} />
+          </li>
+        ))}
+      </VideosGrid>
+    </LazyLoad>
+  )
+}
 
 const VideosGrid = styled.ul`
   display: grid;

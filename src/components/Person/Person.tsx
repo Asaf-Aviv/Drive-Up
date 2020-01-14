@@ -16,6 +16,10 @@ import {
   Videos,
   Poster,
   SectionTitle,
+  Loader,
+  ErrorMessageWithRetry,
+  NotFound,
+  Images,
 } from 'components'
 import {
   requestPersonById,
@@ -34,16 +38,16 @@ const Person = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (person || person === null) return
+    dispatch(requestPersonById(personId))
+  }, [dispatch, personId])
 
-    if (!loading && !error) {
-      dispatch(requestPersonById(personId))
-    }
-  }, [dispatch, error, loading, person, personId])
+  const requestPerson = () => {
+    dispatch(requestPersonById(personId))
+  }
 
-  if (error) return <span>error</span>
-  if (loading) return <span>Loading</span>
-  if (person === null) return <span>Person Not Found</span>
+  if (loading) return <Loader withContainer />
+  if (error) return <ErrorMessageWithRetry mediaType="person" retry={requestPerson} />
+  if (person === null) return <NotFound>Person Not Found</NotFound>
   if (!person) return null
 
   const renderDetailsField = (field: string, value: string) => (
@@ -82,9 +86,8 @@ const Person = () => {
           {birthday && renderDetailsField('Birthday', birthday)}
           {department && renderDetailsField('Known for', department)}
           {placeOfBirth && renderDetailsField('Born', placeOfBirth)}
+          {alsoKnownAs[0] && renderDetailsField('Also known as', alsoKnownAs.join(', '))}
           {homepage && <ExternalLink href={homepage} text="Homepage" />}
-          {alsoKnownAs[0]
-            && renderDetailsField('Also known as', alsoKnownAs.join(', '))}
         </Section>
         <Section>
           <SectionTitle>Movies</SectionTitle>
@@ -106,12 +109,7 @@ const Person = () => {
           </SlideShow>
         </Section>
         <Section>
-          <SectionTitle>Images</SectionTitle>
-          <SlideShow>
-            {images.map(({ url }) => (
-              <BackDrop key={url} imgPath={url} alt={name} />
-            ))}
-          </SlideShow>
+          <Images posters={images} alt={name} />
           <Spacer />
           <Videos videos={videos} />
         </Section>

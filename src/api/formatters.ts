@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ShortMedia, Collection } from 'store/types'
 
 const siteVideoUrls = {
@@ -5,7 +6,7 @@ const siteVideoUrls = {
   Vimeo: (videoId: string) => `https://player.vimeo.com/video/${videoId}`,
 }
 
-const getMovieUrl = (site: string, videoId: string) =>
+const getMovieUrl = (site: keyof typeof siteVideoUrls, videoId: string) =>
   siteVideoUrls[site]?.(videoId)
 
 export const formatRuntime = (minutes: number) => {
@@ -19,6 +20,49 @@ export const formatRuntime = (minutes: number) => {
   const hoursPhrase = hours > 1 ? `${hours} hrs` : '1 hr'
 
   return mins ? `${hoursPhrase} ${mins} mins` : hoursPhrase
+}
+
+export const formatPageInfo = (res: any) => ({
+  page: res.page,
+  totalPages: res.total_pages,
+  totalResults: res.total_results,
+  isLastPage: res.page === res.total_pages,
+})
+
+export const formatResponse = (res: any) => ({
+  ...formatPageInfo(res),
+  results: res.results.map(formatShortMedia),
+})
+
+export const formatPersonResponse = (res: any) => ({
+  ...formatPageInfo(res),
+  results: res.results.map(formatPersonSummary),
+})
+
+export const formatPersonInfo = (person: any) => ({
+  id: person.id,
+  name: person.name,
+  poster: person.profile_path,
+})
+
+export const formatSearchResponse = (res: any) => {
+  const mapper = {
+    movie: 'movies',
+    tv: 'shows',
+    person: 'persons',
+  }
+
+  return {
+    ...formatPageInfo(res),
+    ...res.results.reduce((results, { media_type, ...item }) => {
+      const formattedItem = media_type === 'person'
+        ? formatPersonInfo(item)
+        : formatShortMedia(item)
+
+      results[mapper[media_type]].push(formattedItem)
+      return results
+    }, { movies: [], shows: [], persons: [] }),
+  }
 }
 
 const dateOptions = {
@@ -35,7 +79,7 @@ const formatImage = image => ({
   url: image.file_path,
 })
 
-const formatCrew = person => ({
+const formatCrew = (person: any) => ({
   id: person.id,
   name: person.name,
   poster: person.profile_path,
@@ -120,7 +164,7 @@ export const formatPerson = person => ({
 })
 
 const formatEpisode = seasonName => episode => ({
-  date: episode.air_date,
+  date: formatDate(episode.air_date),
   episodeNumber: episode.episode_number,
   name: episode.name,
   overview: episode.overview,

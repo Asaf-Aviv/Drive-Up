@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Montserrat', sans-serif;
     color: #FFF;
-    background: #161616;
+    background: #001e32;
     letter-spacing: 0.5px;
     line-height: 1.3;
     overflow-x: hidden;

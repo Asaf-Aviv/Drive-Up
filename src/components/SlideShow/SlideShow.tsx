@@ -3,6 +3,7 @@ import Slider, { Settings as SlickSettings } from 'react-slick'
 import styled, { css } from 'styled-components'
 import { ArrowBackIos } from '@material-ui/icons'
 import { Loader } from 'components'
+import { LoaderSVG } from 'components/global/Loader'
 
 const baseOptions: SlickSettings = {
   infinite: false,
@@ -121,7 +122,7 @@ const StyledNextArrow = styled(ArrowBackIos)`
   ${sharedArrowIconStyles}
   &.slick-next {
     right: -5px;
-    &${Loader} {
+    &${LoaderSVG} {
       right: -13px;
     }
   }

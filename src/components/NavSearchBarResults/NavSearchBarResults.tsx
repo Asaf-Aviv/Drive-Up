@@ -10,6 +10,7 @@ import {
   Tab,
   Badge,
   SearchBarResults,
+  Button,
 } from 'components'
 import { ShortMedia, PersonByQuery } from 'store/types'
 
@@ -21,7 +22,6 @@ type Props = {
   isLastPage: boolean
   fetchNextPage: () => void
   totalResults: number
-  isInputEmpty: boolean
 }
 
 const mediaTypes = ['movie', 'show', 'person'] as const
@@ -34,23 +34,21 @@ const NavSearchBarResults = ({
   isLastPage,
   fetchNextPage,
   totalResults,
-  isInputEmpty,
 }: Props) => {
   const [activeTab, setActiveTab] = useState(0)
   const handleTabClick = (i: number) => () => setActiveTab(i)
 
-  const badges = {
-    movies: results[0].filter(m => m.poster).length,
-    shows: results[1].filter(s => s.poster).length,
-    persons: results[2].filter(p => p.poster).length,
+  const badgeCount = {
+    movies: results[0].length,
+    shows: results[1].length,
+    persons: results[2].length,
   }
 
-  const noResults = () => totalResults === 0
+  const noResults = () => !loading && !error && totalResults === 0
 
   const hasNextPage = () => !isLastPage && !loading && totalResults !== 0
 
-  const noMoreResults = () =>
-    !isInputEmpty && !loading && isLastPage && totalResults !== -1
+  const noMoreResults = () => !loading && isLastPage && totalResults !== -1
 
   return (
     <StyledModal closeModal={closeResults}>
@@ -66,7 +64,7 @@ const NavSearchBarResults = ({
                   onClick={handleTabClick(i)}
                 >
                   {tab}
-                  <Badge num={badges[tab as keyof typeof badges]} />
+                  <Badge count={badgeCount[tab as keyof typeof badgeCount]} />
                 </Tab>
               ))}
             </TabsPanel>
@@ -76,22 +74,22 @@ const NavSearchBarResults = ({
             />
             <Footer>
               {loading && (
-                <LoadMoreButton disabled>
-                  <Loader />
-                </LoadMoreButton>
+                <StyledButton disabled>
+                  <StyledLoader />
+                </StyledButton>
               )}
               {hasNextPage() && (
-                <LoadMoreButton onClick={fetchNextPage}>
+                <StyledButton onClick={fetchNextPage}>
                   Load More
-                </LoadMoreButton>
+                </StyledButton>
               )}
               {error && (
-                <LoadMoreButton onClick={fetchNextPage}>
+                <StyledButton onClick={fetchNextPage}>
                   Try Again
-                </LoadMoreButton>
+                </StyledButton>
               )}
-              {noMoreResults() && <p>No More Results</p>}
-              {noResults() && <p>No Results Found</p>}
+              {noMoreResults() && <StyledP>No More Results</StyledP>}
+              {noResults() && <StyledP>No Results Found</StyledP>}
             </Footer>
           </StyledPaper>
         </StyledContainer>
@@ -100,45 +98,32 @@ const NavSearchBarResults = ({
   )
 }
 
+const StyledP = styled.p`
+  color: ${({ theme }) => theme.colors.secondary}
+`
+
+const StyledButton = styled(Button)`
+  height: 50px;
+  width: 140px;
+  padding: 0;
+`
+
+const StyledLoader = styled(Loader)`
+  margin: 0;
+  height: 36px;
+  width: 36px;
+`
+
 const Footer = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(36px + 2rem);
-  background: #262626;
+  background: ${props => props.theme.colors.primaryDark};
   font-weight: 600;
   @media (min-width: 768px) {
     height: calc(54px + 2rem);
   }
-`
-
-const LoadMoreButton = styled.button`
-  ${(props) => {
-    const { primary } = props.theme.colors
-
-    return css`
-      height: 36px;
-      text-transform: uppercase;
-      border: 3px solid ${primary};
-      background: transparent;
-      color: #fff;
-      outline: none;
-      transition: background 250ms;
-      font-weight: 600;
-      display: flex;
-      width: 150px;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0px 3px 10px 3px rgb(23, 21, 21);
-      &:hover:not(:disabled) {
-        background: ${primary};
-      }
-      @media (min-width: 768px) {
-        width: 170px;
-        height: 52px;
-      }
-    `
-  }}
 `
 
 const StyledContainer = styled(Container)`
@@ -152,7 +137,7 @@ const StyledContainer = styled(Container)`
 const StyledPaper = styled(Paper)`
   display: flex;
   flex-direction: column;
-  background: #1d1d1d;
+  background: ${props => props.theme.colors.body};
 `
 
 const StyledModal = styled(Modal)`

@@ -8,23 +8,23 @@ import {
   requestMoviesByQuery,
   selectMoviesByQuery,
 } from 'store/moviesByQuery/reducers'
-import { useIsFirstRender, useShallowEqualSelector } from 'hooks'
+import { useShallowEqualSelector } from 'hooks'
 import {
   InfiniteMediaList,
   MediaCard,
   Container,
   MediaGrid,
   PosterLink,
+  Title,
 } from 'components'
 
 const MoviesByQuery = () => {
+  const movies = useShallowEqualSelector(selectMoviesByQuery)
   const { page, loading, error, isLastPage } = useShallowEqualSelector(
     state => state.moviesByQuery,
   )
-  const movies = useShallowEqualSelector(selectMoviesByQuery)
   const dispatch = useDispatch()
   const { search } = useLocation()
-  const isFirstRender = useIsFirstRender()
   const windowWidth = useContext(WindowWidthContext)
 
   const getParams = useCallback(
@@ -33,19 +33,9 @@ const MoviesByQuery = () => {
   )
 
   useEffect(() => {
-    if (isFirstRender) return
-
     dispatch(clearMoviesByQuery())
     dispatch(requestMoviesByQuery(getParams(), 1))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, getParams])
-
-  useEffect(() => {
-    if (isFirstRender && !movies[0]) {
-      dispatch(clearMoviesByQuery())
-      dispatch(requestMoviesByQuery(getParams(), 1))
-    }
-  }, [dispatch, getParams, isFirstRender, movies])
 
   const fetchNextPage = () => {
     dispatch(requestMoviesByQuery(getParams(), page + 1))
@@ -54,6 +44,7 @@ const MoviesByQuery = () => {
   return (
     <Container>
       <main>
+        <Title>Movies</Title>
         <InfiniteMediaList
           isLastPage={isLastPage}
           fetchNextPage={fetchNextPage}

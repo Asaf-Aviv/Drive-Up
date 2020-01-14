@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import { ArrowBackIos } from '@material-ui/icons'
 import styled from 'styled-components'
 import { ImageHeader } from 'components/MediaHeader/MediaHeader'
-import { TransparentBG, Title, Container } from 'components'
+import { TransparentBG, Title, Container, ErrorMessageWithRetry } from 'components'
 import { selectTodaysTrendingMovies, requestTrendings } from 'store/trending/reducers'
 import { useDispatch } from 'react-redux'
 import { getImgUrl } from 'utils'
+import Loader from 'components/global/Loader'
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector'
 
 const FeaturedSlider = () => {
@@ -16,11 +17,14 @@ const FeaturedSlider = () => {
   const error = useShallowEqualSelector(({ trending }) => trending.todaysTrendingMovies.error)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (movies.length) return
-
+  const fetchTrendings = () => {
     dispatch(requestTrendings('todaysTrendingMovies'))
-  }, [dispatch, movies.length])
+  }
+
+  useEffect(() => {
+    fetchTrendings()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch])
 
   const nextSlide = () => setMovieIndex(prevIndex => prevIndex + 1)
   const prevSlide = () => setMovieIndex(prevIndex => prevIndex - 1)
@@ -38,12 +42,16 @@ const FeaturedSlider = () => {
         <ArrowButton
           side="right"
           onClick={nextSlide}
-          disabled={movieIndex === movies.length - 1}
+          disabled={movieIndex === (movies?.length - 1)}
         >
           <ForwardButton />
         </ArrowButton>
         <SliderContainer translateX={`${movieIndex * 100}vw`}>
-          {movies.slice(0, movieIndex + 2).map(movie => (
+          {loading && <Loader />}
+          {error && (
+            <ErrorMessageWithRetry mediaType="featured movies" retry={fetchTrendings} />
+          )}
+          {movies[0] && movies.slice(0, movieIndex + 2).map(movie => (
             <Link key={movie.id} to={`/movie/${movie.id}`}>
               <StyledImageHeader as="article" bgImg={getImgUrl(movie.backdrop, 1280)}>
                 <TransparentBG>
@@ -102,6 +110,9 @@ const SliderContainer = styled.div<{ translateX: number | string }>`
   display: flex;
   transition: transform 250ms;
   transform: translateX(${props => `-${props.translateX}`});
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
 `
 
 const ArrowButton = styled.button<{ side: 'left' | 'right' }>`

@@ -23,7 +23,12 @@ import {
   SeasonCard,
   Grid,
   PersonCard,
-  BackDrop,
+  NotFound,
+  Images,
+  ErrorMessageWithRetry,
+  Loader,
+  PersonsSection,
+  Visible,
 } from 'components'
 import { useShallowEqualSelector } from 'hooks'
 import { requestShowById } from 'store/show/reducers'
@@ -40,14 +45,16 @@ const Show = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (show === undefined && !error && !loading) {
-      dispatch(requestShowById(showId))
-    }
-  }, [dispatch, error, loading, show, showId])
+    dispatch(requestShowById(showId))
+  }, [dispatch, showId])
 
-  if (error) return <span>error</span>
-  if (loading) return <span>Loading</span>
-  if (show === null) return <span>Show Not Found</span>
+  const requestShow = () => {
+    dispatch(requestShowById(showId))
+  }
+
+  if (error) return <ErrorMessageWithRetry mediaType="show" retry={requestShow} />
+  if (loading) return <Loader withContainer />
+  if (show === null) return <NotFound>Show Not Found</NotFound>
   if (!show) return null
 
   const {
@@ -78,11 +85,6 @@ const Show = () => {
     trailer,
   } = show
 
-  // const director = crew.find(c => c.department === 'Directing');
-  // const writers = crew.filter(c => c.department === 'Writing').slice(0, 3);
-  // const languageNames = languages.join(', ').toUpperCase()
-  // const createdBy = created_by.filter(c => !!c.profile_path).slice(0, 8)
-
   return (
     <main>
       <ImageHeader bgImg={getImgUrl(backdrop, 1280)}>
@@ -100,7 +102,7 @@ const Show = () => {
       />
       <Container>
         <Section>
-          <StyledGenres genres={genres} mediaType="shows" />
+          <StyledGenres genres={genres} mediaType="shows" large />
           <StyledOverview overview={overview} />
           <MediaDetails
             mediaType="show"
@@ -114,51 +116,34 @@ const Show = () => {
           />
         </Section>
         <Section>
-          {/* {createdBy[0] && (
-            <>
-              <SectionTitle>Created By</SectionTitle>
-              <LazyLoad offset={200} once>
-                <PersonsGrid>
-                  {created_by
-                    .filter(c => !!c.profile_path)
-                    .slice(0, 8)
-                    .map(c => (
-                      <li key={c.id}>
-                        <PersonCard {...c} />
-                      </li>
-                    ))}
-                </PersonsGrid>
-              </LazyLoad>
-            </>
-          )} */}
-          <Spacer />
-          <SectionTitle>Cast</SectionTitle>
-          <PersonsGrid>
-            {cast
-              .filter(member => member.poster)
-              .slice(0, 8)
-              .map(member => (
-                <PersonCard key={member.id} {...member} />
+          <PersonsSection title="Cast" persons={cast} />
+          {cast[0] && <Spacer />}
+          <PersonsSection title="Crew" persons={crew} />
+        </Section>
+        <Visible when={seasons[0]}>
+          <Section>
+            <SectionTitle>Seasons</SectionTitle>
+            <SeasonsGrid as="ul">
+              {seasons.map(season => (
+                <li key={season.name}>
+                  <SeasonCard {...season} />
+                </li>
               ))}
-          </PersonsGrid>
+            </SeasonsGrid>
+          </Section>
+        </Visible>
+        <Section>
+          <Images backdrops={backdrops} posters={posters} alt={name} />
+          <Videos videos={videos} />
         </Section>
         <Section>
-          <SectionTitle>Seasons</SectionTitle>
-          <SeasonsGrid as="ul">
-            {seasons.map(season => (
-              <li key={season.name}>
-                <SeasonCard {...season} />
-              </li>
-            ))}
-          </SeasonsGrid>
-        </Section>
-        <Section>
-          <SectionTitle>Recommended</SectionTitle>
-          <SlideShow
-            currentItemsCount={recommendations.results.length - 1}
-            loading={recommendations.loading}
-            isLastPage={recommendations.totalPages === recommendations.page}
-            loadMore={() => {
+          <Visible when={recommendations.results[0]}>
+            <SectionTitle>Recommended</SectionTitle>
+            <SlideShow
+              currentItemsCount={recommendations.results.length - 1}
+              loading={recommendations.loading}
+              isLastPage={recommendations.isLastPage}
+              loadMore={() => {
               // TODO: fix related shows
               // dispatch(
               // requestRelatedShows(
@@ -167,56 +152,46 @@ const Show = () => {
               //   recommendations.page + 1,
               // ),
               // )
-            }}
-          >
-            {recommendations.results.map(s => (
-              <MediaSlideItem
-                key={s.id}
-                id={s.id}
-                backdrop={s.backdrop}
-                name={s.name}
-                mediaType="show"
-              />
-            ))}
-          </SlideShow>
-          <SectionTitle>Similar</SectionTitle>
-          <LazyLoad offset={400} once>
-            <SlideShow
-              currentItemsCount={similar.results.length - 1}
-              loading={similar.loading}
-              isLastPage={similar.totalPages === similar.page}
-              loadMore={() => {
-                // TODO: fix related shows
-                // dispatch(
-                //   requestRelatedShows(show.id, 'similar', similar.page + 1),
-                // )
               }}
             >
-              {similar.results.map(s => (
+              {recommendations.results.map(recommendedShow => (
                 <MediaSlideItem
-                  key={s.id}
-                  id={s.id}
-                  backdrop={s.backdrop}
-                  name={s.name}
+                  key={recommendedShow.id}
+                  id={recommendedShow.id}
+                  backdrop={recommendedShow.backdrop}
+                  name={recommendedShow.name}
                   mediaType="show"
                 />
               ))}
             </SlideShow>
-          </LazyLoad>
-        </Section>
-        <Section>
-          <SectionTitle>Images</SectionTitle>
-          <SlideShow>
-            {backdrops.map(({ url }) => (
-              <BackDrop key={url} imgPath={url} alt={name} />
-            ))}
-          </SlideShow>
-          <SlideShow>
-            {posters.map(({ url }) => (
-              <BackDrop key={url} imgPath={url} alt={name} />
-            ))}
-          </SlideShow>
-          {videos[0] && <Videos videos={videos} />}
+            <Spacer />
+          </Visible>
+          <Visible when={similar.results[0]}>
+            <SectionTitle>Similar</SectionTitle>
+            <LazyLoad offset={400} once>
+              <SlideShow
+                currentItemsCount={similar.results.length - 1}
+                loading={similar.loading}
+                isLastPage={similar.isLastPage}
+                loadMore={() => {
+                  // TODO: fix related shows
+                  // dispatch(
+                  //   requestRelatedShows(show.id, 'similar', similar.page + 1),
+                  // )
+                }}
+              >
+                {similar.results.map(similarShow => (
+                  <MediaSlideItem
+                    key={similarShow.id}
+                    id={similarShow.id}
+                    backdrop={similarShow.backdrop}
+                    name={similarShow.name}
+                    mediaType="show"
+                  />
+                ))}
+              </SlideShow>
+            </LazyLoad>
+          </Visible>
         </Section>
       </Container>
       <section>

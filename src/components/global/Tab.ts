@@ -21,7 +21,8 @@ const Tab = styled.button<{ active: boolean }>`
     transition-property: border-color, background;
     font-size: 14px;
     ${active && css`
-      border-color: ${theme.colors.primary};
+      border-color: ${theme.colors.primaryLight};
+      color: ${theme.colors.primaryLight};
     `}
     &:hover {
       background: rgba(255, 255, 255, 0.2);

@@ -10,7 +10,6 @@ const SeasonCard = ({
   episodesCount,
   poster,
   name,
-  overview,
   seasonNumber,
 }: SeasonSummary) => {
   const { pathname } = useLocation()
@@ -32,9 +31,9 @@ const SeasonCard = ({
 }
 
 const Card = styled(Link)`
-  background: #151515;
+  background: ${props => props.theme.colors.primaryDark};
   transition: transform 150ms;
-  border-top: 5px solid ${props => props.theme.colors.primary};
+  border-top: 3px solid ${props => props.theme.colors.primaryLight};
   box-shadow: 0 2px 10px black;
   height: 100%;
   display: flex;

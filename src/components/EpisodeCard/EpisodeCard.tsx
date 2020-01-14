@@ -48,8 +48,8 @@ const StyledLink = styled(Link)`
   text-align: center;
   box-shadow: 0 2px 10px black;
   height: 100%;
-  background: #000;
-  border: 3px solid ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.primaryDark};
+  border: 3px solid ${({ theme }) => theme.colors.primaryLight};
   overflow: hidden;
   & ${BackDropContainer} {
     box-shadow: none;

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import {
   Overview,
-  PersonsGrid,
   Spacer,
   SectionDivider,
   Section,
@@ -16,14 +15,19 @@ import {
   Genres,
   MediaDetails,
   BackDrop,
-  PersonCard,
+  PersonsSection,
   MediaSlideItem,
   SlideShow,
   Companies,
   Container,
+  Loader,
+  NotFound,
+  Images,
+  Visible,
 } from 'components'
 import { selectMovieById } from 'store/fullMoviesByIds/reducers'
 import { getImgUrl } from 'utils'
+import ErrorMessageWithRetry from 'components/ErrorMessageWithRetry'
 import { requestMovieById } from '../../store/movie/reducers'
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector'
 import { ImageHeader } from '../MediaHeader/MediaHeader'
@@ -39,14 +43,16 @@ const Movie = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (movie === undefined && !error && !loading) {
-      dispatch(requestMovieById(movieId))
-    }
-  }, [dispatch, error, loading, movie, movieId])
+    dispatch(requestMovieById(movieId))
+  }, [dispatch, movieId])
 
-  if (error) return <span>error</span>
-  if (loading) return <span>Loading</span>
-  if (movie === null) return <span>Movie Not Found</span>
+  const requestMovie = () => {
+    dispatch(requestMovieById(movieId))
+  }
+
+  if (error) return <ErrorMessageWithRetry mediaType="movie" retry={requestMovie} />
+  if (loading) return <Loader withContainer />
+  if (movie === null) return <NotFound>Movie Not Found</NotFound>
   if (!movie) return null
 
   const {
@@ -99,7 +105,7 @@ const Movie = () => {
       />
       <Container>
         <Section>
-          <StyledGenres genres={genres} mediaType="movies" />
+          <StyledGenres genres={genres} mediaType="movies" large />
           <StyledOverview overview={overview} />
           <MediaDetails
             mediaType="movie"
@@ -115,86 +121,14 @@ const Movie = () => {
           />
         </Section>
         <Section>
-          <SectionTitle>Cast</SectionTitle>
-          <PersonsGrid>
-            {cast
-              .filter(member => member.poster)
-              .slice(0, 8)
-              .map(member => (
-                <PersonCard key={member.id} {...member} />
-              ))}
-          </PersonsGrid>
-          <SectionTitle>Crew</SectionTitle>
-          <Spacer />
-          <PersonsGrid>
-            {crew
-              .filter(member => member.poster)
-              .slice(0, 8)
-              .map(member => (
-                <PersonCard key={member.id} {...member} />
-              ))}
-          </PersonsGrid>
+          <PersonsSection title="Cast" persons={cast} />
+          {cast[0] && <Spacer />}
+          <PersonsSection title="Crew" persons={crew} />
         </Section>
         <Section>
-          <SectionTitle as="h3">Recommended</SectionTitle>
-          <SlideShow
-            currentItemsCount={recommendations.results.length - 1}
-            loading={recommendations.loading}
-            isLastPage={recommendations.isLastPage}
-            loadMore={() => {
-              // TODO: fix related movies
-              // dispatch(
-              //   requestRelatedMovies(
-              //     movie.id,
-              //     'recommendations',
-              //     recommendations.page + 1,
-              //   ),
-              // )
-            }}
-          >
-            {recommendations.results.map(recommendedMovie => (
-              <MediaSlideItem
-                key={recommendedMovie.id}
-                mediaType="movie"
-                {...recommendedMovie}
-              />
-            ))}
-          </SlideShow>
+          <Images backdrops={backdrops} posters={posters} alt={name} />
           <Spacer />
-          <SectionTitle>Similar</SectionTitle>
-          <SlideShow
-            currentItemsCount={similar.results.length - 1}
-            loading={similar.loading}
-            isLastPage={similar.isLastPage}
-            loadMore={() => {
-              // TODO: fix related movies
-              // dispatch(
-              //   requestRelatedMovies(movie.id, 'similar', similar.page + 1),
-              // )
-            }}
-          >
-            {similar.results.map(similarMovie => (
-              <MediaSlideItem
-                key={similarMovie.id}
-                mediaType="movie"
-                {...similarMovie}
-              />
-            ))}
-          </SlideShow>
-        </Section>
-        <Section>
-          <SectionTitle>Images</SectionTitle>
-          <SlideShow>
-            {backdrops.map(({ url }) => (
-              <BackDrop key={url} imgPath={url} alt={name} />
-            ))}
-          </SlideShow>
-          <SlideShow>
-            {posters.map(({ url }) => (
-              <BackDrop key={url} imgPath={url} alt={name} />
-            ))}
-          </SlideShow>
-          {videos[0] && <Videos videos={videos} />}
+          <Videos videos={videos} />
           {collection && (
             <>
               <SectionDivider />
@@ -204,6 +138,57 @@ const Movie = () => {
               </Link>
             </>
           )}
+        </Section>
+        <Section>
+          <Visible when={recommendations.results[0]}>
+            <SectionTitle as="h3">Recommended</SectionTitle>
+            <SlideShow
+              currentItemsCount={recommendations.results.length - 1}
+              loading={recommendations.loading}
+              isLastPage={recommendations.isLastPage}
+              loadMore={() => {
+                // TODO: fix related movies
+                // dispatch(
+                //   requestRelatedMovies(
+                //     movie.id,
+                //     'recommendations',
+                //     recommendations.page + 1,
+                //   ),
+                // )
+              }}
+            >
+              {recommendations.results.map(recommendedMovie => (
+                <MediaSlideItem
+                  key={recommendedMovie.id}
+                  mediaType="movie"
+                  {...recommendedMovie}
+                />
+              ))}
+            </SlideShow>
+            <Spacer />
+          </Visible>
+          <Visible when={similar.results[0]}>
+            <SectionTitle>Similar</SectionTitle>
+            <SlideShow
+              currentItemsCount={similar.results.length - 1}
+              loading={similar.loading}
+              isLastPage={similar.isLastPage}
+              loadMore={() => {
+                // TODO: fix related movies
+                // dispatch(
+                //   requestRelatedMovies(movie.id, 'similar', similar.page + 1),
+                // )
+              }}
+            >
+              {similar.results.map(similarMovie => (
+                <MediaSlideItem
+                  key={similarMovie.id}
+                  mediaType="movie"
+                  {...similarMovie}
+                />
+              ))}
+            </SlideShow>
+          </Visible>
         </Section>
       </Container>
       <section>

@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LazyLoad from 'react-lazyload'
 import { useDispatch } from 'react-redux'
+import uniqBy from 'lodash.uniqby'
 import {
   selectShowSeasonEpisode,
   requestShowSeason,
@@ -18,7 +19,9 @@ import {
   SectionTitle,
   Section,
   Spacer,
+  PersonsSection,
 } from 'components'
+import Visible from 'components/Visible'
 
 type Params = {
   showId: string
@@ -69,7 +72,7 @@ const Episode = () => {
               <SectionTitle centered as="h2">{seasonName}</SectionTitle>
             </Link>
             <SectionTitle centered as="h3">Episode {episodeNumber}</SectionTitle>
-            <span>Air Date: {date}</span>
+            <span>Air Date - {date}</span>
           </EpisodeMetaData>
           <InfoContainer>
             <StyledBackDrop
@@ -81,29 +84,13 @@ const Episode = () => {
             <StyledOverview overview={overview} />
           </InfoContainer>
         </StyledHeader>
-        <Section>
-          <SectionTitle>Crew</SectionTitle>
-          <PersonsGrid as="ul">
-            <LazyLoad offset={400} once>
-              {crew.map(member => (
-                <li key={member.id}>
-                  <PersonCard {...member} />
-                </li>
-              ))}
-            </LazyLoad>
-          </PersonsGrid>
-          <Spacer />
-          <SectionTitle>Guest Stars</SectionTitle>
-          <PersonsGrid as="ul">
-            <LazyLoad offset={400} once>
-              {guestStars.map(member => (
-                <li key={member.id}>
-                  <PersonCard {...member} />
-                </li>
-              ))}
-            </LazyLoad>
-          </PersonsGrid>
-        </Section>
+        <Visible when={crew[0] || guestStars[0]}>
+          <Section>
+            <PersonsSection title="Crew" persons={crew} />
+            {crew[0] && <Spacer />}
+            <PersonsSection title="Guest Stars" persons={guestStars} />
+          </Section>
+        </Visible>
       </Container>
     </StyledMain>
   )

@@ -12,7 +12,7 @@ import store from 'store'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 
-ReactGA.initialize(process.env.REACT_APP_GA_ID)
+ReactGA.initialize(process.env.REACT_APP_GA_ID as string)
 
 const App = () => {
   const location = useLocation()

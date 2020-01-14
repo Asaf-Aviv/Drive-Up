@@ -11,9 +11,11 @@ type Props = {
 const PosterWithTitle = ({ poster, title, className }: Props) => (
   <Wrapper className={className}>
     <StyledPoster poster={poster} alt={title} />
-    <TitleContainer>
-      <Title>{title}</Title>
-    </TitleContainer>
+    {poster && (
+      <TitleContainer>
+        <Title>{title}</Title>
+      </TitleContainer>
+    )}
   </Wrapper>
 )
 

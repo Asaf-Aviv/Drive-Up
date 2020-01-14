@@ -81,7 +81,6 @@ const NavSearchBar = () => {
           fetchNextPage={fetchNextPage}
           error={error}
           totalResults={totalResults}
-          isInputEmpty={!query}
         />
       )}
     </Container>
@@ -110,17 +109,22 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 const Input = styled.input`
   height: 40px;
-  background: #000;
+  background: ${({ theme }) => theme.colors.primaryDark};
   color: #FFF;
   border: none;
   padding-left: 0.5rem;
   flex: 1;
-  outline: none;
+  outline-color: transparent;
+  transition: outline-color 250ms;
   font-size: 1rem;
+  box-shadow: 0 2px 7px #000d1a;
   &::placeholder {
     font-size: 0.8rem;
     font-style: italic;
     color: #bfbfbf;
+  }
+  &:focus {
+    outline-color: #00f8e3;
   }
   @media (min-width: 400px) {
     padding-left: 1rem;

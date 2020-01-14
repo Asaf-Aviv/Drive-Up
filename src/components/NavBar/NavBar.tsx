@@ -28,7 +28,7 @@ const NavHeader = styled.header`
   left: 0;
   right: 0;
   height: 64px;
-  z-index: 100;
+  z-index: 1300;
   background: ${({ theme }) => theme.colors.primary};
   font-weight: 500;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),

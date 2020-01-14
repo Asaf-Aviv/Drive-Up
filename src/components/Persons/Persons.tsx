@@ -1,18 +1,23 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import LazyLoad from 'react-lazyload'
-import styled from 'styled-components'
-import { selectPersonsByQuery, requestPersonsByQuery } from 'store/personsByQuery/reducers'
+import {
+  selectPersonsByQuery,
+  requestPersonsByQuery,
+} from 'store/personsByQuery/reducers'
 import { useShallowEqualSelector, useOnVisibilityTrigger } from 'hooks'
-import { PersonsGrid, InfiniteMediaList, Container, PersonCard } from 'components'
+import {
+  PersonsGrid,
+  InfiniteMediaList,
+  Container,
+  PersonCard,
+  Title,
+} from 'components'
 
 const Persons = () => {
-  const {
-    page,
-    loading,
-    error,
-    isLastPage,
-  } = useShallowEqualSelector(state => state.personsByQuery)
+  const { page, loading, error, isLastPage } = useShallowEqualSelector(
+    state => state.personsByQuery,
+  )
   const persons = useShallowEqualSelector(selectPersonsByQuery)
   const dispatch = useDispatch()
   const fetchNextPageTrigger = useRef<HTMLElement>(null)
@@ -30,7 +35,8 @@ const Persons = () => {
   useOnVisibilityTrigger(fetchNextPageTrigger, fetchNextPage)
 
   return (
-    <StyledMain>
+    <main>
+      <Title>Persons</Title>
       <Container>
         <InfiniteMediaList
           as="div"
@@ -50,12 +56,8 @@ const Persons = () => {
           </PersonsGrid>
         </InfiniteMediaList>
       </Container>
-    </StyledMain>
+    </main>
   )
 }
-
-const StyledMain = styled.main`
-  margin-top: 2rem;
-`
 
 export default Persons

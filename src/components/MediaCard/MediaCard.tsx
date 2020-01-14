@@ -37,8 +37,8 @@ const MediaCard = ({
         <StyledGenres mediaType={pluralMediaType} genres={genres} />
         <p>{overview}</p>
         <CardFooter>
-          <span>{`${dateCategory}: ${date}`}</span>
-          <span>{`Language: ${originalLanguage.toUpperCase()}`}</span>
+          <span>{`${dateCategory} - ${date}`}</span>
+          <span>{`Language - ${originalLanguage.toUpperCase()}`}</span>
           <StyledLink to={linkHref}>Read More</StyledLink>
         </CardFooter>
       </CardBody>
@@ -47,7 +47,6 @@ const MediaCard = ({
 }
 
 const MediaTitle = styled.h2`
-  text-align: center;
   margin: 1rem 0;
 `
 
@@ -69,9 +68,9 @@ const Card = styled.article`
   margin-bottom: 1rem;
   width: 100%;
   display: flex;
-  background: #000;
+  background: ${({ theme }) => theme.colors.primaryDark};
   overflow: hidden;
-  border-right: 3px solid ${({ theme }) => theme.colors.primary};
+  border-right: 3px solid ${({ theme }) => theme.colors.primaryLight};
   box-shadow: 0 2px 10px black;
 `
 

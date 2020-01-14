@@ -19,11 +19,13 @@ const BackDrop = ({
 }: Props) => (
   <BackDropContainer className={className}>
     <Wrapper>
-      <StyledBackDrop
-        src={getImgUrl(imgPath, width || 500)}
-        alt={alt}
-      />
-      {withCaption && (
+      {imgPath && (
+        <StyledBackDrop
+          src={getImgUrl(imgPath, width || 500)}
+          alt={alt}
+        />
+      )}
+      {(withCaption || !imgPath) && (
         <CaptionContainer>
           <Caption>{alt}</Caption>
         </CaptionContainer>

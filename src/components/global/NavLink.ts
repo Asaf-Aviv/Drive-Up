@@ -6,6 +6,7 @@ const NavLink = styled.a`
   color: #fff;
   display: inline-flex;
   align-items: center;
+  font-size: 18px;
   &::after {
     content: '';
     position: absolute;
@@ -20,9 +21,6 @@ const NavLink = styled.a`
     &::after {
       width: 100%;
     }
-  }
-  & .MuiSvgIcon-root {
-    margin-right: 0.5rem;
   }
 `
 

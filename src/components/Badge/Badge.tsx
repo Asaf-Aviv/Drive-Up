@@ -2,16 +2,16 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 type Props = {
-  num: number
+  count: number
   className?: string
 }
 
-const Badge = ({ num, className }: Props) => {
-  if (!num) return null
+const Badge = ({ count, className }: Props) => {
+  if (!count) return null
 
   return (
     <StyledBadge className={className}>
-      {num}
+      {count}
     </StyledBadge>
   )
 }
@@ -19,6 +19,7 @@ const Badge = ({ num, className }: Props) => {
 const StyledBadge = styled.div`
   ${({ theme }) => css`
     position: absolute;
+    color: #FFF;
     font-size: 12px;
     height: 24px;
     width: 24px;
@@ -29,7 +30,7 @@ const StyledBadge = styled.div`
     padding: 0.25rem;
     top: -12px;
     right: 3px;
-    background: ${theme.colors.primary};
+    background: ${theme.colors.primaryLight};
   `}
 `
 

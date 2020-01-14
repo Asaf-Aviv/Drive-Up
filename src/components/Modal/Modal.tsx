@@ -49,11 +49,16 @@ const IconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
-  width: 36px;
+  height: 48px;
+  width: 48px;
+  padding: 0.25rem;
   color: ${({ theme }) => theme.textColors.secondary};
-  &:hover ${CloseIcon} {
-    color: #fff;
+  transition: background 150ms;
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    ${CloseIcon} {
+      color: #FFF;
+    }
   }
 `
 
@@ -64,6 +69,7 @@ const StyledModal = styled.div`
   left: 0;
   bottom: 0;
   z-index: 1200;
+  padding: 2rem;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;

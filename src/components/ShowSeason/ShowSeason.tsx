@@ -10,6 +10,9 @@ import {
   Overview,
   SectionTitle,
   Poster,
+  ErrorMessageWithRetry,
+  Loader,
+  NotFound,
 } from 'components'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -23,21 +26,21 @@ type Params = {
 const ShowSeason = () => {
   const dispatch = useDispatch()
   const { showId, seasonNumber } = useParams<Params>()
-  const { loading, error } = useShallowEqualSelector(
-    ({ showSeasons }) => showSeasons,
-  )
-
+  const loading = useShallowEqualSelector(({ showSeasons }) => showSeasons.loading)
+  const error = useShallowEqualSelector(({ showSeasons }) => showSeasons.error)
   const season = useShallowEqualSelector(selectShowSeason(showId, seasonNumber))
 
   useEffect(() => {
-    if (season === undefined && !error && !loading) {
-      dispatch(requestShowSeason(showId, seasonNumber))
-    }
-  }, [dispatch, error, loading, season, seasonNumber, showId])
+    dispatch(requestShowSeason(showId, seasonNumber))
+  }, [dispatch, seasonNumber, showId])
 
-  if (error) return <span>error</span>
-  if (loading) return <span>Loading</span>
-  if (season === null) return <span>Season Not Found</span>
+  const requestSeason = () => {
+    dispatch(requestShowSeason(showId, seasonNumber))
+  }
+
+  if (loading) return <Loader withContainer />
+  if (error) return <ErrorMessageWithRetry mediaType="season" retry={requestSeason} />
+  if (season === null) return <NotFound>Season Not Found</NotFound>
   if (!season) return null
 
   const {

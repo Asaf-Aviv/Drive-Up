@@ -11,14 +11,14 @@ type Props = {
 }
 
 const Companies = ({ companies, title = 'Companies' }: Props) => {
-  if (!companies.some(company => company.backdrop)) return null
+  if (companies.every(company => !company.backdrop)) return null
 
   return (
     <CompaniesWrapper>
       <Container>
-        <SectionTitle centered>
+        <StyledSectionTitle centered>
           {title}
-        </SectionTitle>
+        </StyledSectionTitle>
         <CompanyContainer>
           {companies
             .filter(({ backdrop }) => backdrop)
@@ -39,6 +39,10 @@ const Companies = ({ companies, title = 'Companies' }: Props) => {
   )
 }
 
+const StyledSectionTitle = styled(SectionTitle)`
+  color: #000;
+`
+
 const CompaniesWrapper = styled.div`
   background: #fff;
   padding-top: 2rem;
@@ -57,10 +61,11 @@ const CompanyLogo = styled.img`
 const CompanyContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   > a {
     padding: 0 2rem;
-    margin: 0 auto 2rem auto;
+    flex: 25%;
   }
 `
 

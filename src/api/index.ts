@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios, { AxiosInstance } from 'axios'
 import {
   formatPerson,
@@ -5,51 +6,10 @@ import {
   formatFullMedia,
   formatSeason,
   formatCollection,
-  formatPersonSummary,
+  formatSearchResponse,
+  formatResponse,
+  formatPersonResponse,
 } from './formatters'
-
-const formatPageInfo = res => ({
-  page: res.page,
-  totalPages: res.total_pages,
-  totalResults: res.total_results,
-  isLastPage: res.page === res.total_pages,
-})
-
-const formatResponse = res => ({
-  ...formatPageInfo(res),
-  results: res.results.map(formatShortMedia),
-})
-
-const formatPersonResponse = res => ({
-  ...formatPageInfo(res),
-  results: res.results.map(formatPersonSummary),
-})
-
-const formatPersonInfo = person => ({
-  id: person.id,
-  name: person.name,
-  poster: person.profile_path,
-})
-
-const formatSearchResponse = (res) => {
-  const mapper = {
-    movie: 'movies',
-    tv: 'shows',
-    person: 'persons',
-  }
-
-  return {
-    ...formatPageInfo(res),
-    ...res.results.reduce((results, { media_type, ...item }) => {
-      const formattedItem = media_type === 'person'
-        ? formatPersonInfo(item)
-        : formatShortMedia(item)
-
-      results[mapper[media_type]].push(formattedItem)
-      return results
-    }, { movies: [], shows: [], persons: [] }),
-  }
-}
 
 class TheMovieDB {
   fetcher: AxiosInstance

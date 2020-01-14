@@ -10,12 +10,16 @@ type Props = {
 }
 
 const Poster = ({ poster, alt, width, className }: Props) => (
-  <StyledPoster
-    className={className}
-    src={getImgUrl(poster, width || 185)}
-    alt={alt}
-    title={alt}
-  />
+  poster
+    ? (
+      <StyledPoster
+        className={className}
+        src={getImgUrl(poster, width || 185)}
+        alt={alt}
+        title={alt}
+      />
+    )
+    : <Placeholder>{alt}</Placeholder>
 )
 
 const StyledPoster = styled.img`
@@ -23,5 +27,12 @@ const StyledPoster = styled.img`
   box-shadow: 0 2px 10px black;
   min-height: 100px;
 `
+
+const Placeholder = styled.div`
+  text-align: center;
+  height: 100%;
+  width: 100%;
+`
+
 
 export default Poster

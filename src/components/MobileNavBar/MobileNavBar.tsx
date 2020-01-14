@@ -102,7 +102,7 @@ const DrawerContainer = styled.div<{ isOpen: boolean }>`
       transition: transform 250ms;
       transform: translateX(${isOpen ? 0 : -100}%);
       background: rgba(0, 0, 0, 0.5);
-      z-index: 100;
+      z-index: 1300;
     `
   }};
 `

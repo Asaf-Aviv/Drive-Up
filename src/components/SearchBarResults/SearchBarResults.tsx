@@ -4,9 +4,10 @@ import useComponentSize from '@rehooks/component-size'
 import SimpleBar from 'simplebar-react'
 import { Link } from 'react-router-dom'
 import { Container, MediaGrid, Poster } from 'components'
+import { ShortMedia, PersonByQuery } from 'store/types'
 
 type Props = {
-  results: { id: string; poster: string; name: string }[]
+  results: (ShortMedia | PersonByQuery)[]
   mediaType: 'movie' | 'show' | 'person'
 }
 
@@ -34,6 +35,7 @@ const SearchBarResults = ({ results, mediaType }: Props) => {
 }
 
 const StyledLink = styled(Link)`
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

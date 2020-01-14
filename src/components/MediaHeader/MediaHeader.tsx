@@ -6,6 +6,7 @@ import {
   Container,
   Poster,
   Title,
+  Video,
 } from 'components'
 import { Video as IVideo } from 'store/types'
 import { ReactComponent as PlayIcon } from 'assets/icons/play.svg'
@@ -96,7 +97,7 @@ const MediaHeader = ({
       {trailer && showTrailer && (
         <Modal closeModal={toggleShowTrailer}>
           <StyledModalChildrenContainer>
-            <Video title={trailer.name} allowFullScreen src={trailer.src} />
+            <Video {...trailer} />
           </StyledModalChildrenContainer>
         </Modal>
       )}
@@ -114,14 +115,7 @@ const StyledTitle = styled(Title)`
 `
 
 const StyledModalChildrenContainer = styled((props: any) => <ModalChildrenContainer {...props} />)`
-  max-height: 80vh;
-  padding: 0 2rem;
-  @media (min-width: 600px) {
-    padding: 0 4rem;
-  }
-  @media (min-width: 900px) {
-    max-height: 600px;
-  }
+  height: auto !important;
 `
 
 const StyledPlayIcon = styled(PlayIcon)`
@@ -142,7 +136,7 @@ const PlayButton = styled.button`
   border: none;
   font-size: 0.85rem;
   font-weight: 500;
-  background: ${({ theme }) => theme.colors.primary};
+  background: #c20029;
   color: #fff;
   letter-spacing: 1px;
   display: flex;
@@ -168,13 +162,6 @@ const TagLine = styled.p`
   @media (max-width: 767px) {
     font-size: 14px;
   }
-`
-
-const Video = styled.iframe`
-  border: none;
-  width: 100%;
-  min-height: 200px;
-  height: 100%;
 `
 
 export const ImageHeader = styled.header<{ bgImg: string }>`

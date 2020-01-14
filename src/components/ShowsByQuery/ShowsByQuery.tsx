@@ -1,16 +1,22 @@
-import React, { useEffect, useRef, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback, useContext } from 'react'
 import qs from 'qs'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router'
-import { Container } from '@material-ui/core'
 import { WindowWidthContext } from 'components/WindowWidthProvider'
-import { PosterLink, MediaGrid, MediaCard, InfiniteMediaList } from 'components'
+import {
+  PosterLink,
+  MediaGrid,
+  MediaCard,
+  InfiniteMediaList,
+  Title,
+  Container,
+} from 'components'
 import {
   selectShowsByQuery,
   requestShowsByQuery,
   clearShowsByQuery,
 } from 'store/showsByQuery/reducers'
-import { useIsFirstRender, useShallowEqualSelector } from 'hooks'
+import { useShallowEqualSelector } from 'hooks'
 
 const ShowsByQuery = () => {
   const { page, loading, error, isLastPage } = useShallowEqualSelector(
@@ -19,8 +25,6 @@ const ShowsByQuery = () => {
   const shows = useShallowEqualSelector(selectShowsByQuery)
   const dispatch = useDispatch()
   const { search } = useLocation()
-  const isFirstRender = useIsFirstRender()
-  const fetchNextPageTrigger = useRef<HTMLElement>(null)
   const windowWidth = useContext(WindowWidthContext)
 
   const getParams = useCallback(
@@ -29,19 +33,9 @@ const ShowsByQuery = () => {
   )
 
   useEffect(() => {
-    if (isFirstRender) return
-
     dispatch(clearShowsByQuery())
     dispatch(requestShowsByQuery(getParams(), 1))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, getParams])
-
-  useEffect(() => {
-    if (isFirstRender && !shows.length) {
-      dispatch(clearShowsByQuery())
-      dispatch(requestShowsByQuery(getParams(), 1))
-    }
-  }, [dispatch, getParams, isFirstRender, shows.length])
 
   const fetchNextPage = () => {
     dispatch(requestShowsByQuery(getParams(), page + 1))
@@ -50,6 +44,7 @@ const ShowsByQuery = () => {
   return (
     <Container>
       <main>
+        <Title>Shows</Title>
         <InfiniteMediaList
           isLastPage={isLastPage}
           fetchNextPage={fetchNextPage}

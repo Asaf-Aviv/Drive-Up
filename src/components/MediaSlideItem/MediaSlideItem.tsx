@@ -15,17 +15,12 @@ const MediaSlideItem = ({
   name,
   backdrop,
   mediaType,
-}: Props) => {
-  // TODO: filter items without backdrop before
-  if (backdrop === null) return null
-
-  return (
-    <Link to={`/${mediaType}/${id}`}>
-      <LazyLoad offset={400} once>
-        <BackDrop imgPath={backdrop} alt={name} withCaption />
-      </LazyLoad>
-    </Link>
-  )
-}
+}: Props) => (
+  <Link to={`/${mediaType}/${id}`}>
+    <LazyLoad offset={400} once>
+      <BackDrop imgPath={backdrop} alt={name} withCaption />
+    </LazyLoad>
+  </Link>
+)
 
 export default MediaSlideItem

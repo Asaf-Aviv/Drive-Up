@@ -22,7 +22,7 @@ const FieldValue = ({ field, value, delimiter = ':' }: Props) => {
 }
 
 const StyledSpan = styled.span`
-  color: ${({ theme }) => theme.textColors.secondary};
+  color: #00fff8;
   margin-right: 0.5rem;
 `
 

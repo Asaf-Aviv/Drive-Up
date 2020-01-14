@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { useOnVisibilityTrigger } from 'hooks'
+import { Loader } from 'components'
 
 type Props = {
   fetchNextPage: () => void
@@ -28,7 +29,7 @@ const InfiniteMediaList = ({
     <Element className={className}>
       {children}
       {!loading && !error && !isLastPage && <span ref={fetchNextPageTrigger} />}
-      {loading && <span>Loading...</span>}
+      {loading && <Loader />}
       {error && <button type="button" onClick={fetchNextPage}>Retry</button>}
     </Element>
   )
