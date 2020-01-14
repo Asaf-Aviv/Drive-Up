@@ -1,3 +1,4 @@
+import { Reducer } from 'redux'
 import { Action } from '../helpers'
 import withLoadingStates from '../helpers/withLoadingStates'
 import { LoadingStates } from '../types'
@@ -56,7 +57,7 @@ const initialState = {
   error: false,
 }
 
-const movieReducer = (
+const movieReducer: Reducer<LoadingStates, MovieByIdActionTypes> = (
   state: LoadingStates = initialState,
   action: MovieByIdActionTypes,
 ) => state

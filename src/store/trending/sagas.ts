@@ -5,6 +5,7 @@ import {
 } from 'redux-saga/effects'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
 import filterExistingMedia from 'store/helpers/filterExistingMedia'
+import { ShortMedia } from 'store/types'
 import { getMediaType, getTimePeriod, getFilterField } from './utils'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
@@ -24,7 +25,7 @@ export function* fetchTrendings(action: RequestTrendingsAction) {
 
   yield put(fetchTrendingsStart(fieldName))
 
-  let data
+  let data: ShortMedia[]
 
   try {
     data = yield call(TMDB.fetchTrendings, mediaType, timePeriod)
@@ -33,9 +34,10 @@ export function* fetchTrendings(action: RequestTrendingsAction) {
     return
   }
 
-  const mediaIds = data.map(media => media.id)
+  const mediaIds = data.map(({ id }) => id)
   const addNewMediasAction = mediaType === 'tv' ? addShortShows : addShortMovies
-  const newMedias = yield call(filterExistingMedia, data, filterField)
+
+  const newMedias: ShortMedia[] = yield call(filterExistingMedia, data, filterField)
 
   yield put(addNewMediasAction(newMedias))
   yield put(fetchTrendingsSuccess(fieldName, mediaIds))

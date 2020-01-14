@@ -1,3 +1,4 @@
+import { FullShow } from 'store/types'
 import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { addShortShows } from '../shortShowsByIds/reducers'
@@ -14,7 +15,7 @@ import TMDB from '../../api'
 function* fetchShowById({ meta: { showId } }: RequestShowByIdAction) {
   yield put(fetchShowByIdStart())
 
-  let show
+  let show: FullShow | null
 
   try {
     show = yield call(TMDB.fetchShowById, showId)
@@ -26,6 +27,7 @@ function* fetchShowById({ meta: { showId } }: RequestShowByIdAction) {
   if (!show) {
     yield put(addFullShow(null, showId))
     yield put(fetchShowByIdSuccess())
+    return
   }
 
   const similar = show.similar.results

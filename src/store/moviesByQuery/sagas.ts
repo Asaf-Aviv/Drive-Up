@@ -1,3 +1,4 @@
+import { Results, ShortMedia } from 'store/types'
 import {
   put,
   takeLatest,
@@ -19,7 +20,7 @@ export function* fetchdMoviesByQuery(action: RequestMoviesByQueryAction) {
 
   yield put(fetchMoviesByQueryStart())
 
-  let data
+  let data: Results<ShortMedia[]>
 
   try {
     data = yield call(TMDB.fetchMoviesByQuery, params, page)
@@ -28,11 +29,11 @@ export function* fetchdMoviesByQuery(action: RequestMoviesByQueryAction) {
     return
   }
 
-  const newMovies = yield call(filterExistingMedia, data.results, 'shortMovies')
+  const newMovies: ShortMedia[] = yield call(filterExistingMedia, data.results, 'shortMovies')
 
   const payload = {
     ...data,
-    results: data.results.map(result => result.id),
+    results: data.results.map(({ id }) => id),
   }
 
   yield put(addShortMovies(newMovies))

@@ -5,6 +5,7 @@ import {
 } from 'redux-saga/effects'
 import TMDB from 'api'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
+import { Results, ShortMedia } from 'store/types'
 import filterExistingMedia from '../helpers/filterExistingMedia'
 import {
   REQUEST_SHOWS_BY_CATEGORY,
@@ -19,7 +20,7 @@ export function* fetchdShowsByCategory(action: RequestShowsByCategoryAction) {
 
   yield put(fetchShowsByCategoryStart(category))
 
-  let data
+  let data: Results<ShortMedia[]>
 
   try {
     data = yield call(TMDB.fetchShowsByCategory, category, page)
@@ -30,10 +31,10 @@ export function* fetchdShowsByCategory(action: RequestShowsByCategoryAction) {
 
   const payload = {
     ...data,
-    results: data.results.map(result => result.id),
+    results: data.results.map(({ id }) => id),
   }
 
-  const newShows = yield call(filterExistingMedia, data.results, 'shortShows')
+  const newShows: ShortMedia[] = yield call(filterExistingMedia, data.results, 'shortShows')
 
   yield put(addShortShows(newShows))
   yield put(fetchShowsByCategorySuccess(category, payload))

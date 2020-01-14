@@ -2,7 +2,7 @@ import produce from 'immer'
 import { RootState } from 'store'
 import { Action } from '../helpers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
-import { SelectedFullMovie, FullMovieInStore } from '../types'
+import { FullMovieInStore } from '../types'
 import addByIdReducer from '../helpers/addByIdReducer'
 
 const ADD_FULL_MOVIE = 'ADD_FULL_MOVIE'
@@ -38,7 +38,7 @@ const fullMoviesReducer = (
 
 export const selectMovieById = (id: string) => (
   state: RootState,
-): SelectedFullMovie | null => {
+) => {
   if (!(id in state.fullMovies)) return
   const movie = state.fullMovies[id]
   if (movie === null) return null

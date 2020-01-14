@@ -20,6 +20,16 @@ export type Collection<T = ShortMedia> = {
 
 export type CollectionInStore = Collection<string>
 
+export type SearchResults = {
+  movies: ShortMedia[]
+  shows: ShortMedia[]
+  persons: PersonByQuery[]
+  page: number
+  totalPages: number
+  totalResults: number
+  isLastPage: boolean
+}
+
 export type ResultsPayload<T = string> = {
   results: T[]
   page: number
@@ -83,7 +93,7 @@ export type SeasonWithEpisodes = Omit<SeasonSummary, 'episodeCount'> & {
   episodes: Episode[]
 }
 
-type FullShow<T> = {
+export type FullShow<T = ShortMedia> = {
   type: string
   networks: Company[]
   country: string
@@ -135,7 +145,7 @@ export type FullShowInStore = FullShow<string>
 
 export type SelectedFullShow= FullShow<ShortMedia>
 
-type FullMovie<T> = {
+export type FullMovie<T = ShortMedia> = {
   budget: number
   revenue: number
   adult: boolean
@@ -165,7 +175,7 @@ export type FullMovieInStore = FullMovie<string>
 
 export type SelectedFullMovie = FullMovie<ShortMedia>
 
-type Person<T> = {
+export type Person<T = ShortMedia> = {
   id: string
   birthday: string
   department: string

@@ -91,8 +91,9 @@ const PersonReducer = (state = initialState, action: PersonByIdActionTypes) =>
 
 export const selectPersonById = (id: string) => (
   state: RootState,
-): SelectedPerson | null => {
+) => {
   if (!(id in state.persons.byId)) return
+
   const person = state.persons.byId[id]
   if (!person) return null
 

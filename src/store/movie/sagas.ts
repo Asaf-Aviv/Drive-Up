@@ -1,5 +1,6 @@
 import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { call, put, takeLatest } from 'redux-saga/effects'
+import { FullMovie } from 'store/types'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import { addFullMovie } from '../fullMoviesByIds/reducers'
 import {
@@ -14,7 +15,7 @@ import TMDB from '../../api'
 function* fetchMovieById({ meta: { movieId } }: RequestMovieByIdAction) {
   yield put(fetchMovieByIdStart())
 
-  let movie
+  let movie: FullMovie | null
 
   try {
     movie = yield call(TMDB.fetchMovieById, movieId)

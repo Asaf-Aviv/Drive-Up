@@ -4,7 +4,6 @@ import addByIdReducer from 'store/helpers/addByIdReducer'
 import { FullShowInStore } from 'store/types'
 import { Action } from '../helpers'
 import { selectShortShows } from '../shortShowsByIds/reducers'
-import { SelectedFullShow } from '../types'
 
 const ADD_FULL_SHOW = 'ADD_FULL_SHOW'
 
@@ -37,8 +36,9 @@ const fullShowsReducer = (state: ShowsState = {}, action: AddShowAction) =>
 
 export const selectShowById = (id: string) => (
   state: RootState,
-): SelectedFullShow | null => {
+) => {
   if (!(id in state.fullShows)) return
+
   const show = state.fullShows[id]
   if (!show) return null
 

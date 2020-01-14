@@ -13,12 +13,6 @@ const FETCH_TRENDINGS_START = 'FETCH_TRENDINGS_START'
 const FETCH_TRENDINGS_SUCCESS = 'FETCH_TRENDINGS_SUCCESS'
 const FETCH_TRENDINGS_ERROR = 'FETCH_TRENDINGS_ERROR'
 
-type TrendingsActionTypeCreator<T, P = never> = {
-  type: T
-  payload?: P
-  meta: { fieldName: TredingFields }
-}
-
 export type RequestTrendingsAction = Action<
   typeof REQUEST_TRENDINGS,
   undefined,

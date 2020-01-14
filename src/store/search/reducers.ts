@@ -102,7 +102,7 @@ const initialState: SearchState = {
   persons: [],
   page: 0,
   totalPages: 0,
-  totalResults: 0,
+  totalResults: -1,
   isLastPage: false,
   loading: false,
   error: false,

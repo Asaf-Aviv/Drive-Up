@@ -1,4 +1,3 @@
-import { ShortMedia } from 'store/types'
 import produce from 'immer'
 import withLoadingStates from 'store/helpers/withLoadingStates'
 import { Action } from 'store/helpers'
@@ -131,7 +130,7 @@ const showsByCategoryReducer = (
     }
   })
 
-export const selectShowsByCategory = (state: RootState): ShortMedia[] =>
+export const selectShowsByCategory = (state: RootState) =>
   state.showsByCategory.results.map(id => state.shortShows[id])
 
 export default withLoadingStates({

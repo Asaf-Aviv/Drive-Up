@@ -109,7 +109,8 @@ export const selectShowSeasonEpisode = ({
 }: SelectSeasonEpisode) => ({ showSeasons }: RootState) => {
   const season = showSeasons.byShowId[showId]?.[seasonNumber]
   if (season === undefined) return
-  return season.episodes
+
+  return season?.episodes
     .find(episode => episode.episodeNumber === +episodeNumber) ?? null
 }
 

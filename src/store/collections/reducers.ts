@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { Collection, CollectionInStore } from 'store/types'
+import { CollectionInStore } from 'store/types'
 import withLoadingStates from 'store/helpers/withLoadingStates'
 import { Action } from '../helpers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
@@ -86,7 +86,7 @@ const collectionsReducer = (
 
 export const selectCollection = (collectionId: string) => (
   state: RootState,
-): Collection | null => {
+) => {
   if (!(collectionId in state.collections.byIds)) return
   const collection = state.collections.byIds[collectionId]
   if (collection === null) return null

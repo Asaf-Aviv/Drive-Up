@@ -1,3 +1,4 @@
+import { Person } from 'store/types'
 import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { call, put, takeLatest, all } from 'redux-saga/effects'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
@@ -14,7 +15,7 @@ import TMDB from '../../api'
 function* fetchPersonById({ meta: { personId } }: RequestPersonByIdAction) {
   yield put(fetchPersonByIdStart())
 
-  let person
+  let person: Person | null
 
   try {
     person = yield call(TMDB.fetchPersonById, personId)

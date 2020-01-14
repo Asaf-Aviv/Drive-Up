@@ -1,5 +1,7 @@
+import { ShortMedia } from 'store/types'
 import filterExistingMedia from 'store/helpers/filterExistingMedia'
 import { put, call, takeLatest } from 'redux-saga/effects'
+import { Collection } from '../types'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
   REQUEST_COLLECTION,
@@ -13,7 +15,7 @@ import TMDB from '../../api'
 export function* fetchCollection({ meta: { collectionId } }: RequestCollectionAction) {
   yield put(fetchCollectionStart())
 
-  let collection
+  let collection: Collection | null
 
   try {
     collection = yield call(TMDB.fetchMovieCollection, collectionId)
@@ -22,11 +24,12 @@ export function* fetchCollection({ meta: { collectionId } }: RequestCollectionAc
     return
   }
 
-  if (!collection) {
+  if (collection === null) {
     yield put(fetchCollectionSuccess(null, collectionId))
+    return
   }
 
-  const newMovies = yield call(filterExistingMedia, collection.parts, 'shortMovies')
+  const newMovies: ShortMedia[] = yield call(filterExistingMedia, collection.parts, 'shortMovies')
   const payload = {
     ...collection,
     parts: collection.parts.map(({ id }) => id),

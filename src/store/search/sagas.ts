@@ -6,6 +6,7 @@ import {
   delay,
 } from 'redux-saga/effects'
 import { addShortShows } from 'store/shortShowsByIds/reducers'
+import { SearchResults, ShortMedia } from '../types'
 import filterExistingMedia from '../helpers/filterExistingMedia'
 import { addShortMovies } from '../shortMoviesByIds/reducers'
 import {
@@ -30,7 +31,7 @@ export function* fetchSearchResults(action: RequestSearchResultsAction) {
 
   yield put(fetchSearchResultsStart())
 
-  let data
+  let data: SearchResults
 
   try {
     data = yield call(TMDB.search, category, params, page)
@@ -39,7 +40,7 @@ export function* fetchSearchResults(action: RequestSearchResultsAction) {
     return
   }
 
-  const [newMovies, newShows] = yield all([
+  const [newMovies, newShows]: [ShortMedia[], ShortMedia[]] = yield all([
     call(filterExistingMedia, data.movies, 'shortMovies'),
     call(filterExistingMedia, data.shows, 'shortShows'),
   ])
