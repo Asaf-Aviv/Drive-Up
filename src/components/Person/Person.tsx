@@ -8,7 +8,6 @@ import {
   Spacer,
   Container,
   ExternalLink,
-  BackDrop,
   FieldValue,
   Section,
   SlideShow,
@@ -26,6 +25,7 @@ import {
   selectPersonById,
 } from 'store/person/reducers'
 import { useShallowEqualSelector } from 'hooks'
+import Visible from 'components/Visible'
 
 type Params = {
   personId: string
@@ -89,30 +89,38 @@ const Person = () => {
           {alsoKnownAs[0] && renderDetailsField('Also known as', alsoKnownAs.join(', '))}
           {homepage && <ExternalLink href={homepage} text="Homepage" />}
         </Section>
-        <Section>
-          <SectionTitle>Movies</SectionTitle>
-          <SlideShow>
-            {movies
-              .filter(movie => movie.backdrop)
-              .map(movie => (
-                <MediaSlideItem key={movie.id} mediaType="movie" {...movie} />
-              ))}
-          </SlideShow>
-          <Spacer />
-          <SectionTitle>Shows</SectionTitle>
-          <SlideShow>
-            {shows
-              .filter(show => show.backdrop)
-              .map(show => (
-                <MediaSlideItem key={show.id} mediaType="show" {...show} />
-              ))}
-          </SlideShow>
-        </Section>
-        <Section>
-          <Images posters={images} alt={name} />
-          <Spacer />
-          <Videos videos={videos} />
-        </Section>
+        <Visible when={movies[0] || shows[0]}>
+          <Section>
+            <Visible when={movies[0]}>
+              <SectionTitle>Movies</SectionTitle>
+              <SlideShow>
+                {movies
+                  .filter(movie => movie.backdrop)
+                  .map(movie => (
+                    <MediaSlideItem key={movie.id} mediaType="movie" {...movie} />
+                  ))}
+              </SlideShow>
+              <Spacer />
+            </Visible>
+            <Visible when={shows[0]}>
+              <SectionTitle>Shows</SectionTitle>
+              <SlideShow>
+                {shows
+                  .filter(show => show.backdrop)
+                  .map(show => (
+                    <MediaSlideItem key={show.id} mediaType="show" {...show} />
+                  ))}
+              </SlideShow>
+            </Visible>
+          </Section>
+        </Visible>
+        <Visible when={images[0] || videos[0]}>
+          <Section>
+            <Images posters={images} alt={name} />
+            {images[0] && <Spacer />}
+            <Videos videos={videos} />
+          </Section>
+        </Visible>
       </Container>
     </main>
   )

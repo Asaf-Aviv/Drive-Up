@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Montserrat', sans-serif;
     color: #FFF;
-    background: #001e32;
+    background: #001522;
     letter-spacing: 0.5px;
     line-height: 1.3;
     overflow-x: hidden;
@@ -35,10 +35,11 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
+    outline-color: #00f8e3;
   }
 
-  .slick-disabled {
-    color: inherit;
+  .slick-track {
+    min-width: 100%;
   }
 
   .slick-disabled {

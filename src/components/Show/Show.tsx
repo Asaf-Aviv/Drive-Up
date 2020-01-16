@@ -100,21 +100,27 @@ const Show = () => {
         trailer={trailer}
         nextEpisode={nextEpisodeDate}
       />
-      <Container>
-        <Section>
+      <Section>
+        <Container>
           <StyledGenres genres={genres} mediaType="shows" large />
-          <StyledOverview overview={overview} />
-          <MediaDetails
-            mediaType="show"
-            name={name}
-            runtime={runtime}
-            seasons={seasonsCount}
-            episodes={episodesCount}
-            countries={[country]}
-            languages={[originalLanguage]}
-            homepage={homepage}
-          />
-        </Section>
+        </Container>
+        <ShowMetaData>
+          <StyledContainer>
+            <StyledMediaDetails
+              mediaType="show"
+              name={name}
+              runtime={runtime}
+              seasons={seasonsCount}
+              episodes={episodesCount}
+              countries={[country]}
+              languages={[originalLanguage]}
+              homepage={homepage}
+            />
+            <Overview overview={overview} />
+          </StyledContainer>
+        </ShowMetaData>
+      </Section>
+      <Container>
         <Section>
           <PersonsSection title="Cast" persons={cast} />
           {cast[0] && <Spacer />}
@@ -144,14 +150,14 @@ const Show = () => {
               loading={recommendations.loading}
               isLastPage={recommendations.isLastPage}
               loadMore={() => {
-              // TODO: fix related shows
-              // dispatch(
-              // requestRelatedShows(
-              //   show.id,
-              //   'recommendations',
-              //   recommendations.page + 1,
-              // ),
-              // )
+                // TODO: fix related shows
+                // dispatch(
+                // requestRelatedShows(
+                //   show.id,
+                //   'recommendations',
+                //   recommendations.page + 1,
+                // ),
+                // )
               }}
             >
               {recommendations.results.map(recommendedShow => (
@@ -202,16 +208,59 @@ const Show = () => {
   )
 }
 
-const StyledGenres = styled(Genres)`
-  margin-bottom: 2rem;
+const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 900px) {
+    flex-direction: row; 
+    padding: 0;
+    width: calc(95% - 2rem);
+    max-width: calc(1280px - 2rem);
+    background: ${props => props.theme.colors.body};
+    > div:first-of-type {
+      margin-right: 1rem;
+      flex-basis: 350px;
+      flex-shrink: 0;
+    }
+  }
 `
 
-const StyledOverview = styled(Overview)`
-  margin-bottom: 4rem;
+const ShowMetaData = styled.div`
+  order: 1;
+  @media (min-width: 900px) {
+    position: relative;
+    &::before {
+      position: absolute;
+      content: '';
+      background: ${props => props.theme.colors.primary};
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 80%;
+      z-index: -1;
+    }
+  }
+`
+
+const StyledMediaDetails = styled(MediaDetails)`
+  order: 1;
+  margin-top: 2rem;
+  @media (min-width: 900px) {
+    margin-top: 0rem;
+    order: 0;
+    padding: 1rem 0;
+    background: ${props => props.theme.colors.primary};
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
 `
 
 const SeasonsGrid = styled(Grid)`
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+`
+
+const StyledGenres = styled(Genres)`
+  margin-bottom: 2rem;
 `
 
 export default Show

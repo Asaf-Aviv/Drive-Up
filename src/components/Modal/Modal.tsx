@@ -69,12 +69,14 @@ const StyledModal = styled.div`
   left: 0;
   bottom: 0;
   z-index: 1200;
-  padding: 2rem;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 300ms;
+  @media (min-width: 600px) {
+    padding: 2rem;
+  }
 `
 
 export default Modal

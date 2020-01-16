@@ -38,6 +38,8 @@ const Card = styled(Link)`
   height: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
   &:hover {
     transform: translateY(-4px);
   }

@@ -34,5 +34,4 @@ const Placeholder = styled.div`
   width: 100%;
 `
 
-
 export default Poster

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { Container, DesktopNavBar, MobileNavBar } from 'components'
+import { Container, DesktopNavBar, SmallScreenNavBar } from 'components'
 import { WindowWidthContext } from '../WindowWidthProvider'
 
 const NavBar = () => {
@@ -11,7 +11,7 @@ const NavBar = () => {
   return (
     <NavHeader>
       <StyledContainer>
-        {isSmallScreen ? <MobileNavBar /> : <DesktopNavBar />}
+        {isSmallScreen ? <SmallScreenNavBar /> : <DesktopNavBar />}
       </StyledContainer>
     </NavHeader>
   )

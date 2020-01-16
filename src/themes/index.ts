@@ -6,7 +6,7 @@ const theme: DefaultTheme = {
     primaryLight: '#0496FF',
     primaryDark: '#000f1f',
     secondary: '#F9DC00',
-    body: '#001e32',
+    body: '#001522',
     black: '#050505',
     white: '#E8E8E8',
   },

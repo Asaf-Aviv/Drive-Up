@@ -9,7 +9,6 @@ const baseOptions: SlickSettings = {
   infinite: false,
   speed: 400,
   lazyLoad: 'ondemand',
-  centerMode: false,
   arrows: true,
   responsive: [
     {
@@ -83,17 +82,23 @@ const SlideShow = ({
 }
 
 /* eslint-disable */
-const BackArrow: React.FC<any> = ({ currentSlide, slideCount, ...arrowProps }) => (
-  <StyledBackArrow {...arrowProps} />
-)
+const BackArrow: React.FC<any> = ({
+  currentSlide,
+  slideCount,
+  ...arrowProps
+}) => <StyledBackArrow {...arrowProps} />
 
-const NextArrow: React.FC<any> = ({ currentSlide, slideCount, ...arrowProps }) => (
-  <StyledNextArrow {...arrowProps} />
-)
+const NextArrow: React.FC<any> = ({
+  currentSlide,
+  slideCount,
+  ...arrowProps
+}) => <StyledNextArrow {...arrowProps} />
 
-const LoaderFix: React.FC<any> = ({ currentSlide, slideCount, ...arrowProps }) => (
-  <Loader {...arrowProps} size={32} />
-)
+const LoaderFix: React.FC<any> = ({
+  currentSlide,
+  slideCount,
+  ...arrowProps
+}) => <Loader {...arrowProps} size={32} />
 /* eslint-enable */
 
 const sharedArrowIconStyles = css`

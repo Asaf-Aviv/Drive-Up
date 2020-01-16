@@ -47,10 +47,12 @@ const ButtonLink = styled(Link)<{ large?: boolean }>`
       box-shadow: 0 4px 10px -2px #0396ff;
       background: ${colors.body};
       transition: background 150ms;
-      ${large && `
-        font-size: 16px;
-        padding: 0.5rem 1.25rem;
-      `}
+      @media (min-width: 600px) {
+        ${large && `
+          font-size: 16px;
+          padding: 0.5rem 1.25rem;
+        `}
+      }
       &:not(:last-of-type) {
         margin-right: 1rem;
       }

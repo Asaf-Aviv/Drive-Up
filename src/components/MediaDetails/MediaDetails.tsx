@@ -16,6 +16,7 @@ type Props = {
   homepage: string | null
   seasons?: number
   episodes?: number
+  className?: string
 }
 
 const MediaDetails = ({
@@ -30,6 +31,7 @@ const MediaDetails = ({
   languages,
   seasons,
   episodes,
+  className,
 }: Props) => {
   const renderDetailsField = (field: string, value: any) => (
     <MetaDataContainer>
@@ -38,13 +40,13 @@ const MediaDetails = ({
   )
 
   return (
-    <div>
+    <div className={className}>
       {renderDetailsField('Name', name)}
       {director && renderDetailsField('Director', director.name)}
-      {renderDetailsField('Writers', writers?.map(w => w.name).join(', '))}
+      {writers && renderDetailsField('Writers', writers.map(w => w.name).join(', '))}
       {runtime && renderDetailsField('Runtime', runtime)}
-      {renderDetailsField('Seasons', seasons)}
-      {renderDetailsField('Episodes', episodes)}
+      {seasons && renderDetailsField('Seasons', seasons)}
+      {episodes && renderDetailsField('Episodes', episodes)}
       {!!budget && renderDetailsField('Budget', `$${budget.toLocaleString()}`)}
       {!!revenue && renderDetailsField('Revenue', `$${revenue.toLocaleString()}`)}
       {languages && renderDetailsField('Languages', languages.join(', '))}
@@ -55,7 +57,7 @@ const MediaDetails = ({
 }
 
 const MetaDataContainer = styled.div`
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 `
 
 export default MediaDetails

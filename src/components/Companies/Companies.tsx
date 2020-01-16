@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LazyLoad from 'react-lazyload'
 import { Company as ICompany } from 'store/types'
@@ -16,14 +15,12 @@ const Companies = ({ companies, title = 'Companies' }: Props) => {
   return (
     <CompaniesWrapper>
       <Container>
-        <StyledSectionTitle centered>
-          {title}
-        </StyledSectionTitle>
+        <StyledSectionTitle centered>{title}</StyledSectionTitle>
         <CompanyContainer>
           {companies
             .filter(({ backdrop }) => backdrop)
             .map(({ id, backdrop, name }) => (
-              <Link key={id} to={`/company/${id}`} aria-label={name}>
+              <CompanyWrapper key={id}>
                 <LazyLoad offset={400} once>
                   <CompanyLogo
                     src={`https://image.tmdb.org/t/p/w300/${backdrop}`}
@@ -31,7 +28,7 @@ const Companies = ({ companies, title = 'Companies' }: Props) => {
                     alt={name}
                   />
                 </LazyLoad>
-              </Link>
+              </CompanyWrapper>
             ))}
         </CompanyContainer>
       </Container>
@@ -41,6 +38,12 @@ const Companies = ({ companies, title = 'Companies' }: Props) => {
 
 const StyledSectionTitle = styled(SectionTitle)`
   color: #000;
+`
+
+const CompanyWrapper = styled.div`
+  flex: 1;
+  padding: 1rem 2rem;
+  flex-basis: 200px;
 `
 
 const CompaniesWrapper = styled.div`
@@ -53,9 +56,7 @@ const CompaniesWrapper = styled.div`
 `
 
 const CompanyLogo = styled.img`
-  display: block;
   max-width: 100%;
-  user-select: none;
 `
 
 const CompanyContainer = styled.div`
@@ -63,10 +64,6 @@ const CompanyContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  > a {
-    padding: 0 2rem;
-    flex: 25%;
-  }
 `
 
 export default Companies

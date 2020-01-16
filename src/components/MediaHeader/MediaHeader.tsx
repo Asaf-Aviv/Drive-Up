@@ -54,37 +54,41 @@ const MediaHeader = ({
         </MovieDetailsHeader>
         <MovieDetailsFooter>
           {date && (
-            <div>
+            <MediaDetailsCategoryContainer>
               <CategoryTitle as="h5">
                 {type === 'movie' ? 'Release Date' : 'Air Date'}
               </CategoryTitle>
               <CategoryValue>{date}</CategoryValue>
-            </div>
+            </MediaDetailsCategoryContainer>
           )}
           {nextEpisode && (
-            <div>
+            <MediaDetailsCategoryContainer>
               <CategoryTitle as="h5">Next Episode</CategoryTitle>
               <CategoryValue>{nextEpisode}</CategoryValue>
-            </div>
+            </MediaDetailsCategoryContainer>
           )}
           {voteAverage && (
-            <div>
+            <MediaDetailsCategoryContainer>
               <CategoryTitle as="h5">Rating</CategoryTitle>
               <CategoryValue>{voteAverage} / 10</CategoryValue>
-            </div>
+            </MediaDetailsCategoryContainer>
           )}
           {runtime && (
-            <Runtime as="div">
-              <StyledPopcornIcon />
-              {runtime}
-            </Runtime>
+            <MediaDetailsCategoryContainer>
+              <Runtime as="div">
+                <StyledPopcornIcon />
+                {runtime}
+              </Runtime>
+            </MediaDetailsCategoryContainer>
           )}
-          {pg && <span>{pg}</span>}
+          {/* {pg && <span>{pg}</span>} */}
           {trailer && (
-            <PlayButton onClick={toggleShowTrailer}>
-              <StyledPlayIcon />
-              Watch Trailer
-            </PlayButton>
+            <MediaDetailsCategoryContainer>
+              <PlayButton onClick={toggleShowTrailer}>
+                <StyledPlayIcon />
+                Watch Trailer
+              </PlayButton>
+            </MediaDetailsCategoryContainer>
           )}
         </MovieDetailsFooter>
       </MovieDetails>
@@ -107,14 +111,19 @@ const MediaHeader = ({
 
 const StyledTitle = styled(Title)`
   @media (max-width: 599px) {
-    font-weight: 400;
-    font-size: 1rem;
+    text-align: center;
+    font-size: 1.25rem;
+  @media (min-width: 600px) and (max-width: 767px) {
+    font-size: 1.5rem;
+  }
   }
   margin: 0 0 1rem;
   text-align: left;
 `
 
-const StyledModalChildrenContainer = styled((props: any) => <ModalChildrenContainer {...props} />)`
+const StyledModalChildrenContainer = styled((props: any) => (
+  <ModalChildrenContainer {...props} />
+))`
   height: auto !important;
 `
 
@@ -167,13 +176,12 @@ const TagLine = styled.p`
 export const ImageHeader = styled.header<{ bgImg: string }>`
   ${(props) => {
     const desktopImage = props.bgImg
-    const mobileImage = desktopImage.replace('1280', '780')
 
     return css`
       background-size: 150vw;
       background-repeat: no-repeat;
       background-position: center 10%;
-      background-image: url(${mobileImage});
+      background-image: url(${desktopImage.replace('1280', '780')});
       height: 40vh;
       @media (min-width: 600px) {
         background-size: 100vw;
@@ -198,7 +206,7 @@ const StyledPoster = styled((props: any) => <Poster {...props} />)`
     width: 100px;
   }
   @media (max-width: 767px) {
-    width: 127px;
+    width: 135px;
   }
   @media (min-with: 768px) {
     width: 150px;
@@ -216,9 +224,9 @@ const MovieDetailsContainer = styled(Container)`
   position: relative;
   margin-bottom: 4rem;
   @media (min-width: 600px) {
-    margin-top: -95px;
+    margin-top: -101px;
   }
-  @media (min-width: 786px) {
+  @media (min-width: 768px) {
     margin-top: -142px;
   }
   & > ${PlayButton} {
@@ -234,6 +242,15 @@ const MovieDetails = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  @media (max-width: 767px) {
+    > div:first-of-type {
+      margin-bottom: 1rem;
+    }
+  }
+  @media (max-width: 599px) {
+    flex-basis: 100%;
+    margin-top: 2rem;
+  }
 `
 
 const MovieDetailsHeader = styled.div`
@@ -243,22 +260,28 @@ const MovieDetailsHeader = styled.div`
   flex: 1;
 `
 
+const MediaDetailsCategoryContainer = styled.div`
+  @media (max-width:  899px) {
+    flex-basis: 50%;
+  }
+  @media (max-width:  599px) {
+    margin-bottom: 1rem;
+  }
+`
+
 const MovieDetailsFooter = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  @media (min-width: 600px) and (max-width: 767px) {
-    > * {
-      margin-bottom: 0.5rem;
-      flex: 30%;
-    }
-  }
   @media (max-width: 767px) {
     ${PlayButton} {
       display: none;
     }
+  }
+  @media (max-width: 419px) {
+    margin-top: 1rem;
   }
 `
 
@@ -276,7 +299,6 @@ const CategoryTitle = styled(CategoryValue)`
   fill: ${props => props.theme.textColors.secondary};
   @media (min-width: 768px) {
     margin-top: 0;
-    margin-bottom: 1rem;
   }
 `
 

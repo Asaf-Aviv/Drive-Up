@@ -7,7 +7,7 @@ import { NavLink, Nav, NavSearchBar } from 'components'
 import { ReactComponent as MenuIcon } from 'assets/icons/menu.svg'
 import { useLockBodyScroll } from 'hooks'
 
-const MobileNavBar = () => {
+const SmallScreenNavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [openCategory, setOpenCategory] = useState<number | null>(null)
   useLockBodyScroll(isOpen)
@@ -125,6 +125,9 @@ const MenuButton = styled.button`
   margin-left: 1rem;
   background: transparent;
   border: none;
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem;
   > svg {
     height: 30px;
     width: 30px;
@@ -136,10 +139,10 @@ const NavWrapper = styled.div`
   height: 100%;
   padding: 10vh 0 0 1rem;
   width: 70vw;
-  background: ${props => props.theme.colors.primary};
+  background: ${({ theme }) => theme.colors.primary};
   @media (min-width: 768px) {
     width: 40vw;
   }
 `
 
-export default MobileNavBar
+export default SmallScreenNavBar
