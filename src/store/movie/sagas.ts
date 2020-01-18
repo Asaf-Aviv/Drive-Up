@@ -20,7 +20,7 @@ function* fetchMovieById({ meta: { movieId } }: RequestMovieByIdAction) {
   try {
     movie = yield call(TMDB.fetchMovieById, movieId)
   } catch (err) {
-    yield put(fetchMovieByIdError(movieId))
+    yield put(fetchMovieByIdError())
     return
   }
 

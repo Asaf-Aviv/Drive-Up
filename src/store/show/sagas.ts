@@ -20,7 +20,7 @@ function* fetchShowById({ meta: { showId } }: RequestShowByIdAction) {
   try {
     show = yield call(TMDB.fetchShowById, showId)
   } catch (err) {
-    yield put(fetchShowByIdError(showId))
+    yield put(fetchShowByIdError())
     return
   }
 

@@ -53,4 +53,4 @@ export default withLoadingStates({
   start: FETCH_SHOW_BY_ID_START,
   success: FETCH_SHOW_BY_ID_SUCCESS,
   error: FETCH_SHOW_BY_ID_ERROR,
-})((state = initialState) => state)
+})((state: LoadingStates = initialState) => state)

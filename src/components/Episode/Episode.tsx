@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import LazyLoad from 'react-lazyload'
 import { useDispatch } from 'react-redux'
-import uniqBy from 'lodash.uniqby'
 import {
   selectShowSeasonEpisode,
   requestShowSeason,
@@ -14,8 +12,6 @@ import {
   Container,
   Overview,
   BackDrop,
-  PersonsGrid,
-  PersonCard,
   SectionTitle,
   Section,
   Spacer,
@@ -52,8 +48,6 @@ const Episode = () => {
     crew,
     date,
     episodeNumber,
-    voteCount,
-    voteAverage,
     seasonName,
     guestStars,
     overview,
