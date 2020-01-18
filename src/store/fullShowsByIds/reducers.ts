@@ -5,9 +5,9 @@ import { FullShowInStore } from 'store/types'
 import { Action } from '../helpers'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 
-const ADD_FULL_SHOW = 'ADD_FULL_SHOW'
+export const ADD_FULL_SHOW = 'ADD_FULL_SHOW'
 
-type AddShowAction = Action<
+export type AddShowAction = Action<
   typeof ADD_FULL_SHOW,
   FullShowInStore | null,
   { showId: string }

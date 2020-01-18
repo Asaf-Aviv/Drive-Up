@@ -1,12 +1,11 @@
-import { Reducer } from 'redux'
 import { Action } from '../helpers'
 import withLoadingStates from '../helpers/withLoadingStates'
 import { LoadingStates } from '../types'
 
 export const REQUEST_MOVIE_BY_ID = 'REQUEST_MOVIE_BY_ID'
-const FETCH_MOVIE_BY_ID_START = 'FETCH_MOVIE_BY_ID_START'
-const FETCH_MOVIE_BY_ID_SUCCESS = 'FETCH_MOVIE_BY_ID_SUCCESS'
-const FETCH_MOVIE_BY_ID_ERROR = 'FETCH_MOVIE_BY_ID_ERROR'
+export const FETCH_MOVIE_BY_ID_START = 'FETCH_MOVIE_BY_ID_START'
+export const FETCH_MOVIE_BY_ID_SUCCESS = 'FETCH_MOVIE_BY_ID_SUCCESS'
+export const FETCH_MOVIE_BY_ID_ERROR = 'FETCH_MOVIE_BY_ID_ERROR'
 
 export type RequestMovieByIdAction = Action<
   typeof REQUEST_MOVIE_BY_ID,
@@ -18,13 +17,9 @@ type FetchMovieByIdStartAction = Action<typeof FETCH_MOVIE_BY_ID_START>
 
 type FetchMovieByIdSuccessAction = Action<typeof FETCH_MOVIE_BY_ID_SUCCESS>
 
-type FetchMovieByIdErrorAction = Action<
-  typeof FETCH_MOVIE_BY_ID_ERROR,
-  undefined,
-  { movieId: string }
->
+type FetchMovieByIdErrorAction = Action<typeof FETCH_MOVIE_BY_ID_ERROR>
 
-type MovieByIdActionTypes =
+export type MovieByIdActionTypes =
   | RequestMovieByIdAction
   | FetchMovieByIdStartAction
   | FetchMovieByIdSuccessAction
@@ -45,25 +40,17 @@ export const fetchMovieByIdSuccess = (): MovieByIdActionTypes => ({
   type: FETCH_MOVIE_BY_ID_SUCCESS,
 })
 
-export const fetchMovieByIdError = (movieId: string): MovieByIdActionTypes => ({
+export const fetchMovieByIdError = (): MovieByIdActionTypes => ({
   type: FETCH_MOVIE_BY_ID_ERROR,
-  meta: {
-    movieId,
-  },
 })
 
-const initialState = {
+export const initialState: LoadingStates = {
   loading: false,
   error: false,
 }
-
-const movieReducer: Reducer<LoadingStates, MovieByIdActionTypes> = (
-  state: LoadingStates = initialState,
-  action: MovieByIdActionTypes,
-) => state
 
 export default withLoadingStates({
   start: FETCH_MOVIE_BY_ID_START,
   success: FETCH_MOVIE_BY_ID_SUCCESS,
   error: FETCH_MOVIE_BY_ID_ERROR,
-})(movieReducer)
+})((state = initialState) => state)

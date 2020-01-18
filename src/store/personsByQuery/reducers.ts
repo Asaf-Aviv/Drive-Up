@@ -5,12 +5,12 @@ import withLoadingStates from 'store/helpers/withLoadingStates'
 import { RootState } from '..'
 
 export const REQUEST_PERSONS_BY_QUERY = 'REQUEST_PERSONS_BY_QUERY'
-const FETCH_PERSONS_BY_QUERY_START = 'FETCH_PERSONS_BY_QUERY_START'
-const FETCH_PERSONS_BY_QUERY_SUCCESS = 'FETCH_PERSONS_BY_QUERY_SUCCESS'
-const FETCH_PERSONS_BY_QUERY_ERROR = 'FETCH_PERSONS_BY_QUERY_ERROR'
-const CLEAR_PERSONS_BY_QUERY = 'CLEAR_PERSONS_BY_QUERY'
+export const FETCH_PERSONS_BY_QUERY_START = 'FETCH_PERSONS_BY_QUERY_START'
+export const FETCH_PERSONS_BY_QUERY_SUCCESS = 'FETCH_PERSONS_BY_QUERY_SUCCESS'
+export const FETCH_PERSONS_BY_QUERY_ERROR = 'FETCH_PERSONS_BY_QUERY_ERROR'
+export const CLEAR_PERSONS_BY_QUERY = 'CLEAR_PERSONS_BY_QUERY'
 
-type Payload = {
+export type Payload = {
   results: PersonByQuery[]
   page: number
   totalPages: number
@@ -35,7 +35,7 @@ type FetchPersonsByQuerySuccessAction = Action<
 
 type FetchPersonsByQueryErrorAction = Action<typeof FETCH_PERSONS_BY_QUERY_ERROR>
 
-type PersonsByQueryActionTypes =
+export type PersonsByQueryActionTypes =
   | ClearPersonsByQueryAction
   | RequestPersonsByQueryAction
   | FetchPersonsByQueryStartAction

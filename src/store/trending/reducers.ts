@@ -9,9 +9,9 @@ export type TredingFields =
   | 'weeklyTrendingShows'
 
 export const REQUEST_TRENDINGS = 'REQUEST_TRENDINGS'
-const FETCH_TRENDINGS_START = 'FETCH_TRENDINGS_START'
-const FETCH_TRENDINGS_SUCCESS = 'FETCH_TRENDINGS_SUCCESS'
-const FETCH_TRENDINGS_ERROR = 'FETCH_TRENDINGS_ERROR'
+export const FETCH_TRENDINGS_START = 'FETCH_TRENDINGS_START'
+export const FETCH_TRENDINGS_SUCCESS = 'FETCH_TRENDINGS_SUCCESS'
+export const FETCH_TRENDINGS_ERROR = 'FETCH_TRENDINGS_ERROR'
 
 export type RequestTrendingsAction = Action<
   typeof REQUEST_TRENDINGS,
@@ -37,7 +37,7 @@ type FetchTrendingsErrorAction = Action<
   { fieldName: TredingFields }
 >
 
-type TrendingActionTypes =
+export type TrendingActionTypes =
   | RequestTrendingsAction
   | FetchTrendingsStartAction
   | FetchTrendingsSuccessAction
@@ -99,31 +99,36 @@ export const initialState: TrendingState = {
   weeklyTrendingShows: initialStateSlice,
 }
 
-const trendingReducer = (
-  state = initialState,
-  action: TrendingActionTypes,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case FETCH_TRENDINGS_START: {
-      const { meta: { fieldName } } = action
-      draft[fieldName].loading = true
-      draft[fieldName].error = false
-      break
+const trendingReducer = (state = initialState, action: TrendingActionTypes) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case FETCH_TRENDINGS_START: {
+        const {
+          meta: { fieldName },
+        } = action
+        draft[fieldName].loading = true
+        draft[fieldName].error = false
+        break
+      }
+      case FETCH_TRENDINGS_SUCCESS: {
+        const {
+          payload,
+          meta: { fieldName },
+        } = action
+        draft[fieldName].results = payload
+        draft[fieldName].loading = false
+        break
+      }
+      case FETCH_TRENDINGS_ERROR: {
+        const {
+          meta: { fieldName },
+        } = action
+        draft[fieldName].loading = false
+        draft[fieldName].error = true
+        break
+      }
     }
-    case FETCH_TRENDINGS_SUCCESS: {
-      const { payload, meta: { fieldName } } = action
-      draft[fieldName].results = payload
-      draft[fieldName].loading = false
-      break
-    }
-    case FETCH_TRENDINGS_ERROR: {
-      const { meta: { fieldName } } = action
-      draft[fieldName].loading = false
-      draft[fieldName].error = true
-      break
-    }
-  }
-})
+  })
 
 export const selectTodaysTrendingMovies = (state: RootState) =>
   state.trending.todaysTrendingMovies.results.map(id => state.shortMovies[id])

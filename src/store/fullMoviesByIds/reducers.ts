@@ -5,9 +5,9 @@ import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { FullMovieInStore } from '../types'
 import addByIdReducer from '../helpers/addByIdReducer'
 
-const ADD_FULL_MOVIE = 'ADD_FULL_MOVIE'
+export const ADD_FULL_MOVIE = 'ADD_FULL_MOVIE'
 
-type AddMovieAction = Action<
+export type AddMovieAction = Action<
   typeof ADD_FULL_MOVIE,
   FullMovieInStore | null,
   { movieId: string }

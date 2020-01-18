@@ -4,12 +4,12 @@ import { Action } from 'store/helpers'
 import { RootState } from '..'
 
 export const REQUEST_SHOWS_BY_CATEGORY = 'REQUEST_SHOWS_BY_CATEGORY'
-const FETCH_SHOWS_BY_CATEGORY_START = 'FETCH_SHOWS_BY_CATEGORY_START'
-const FETCH_SHOWS_BY_CATEGORY_SUCCESS = 'FETCH_SHOWS_BY_CATEGORY_SUCCESS'
-const FETCH_SHOWS_BY_CATEGORY_ERROR = 'FETCH_SHOWS_BY_CATEGORY_ERROR'
-const CLEAR_SHOWS_BY_CATEGORY = 'CLEAR_SHOWS_BY_CATEGORY'
+export const FETCH_SHOWS_BY_CATEGORY_START = 'FETCH_SHOWS_BY_CATEGORY_START'
+export const FETCH_SHOWS_BY_CATEGORY_SUCCESS = 'FETCH_SHOWS_BY_CATEGORY_SUCCESS'
+export const FETCH_SHOWS_BY_CATEGORY_ERROR = 'FETCH_SHOWS_BY_CATEGORY_ERROR'
+export const CLEAR_SHOWS_BY_CATEGORY = 'CLEAR_SHOWS_BY_CATEGORY'
 
-type Payload = {
+export type Payload = {
   results: string[]
   page: number
   totalPages: number
@@ -43,7 +43,7 @@ type FetchShowsByCategoryErrorAction = Action<
   { category: string }
 >
 
-type ShowsByCategoryActionTypes =
+export type ShowsByCategoryActionTypes =
   | ClearShowsByQuery
   | RequestShowsByCategoryAction
   | FetchShowsByCategoryStartAction

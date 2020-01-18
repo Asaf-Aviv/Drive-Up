@@ -5,9 +5,9 @@ import { Action } from 'store/helpers'
 import { SeasonWithEpisodes } from '../types'
 
 export const REQUEST_SEASON = 'REQUEST_SEASON'
-const FETCH_SEASON_START = 'FETCH_SEASON_START'
-const FETCH_SEASON_SUCCESS = 'FETCH_SEASON_SUCCESS'
-const FETCH_SEASON_ERROR = 'FETCH_SEASON_ERROR'
+export const FETCH_SEASON_START = 'FETCH_SEASON_START'
+export const FETCH_SEASON_SUCCESS = 'FETCH_SEASON_SUCCESS'
+export const FETCH_SEASON_ERROR = 'FETCH_SEASON_ERROR'
 
 export type RequestShowSeasonAction = Action<
   typeof REQUEST_SEASON,

@@ -5,12 +5,12 @@ import produce from 'immer'
 import { RootState } from '..'
 
 export const REQUEST_MOVIES_BY_CATEGORY = 'REQUEST_MOVIES_BY_CATEGORY'
-const FETCH_MOVIES_BY_CATEGORY_START = 'FETCH_MOVIES_BY_CATEGORY_START'
-const FETCH_MOVIES_BY_CATEGORY_SUCCESS = 'FETCH_MOVIES_BY_CATEGORY_SUCCESS'
-const FETCH_MOVIES_BY_CATEGORY_ERROR = 'FETCH_MOVIES_BY_CATEGORY_ERROR'
-const CLEAR_MOVIES_BY_CATEGORY = 'CLEAR_MOVIES_BY_CATEGORY'
+export const FETCH_MOVIES_BY_CATEGORY_START = 'FETCH_MOVIES_BY_CATEGORY_START'
+export const FETCH_MOVIES_BY_CATEGORY_SUCCESS = 'FETCH_MOVIES_BY_CATEGORY_SUCCESS'
+export const FETCH_MOVIES_BY_CATEGORY_ERROR = 'FETCH_MOVIES_BY_CATEGORY_ERROR'
+export const CLEAR_MOVIES_BY_CATEGORY = 'CLEAR_MOVIES_BY_CATEGORY'
 
-type Payload = {
+export type Payload = {
   results: string[]
   page: number
   totalPages: number
@@ -44,7 +44,7 @@ type FetchMoviesByCategoryErrorAction = Action<
   { category: string }
 >
 
-type MoviesByCategoryActionTypes =
+export type MoviesByCategoryActionTypes =
   | ClearMoviesByQuery
   | RequestMoviesByCategoryAction
   | FetchMoviesByCategoryStartAction
