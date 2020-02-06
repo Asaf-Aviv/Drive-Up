@@ -5,12 +5,12 @@ import { Action } from 'store/helpers'
 import { RootState } from '..'
 
 export const REQUEST_SHOWS_BY_QUERY = 'REQUEST_SHOWS_BY_QUERY'
-const FETCH_SHOWS_BY_QUERY_START = 'FETCH_SHOWS_BY_QUERY_START'
-const FETCH_SHOWS_BY_QUERY_SUCCESS = 'FETCH_SHOWS_BY_QUERY_SUCCESS'
-const FETCH_SHOWS_BY_QUERY_ERROR = 'FETCH_SHOWS_BY_QUERY_ERROR'
-const CLEAR_SHOWS_BY_QUERY = 'CLEAR_SHOWS_BY_QUERY'
+export const FETCH_SHOWS_BY_QUERY_START = 'FETCH_SHOWS_BY_QUERY_START'
+export const FETCH_SHOWS_BY_QUERY_SUCCESS = 'FETCH_SHOWS_BY_QUERY_SUCCESS'
+export const FETCH_SHOWS_BY_QUERY_ERROR = 'FETCH_SHOWS_BY_QUERY_ERROR'
+export const CLEAR_SHOWS_BY_QUERY = 'CLEAR_SHOWS_BY_QUERY'
 
-type Payload = {
+export type Payload = {
   results: string[]
   page: number
   totalPages: number
@@ -35,7 +35,7 @@ type FetchShowsByQuerySuccessAction = Action<
 
 type FetchShowsByQueryErrorAction = Action<typeof FETCH_SHOWS_BY_QUERY_ERROR>
 
-type ShowsByQueryActionTypes =
+export type ShowsByQueryActionTypes =
   | ClearShowsByQueryAction
   | RequestShowsByQueryAction
   | FetchShowsByQueryStartAction

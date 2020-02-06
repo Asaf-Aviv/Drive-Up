@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { getImgUrl } from 'utils'
 import { selectShowById } from 'store/fullShowsByIds/reducers'
 import {
-  PersonsGrid,
   Overview,
   Companies,
   SectionTitle,
@@ -22,7 +21,6 @@ import {
   Videos,
   SeasonCard,
   Grid,
-  PersonCard,
   NotFound,
   Images,
   ErrorMessageWithRetry,
@@ -216,8 +214,9 @@ const Show = () => {
 const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: column;
+  position: relative;
   @media (min-width: 900px) {
-    flex-direction: row; 
+    flex-direction: row;
     padding: 0;
     width: calc(95% - 2rem);
     max-width: calc(1280px - 2rem);
@@ -242,7 +241,6 @@ const ShowMetaData = styled.div`
       top: 0;
       bottom: 0;
       right: 80%;
-      z-index: -1;
     }
   }
 `

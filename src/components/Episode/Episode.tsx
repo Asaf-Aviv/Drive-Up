@@ -49,8 +49,6 @@ const Episode = () => {
     crew,
     date,
     episodeNumber,
-    voteCount,
-    voteAverage,
     seasonName,
     guestStars,
     overview,

@@ -5,12 +5,12 @@ import { Action } from '../helpers'
 import { selectShortShows } from '../shortShowsByIds/reducers'
 import { selectShortMovies } from '../shortMoviesByIds/reducers'
 import { RootState } from '..'
-import { PersonInStore, SelectedPerson, LoadingStates } from '../types'
+import { PersonInStore, LoadingStates } from '../types'
 
 export const REQUEST_PERSON_BY_ID = 'REQUEST_PERSON_BY_ID'
-const FETCH_PERSON_BY_ID_START = 'FETCH_PERSON_BY_ID_START'
-const FETCH_PERSON_BY_ID_SUCCESS = 'FETCH_PERSON_BY_ID_SUCCESS'
-const FETCH_PERSON_BY_ID_ERROR = 'FETCH_PERSON_BY_ID_ERROR'
+export const FETCH_PERSON_BY_ID_START = 'FETCH_PERSON_BY_ID_START'
+export const FETCH_PERSON_BY_ID_SUCCESS = 'FETCH_PERSON_BY_ID_SUCCESS'
+export const FETCH_PERSON_BY_ID_ERROR = 'FETCH_PERSON_BY_ID_ERROR'
 
 export type RequestPersonByIdAction = Action<
   typeof REQUEST_PERSON_BY_ID,
@@ -32,7 +32,7 @@ type FetchPersonByIdErrorAction = Action<
   { personId: string }
 >
 
-type PersonByIdActionTypes =
+export type PersonByIdActionTypes =
   | RequestPersonByIdAction
   | FetchPersonByIdStartAction
   | FetchPersonByIdSuccessAction
@@ -75,7 +75,7 @@ type PersonState = {
   }
 } & LoadingStates
 
-const initialState: PersonState = {
+export const initialState: PersonState = {
   byId: {},
   loading: false,
   error: false,

@@ -4,9 +4,9 @@ import { RootState } from 'store'
 import { Action } from 'store/helpers'
 import { ShortMedia } from 'store/types'
 
-const ADD_SHORT_SHOWS = 'ADD_SHORT_SHOWS'
+export const ADD_SHORT_SHOWS = 'ADD_SHORT_SHOWS'
 
-type AddShowsAction = Action<
+export type AddShowsAction = Action<
   typeof ADD_SHORT_SHOWS,
   ShortMedia[]
 >

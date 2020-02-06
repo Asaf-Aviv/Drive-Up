@@ -46,9 +46,7 @@ const ShowSeason = () => {
 
   const {
     showName,
-    date,
     episodes,
-    episodesCount,
     name,
     overview,
     poster,

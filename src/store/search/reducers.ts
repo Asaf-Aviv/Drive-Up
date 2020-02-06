@@ -5,12 +5,12 @@ import { Action } from '../helpers'
 import { RootState } from '../index'
 
 export const REQUEST_SEARCH_RESULTS = 'REQUEST_SEARCH_RESULTS'
-const FETCH_SEARCH_RESULTS_START = 'FETCH_SEARCH_RESULTS_START'
-const FETCH_SEARCH_RESULTS_SUCCESS = 'FETCH_SEARCH_RESULTS_SUCCESS'
-const FETCH_SEARCH_RESULTS_ERROR = 'FETCH_SEARCH_RESULTS_ERROR'
-const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS'
+export const FETCH_SEARCH_RESULTS_START = 'FETCH_SEARCH_RESULTS_START'
+export const FETCH_SEARCH_RESULTS_SUCCESS = 'FETCH_SEARCH_RESULTS_SUCCESS'
+export const FETCH_SEARCH_RESULTS_ERROR = 'FETCH_SEARCH_RESULTS_ERROR'
+export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS'
 
-type SearchResultsPayload = {
+export type SearchResultsPayload = {
   movies: string[]
   shows: string[]
   persons: PersonByQuery[]
@@ -96,7 +96,7 @@ type SearchState = {
   error: boolean
 }
 
-const initialState: SearchState = {
+export const initialState: SearchState = {
   movies: [],
   shows: [],
   persons: [],

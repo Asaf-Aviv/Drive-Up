@@ -5,12 +5,12 @@ import { Action } from '../helpers'
 import { RootState } from '..'
 
 export const REQUEST_MOVIES_BY_QUERY = 'REQUEST_MOVIES_BY_QUERY'
-const FETCH_MOVIES_BY_QUERY_START = 'FETCH_MOVIES_BY_QUERY_START'
-const FETCH_MOVIES_BY_QUERY_SUCCESS = 'FETCH_MOVIES_BY_QUERY_SUCCESS'
-const FETCH_MOVIES_BY_QUERY_ERROR = 'FETCH_MOVIES_BY_QUERY_ERROR'
-const CLEAR_MOVIES_BY_QUERY = 'CLEAR_MOVIES_BY_QUERY'
+export const FETCH_MOVIES_BY_QUERY_START = 'FETCH_MOVIES_BY_QUERY_START'
+export const FETCH_MOVIES_BY_QUERY_SUCCESS = 'FETCH_MOVIES_BY_QUERY_SUCCESS'
+export const FETCH_MOVIES_BY_QUERY_ERROR = 'FETCH_MOVIES_BY_QUERY_ERROR'
+export const CLEAR_MOVIES_BY_QUERY = 'CLEAR_MOVIES_BY_QUERY'
 
-type Payload = {
+export type Payload = {
   results: string[]
   page: number
   totalPages: number
@@ -35,7 +35,7 @@ type FetchMoviesByQuerySuccessAction = Action<
 
 type FetchMoviesByQueryErrorAction = Action<typeof FETCH_MOVIES_BY_QUERY_ERROR>
 
-type MoviesByQueryActionTypes =
+export type MoviesByQueryActionTypes =
   | ClearMoviesByQueryAction
   | RequestMoviesByQueryAction
   | FetchMoviesByQueryStartAction

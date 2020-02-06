@@ -83,9 +83,7 @@ const Movie = () => {
     pg,
     trailer,
     director,
-    originalLanguage,
     writers,
-    voteCount,
   } = movie
 
   return (
@@ -210,10 +208,11 @@ const Movie = () => {
 }
 
 const StyledContainer = styled(Container)`
+  position: relative;
   display: flex;
   flex-direction: column;
   @media (min-width: 900px) {
-    flex-direction: row; 
+    flex-direction: row;
     padding: 0;
     width: calc(95% - 2rem);
     max-width: calc(1280px - 2rem);
@@ -238,7 +237,6 @@ const MovieMetaData = styled.div`
       top: 0;
       bottom: 0;
       right: 80%;
-      z-index: -1;
     }
   }
 `
