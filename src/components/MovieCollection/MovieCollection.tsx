@@ -18,6 +18,8 @@ import { getImgUrl } from 'utils'
 import { WindowWidthContext } from 'components/WindowWidthProvider'
 import { ImageHeader } from 'components/MediaHeader'
 import { requestCollection, selectCollection } from 'store/collections/reducers'
+import NotFound from 'components/global/NotFound'
+import { Helmet } from 'react-helmet'
 
 type Params = {
   collectionId: string
@@ -38,7 +40,7 @@ const MovieCollection = () => {
 
   if (error) return <span>error</span>
   if (loading) return <span>Loading</span>
-  if (collection === null) return <span>Collection Not Found</span>
+  if (collection === null) return <NotFound>Collection Not Found</NotFound>
   if (!collection) return null
 
   const {
@@ -51,6 +53,10 @@ const MovieCollection = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{`${name} - Drive Up`}</title>
+        <meta name="description" content={`Details page about ${name} collection`} />
+      </Helmet>
       <ImageHeader bgImg={getImgUrl(backdrop, 1280)}>
         <TransparentBG />
       </ImageHeader>

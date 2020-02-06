@@ -17,6 +17,7 @@ import {
   requestMoviesByCategory,
 } from 'store/moviesByCategory/reducers'
 import { useShallowEqualSelector } from 'hooks'
+import { Helmet } from 'react-helmet'
 
 const MoviesByCategory = () => {
   const { category } = useParams<{ category: string }>()
@@ -44,6 +45,10 @@ const MoviesByCategory = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>{title} Movies - Drive Up</title>
+        <meta name="description" content={`${title} movies list`} />
+      </Helmet>
       <main>
         <Title>{title} Movies</Title>
         <InfiniteMediaList
@@ -64,7 +69,7 @@ const MoviesByCategory = () => {
                 />
               ) : (
                 <MediaCard key={movie.id} mediaType="movie" {...movie} />
-              ),)}
+              ))}
           </MediaGrid>
         </InfiniteMediaList>
       </main>

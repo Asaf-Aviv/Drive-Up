@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router'
 import {
   Episode,
-  Home,
+  Featured,
   MoviesByQuery,
   MoviesByCategory,
   ShowsByCategory,
@@ -17,8 +17,8 @@ import {
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/">
-      <Home />
+    <Route exact path="/featured">
+      <Featured />
     </Route>
     <Route exact path="/movies">
       <MoviesByQuery />
@@ -54,7 +54,7 @@ const Routes = () => (
       <MovieCollection />
     </Route>
     <Route>
-      <Redirect to="/" />
+      <Redirect to="/featured" />
     </Route>
   </Switch>
 )

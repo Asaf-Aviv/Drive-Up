@@ -17,6 +17,7 @@ import {
   clearShowsByQuery,
 } from 'store/showsByQuery/reducers'
 import { useShallowEqualSelector } from 'hooks'
+import { Helmet } from 'react-helmet'
 
 const ShowsByQuery = () => {
   const { page, loading, error, isLastPage } = useShallowEqualSelector(
@@ -43,6 +44,10 @@ const ShowsByQuery = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Shows - Drive Up</title>
+        <meta name="description" content="Shows list" />
+      </Helmet>
       <main>
         <Title>Shows</Title>
         <InfiniteMediaList

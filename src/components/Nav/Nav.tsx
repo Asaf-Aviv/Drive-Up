@@ -1,14 +1,14 @@
 import React from 'react'
 import { NavLink as RouterNavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as Home } from 'assets/icons/home.svg'
+import FeaturedVideoIcon from '@material-ui/icons/FeaturedVideo';
 import { ReactComponent as Movies } from 'assets/icons/movies.svg'
 import { ReactComponent as TV } from 'assets/icons/tv.svg'
 import { ReactComponent as Persons } from 'assets/icons/people.svg'
 import { NavLink } from 'components'
 
 const links = [
-  { to: '/', text: 'Home', icon: Home },
+  { to: '/featured', text: 'Featured', icon: FeaturedVideoIcon },
   { to: '/movies', text: 'Movies', icon: Movies },
   { to: '/shows', text: 'Shows', icon: TV },
   { to: '/persons', text: 'Persons', icon: Persons },

@@ -28,6 +28,7 @@ import {
 import { selectMovieById } from 'store/fullMoviesByIds/reducers'
 import { getImgUrl } from 'utils'
 import ErrorMessageWithRetry from 'components/ErrorMessageWithRetry'
+import { Helmet } from 'react-helmet'
 import { requestMovieById } from '../../store/movie/reducers'
 import useShallowEqualSelector from '../../hooks/useShallowEqualSelector'
 import { ImageHeader } from '../MediaHeader/MediaHeader'
@@ -89,6 +90,10 @@ const Movie = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{`${name} - Drive Up`}</title>
+        <meta name="description" content={`Details page about the movie ${name}`} />
+      </Helmet>
       <ImageHeader bgImg={getImgUrl(backdrop, 1280)}>
         <TransparentBG />
       </ImageHeader>

@@ -13,6 +13,7 @@ import {
   PersonCard,
   Title,
 } from 'components'
+import { Helmet } from 'react-helmet'
 
 const Persons = () => {
   const { page, loading, error, isLastPage } = useShallowEqualSelector(
@@ -36,6 +37,10 @@ const Persons = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>Persons - Drive Up</title>
+        <meta name="description" content="Persons list" />
+      </Helmet>
       <Title>Persons</Title>
       <Container>
         <InfiniteMediaList

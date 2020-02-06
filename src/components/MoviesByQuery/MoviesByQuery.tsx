@@ -17,6 +17,7 @@ import {
   PosterLink,
   Title,
 } from 'components'
+import { Helmet } from 'react-helmet'
 
 const MoviesByQuery = () => {
   const movies = useShallowEqualSelector(selectMoviesByQuery)
@@ -27,10 +28,9 @@ const MoviesByQuery = () => {
   const { search } = useLocation()
   const windowWidth = useContext(WindowWidthContext)
 
-  const getParams = useCallback(
-    () => qs.parse(search, { ignoreQueryPrefix: true }),
-    [search],
-  )
+  const getParams = useCallback(() => qs.parse(search, { ignoreQueryPrefix: true }), [
+    search,
+  ])
 
   useEffect(() => {
     dispatch(clearMoviesByQuery())
@@ -43,6 +43,10 @@ const MoviesByQuery = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Movies - Drive Up</title>
+        <meta name="description" content="Movies list" />
+      </Helmet>
       <main>
         <Title>Movies</Title>
         <InfiniteMediaList

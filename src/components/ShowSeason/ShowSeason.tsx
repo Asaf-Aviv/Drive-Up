@@ -17,6 +17,7 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useShallowEqualSelector } from 'hooks'
+import { Helmet } from 'react-helmet'
 
 type Params = {
   showId: string
@@ -55,6 +56,10 @@ const ShowSeason = () => {
 
   return (
     <StyledMain>
+      <Helmet>
+        <title>{`${showName} ${name} - Drive Up`}</title>
+        <meta name="description" content={`Details page about ${name} of ${showName}`} />
+      </Helmet>
       <Container>
         <StyledHeader>
           <Link to={`/show/${showId}`}>

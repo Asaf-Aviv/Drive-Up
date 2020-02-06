@@ -33,6 +33,7 @@ import {
 import { useShallowEqualSelector } from 'hooks'
 import { requestShowById } from 'store/show/reducers'
 import { ImageHeader } from 'components/MediaHeader'
+import { Helmet } from 'react-helmet'
 
 type Params = {
   showId: string
@@ -87,6 +88,10 @@ const Show = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{`${name} - Drive Up`}</title>
+        <meta name="description" content={`Details page about the show ${name}`} />
+      </Helmet>
       <ImageHeader bgImg={getImgUrl(backdrop, 1280)}>
         <TransparentBG />
       </ImageHeader>

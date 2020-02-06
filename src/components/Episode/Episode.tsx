@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import LazyLoad from 'react-lazyload'
 import { useDispatch } from 'react-redux'
-import uniqBy from 'lodash.uniqby'
 import {
   selectShowSeasonEpisode,
   requestShowSeason,
@@ -14,14 +12,13 @@ import {
   Container,
   Overview,
   BackDrop,
-  PersonsGrid,
-  PersonCard,
   SectionTitle,
   Section,
   Spacer,
   PersonsSection,
 } from 'components'
 import Visible from 'components/Visible'
+import { Helmet } from 'react-helmet'
 
 type Params = {
   showId: string
@@ -62,6 +59,10 @@ const Episode = () => {
 
   return (
     <StyledMain>
+      <Helmet>
+        <title>{`${name} ${seasonName} Episode ${episodeNumber} - Drive Up`}</title>
+        <meta name="description" content={`Details page about episode ${episodeNumber} of ${name} ${seasonName}`} />
+      </Helmet>
       <Container>
         <StyledHeader>
           <Link to={`/show/${showId}`}>

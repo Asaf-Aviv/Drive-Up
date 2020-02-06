@@ -17,6 +17,7 @@ import {
   requestShowsByCategory,
 } from 'store/showsByCategory/reducers'
 import { useShallowEqualSelector } from 'hooks'
+import { Helmet } from 'react-helmet'
 
 const ShowsByCategory = () => {
   const { category } = useParams<{ category: string }>()
@@ -44,6 +45,10 @@ const ShowsByCategory = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>{title} Shows - Drive Up</title>
+        <meta name="description" content={`${title} shows list`} />
+      </Helmet>
       <main>
         <Title>{title} Shows</Title>
         <InfiniteMediaList

@@ -26,6 +26,7 @@ import {
 } from 'store/person/reducers'
 import { useShallowEqualSelector } from 'hooks'
 import Visible from 'components/Visible'
+import { Helmet } from 'react-helmet'
 
 type Params = {
   personId: string
@@ -73,6 +74,10 @@ const Person = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{`${name} - Drive Up`}</title>
+        <meta name="description" content={`Details page about ${name}`} />
+      </Helmet>
       <Container>
         <header>
           <Title>{name}</Title>

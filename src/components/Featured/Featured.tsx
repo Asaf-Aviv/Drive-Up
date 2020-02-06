@@ -6,9 +6,14 @@ import {
   WeeklyTrendingMovies,
   WeeklyTrendingShows,
 } from 'components'
+import { Helmet } from 'react-helmet'
 
-const Home = () => (
+const Featured = () => (
   <main>
+    <Helmet>
+      <title>Featured - Drive Up</title>
+      <meta name="description" content="Featured movies and shows" />
+    </Helmet>
     <Section>
       <FeaturedSlider />
     </Section>
@@ -21,4 +26,4 @@ const Home = () => (
   </main>
 )
 
-export default Home
+export default Featured
